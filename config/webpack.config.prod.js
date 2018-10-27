@@ -237,7 +237,7 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: true,
-                  sourceMap: true,
+                  sourceMap: shouldUseSourceMap,
                   minimize: true,
                   namedExport: true,
                   camelCase: true
