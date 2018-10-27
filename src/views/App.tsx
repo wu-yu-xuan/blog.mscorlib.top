@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import * as ReactMarkdown from 'react-markdown';
+import MarkdownRender from './MarkdownRender';
 
 export default class App extends React.Component<{}, { text: string }> {
     private editorRef = React.createRef<HTMLElement>();
@@ -24,7 +24,7 @@ export default class App extends React.Component<{}, { text: string }> {
             <section className={style.flex}>
                 <section className={style.frame} contentEditable={true} ref={this.editorRef} onInput={this.handleInput} spellCheck={false} />
                 <section className={style.frame}>
-                    <ReactMarkdown source={this.state.text} />
+                    <MarkdownRender source={this.state.text} />
                 </section>
             </section>
         )
