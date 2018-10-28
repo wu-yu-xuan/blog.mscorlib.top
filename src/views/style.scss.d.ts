@@ -1,2 +1,1 @@
-export const flex: string;
-export const frame: string;
+export const tab: string;

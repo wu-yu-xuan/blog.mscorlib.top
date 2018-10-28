@@ -8,17 +8,18 @@ html,
     font-size: 14px;
 }
 
-.flex {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.tab {
     height: 100%;
-    .frame {
-        overflow: auto;
-        width: 40%;
-        height: 75%;
-        box-shadow: 0 0 1px #ccc;
-        padding: 3px;
-        white-space: pre-wrap;
+    width: 100%;
+    padding: 0 16px;
+    text-align: center;
+    line-height: 45px;
+    display: block;
+}
+
+:global {
+    #root .ant-tabs-nav .ant-tabs-tab {
+        padding: 0;
+        height: 45px;
     }
 }
