@@ -4,6 +4,7 @@ import { LocaleProvider, Tabs } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 import MarkdownView from './MarkdownView';
+import RichtextView from './RichtextView';
 
 const { TabPane } = Tabs;
 
@@ -18,8 +19,9 @@ export default class App extends React.Component {
                             <TabPane tab={<NavLink to="markdown" className={style.tab}>Markdown</NavLink>} key="2" />
                         </Tabs>
                         <Switch>
+                            <Route path="/richtext" component={RichtextView} />
                             <Route path="/markdown" component={MarkdownView} />
-                            <Route path="/" component={MarkdownView} />
+                            <Route path="/" component={RichtextView} />
                         </Switch>
                     </>
                 </BrowserRouter>

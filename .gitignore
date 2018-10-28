@@ -62,3 +62,6 @@ typings/
 
 # scss dependency ts
 *.scss.d.ts
+
+# vscode cache
+.vscode
