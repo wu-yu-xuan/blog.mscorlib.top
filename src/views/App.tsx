@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import MarkdownView from './MarkdownView';
 import RichtextView from './RichtextView';
 import TabRoute, { TabRouteElement } from './TabRoute';
+import Corner from './Corner';
 
 
 export default class App extends React.Component {
@@ -16,7 +17,10 @@ export default class App extends React.Component {
         return (
             <LocaleProvider locale={zhCN}>
                 <BrowserRouter>
-                    <TabRoute components={this.tabRouteComponents} />
+                    <>
+                        <Corner />
+                        <TabRoute components={this.tabRouteComponents} />
+                    </>
                 </BrowserRouter>
             </LocaleProvider>
         )
