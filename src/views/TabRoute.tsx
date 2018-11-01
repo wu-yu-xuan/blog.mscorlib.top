@@ -40,12 +40,8 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
                 <div className={style.tabRouteContentWrapper}>
                     {components.map(({ Component }, index) => Component && (
                         <CSSTransition in={index === matchIndex} timeout={300} key={index} mountOnEnter={true} classNames={{
-                            appear: 'appear',
-                            appearActive: 'appearActive',
                             enterActive: style.enterActive,
                             enter: style.enter,
-                            enterDone: 'enterDone',
-                            exit: 'exit',
                             exitActive: style.exitActive,
                             exitDone: style.exitDone
                         }}>
