@@ -17,6 +17,37 @@ html,
     display: block;
 }
 
+.tab-route-content-wrapper {
+    height: calc(100% - 60px);
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.tab-route-content {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    &.enter {
+        transform: translateX(20%);
+        opacity: .3;
+    }
+    &.enter-active {
+        transform: translateX(0);
+        opacity: 1;
+        transition: .3s;
+    }
+    &.exit-active {
+        transform: translateX(-20%);
+        opacity: 0;
+        transition: .3s;
+    }
+    &.exit-done {
+        transform: translateX(-20%);
+        opacity: 0;
+    }
+}
+
 :global {
     #root .ant-tabs-nav .ant-tabs-tab {
         padding: 0;
