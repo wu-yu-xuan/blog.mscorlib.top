@@ -29,7 +29,6 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
     public render() {
         const { components } = this.props;
         const matchIndex = this.findMatchIndex();
-        console.log(matchIndex);
         return (
             <>
                 <Tabs activeKey={matchIndex.toString()}>
