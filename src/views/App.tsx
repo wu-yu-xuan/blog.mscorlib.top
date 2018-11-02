@@ -9,20 +9,20 @@ import Corner from './Corner';
 
 
 export default class App extends React.Component {
-    private tabRouteComponents: TabRouteElement[] = [
-        { path: '/richtext', tabName: 'Richtext', Component: RichtextView },
-        { path: '/markdown', tabName: 'Markdown', Component: MarkdownView }
-    ];
-    public render() {
-        return (
-            <LocaleProvider locale={zhCN}>
-                <BrowserRouter>
-                    <>
-                        <Corner />
-                        <TabRoute components={this.tabRouteComponents} />
-                    </>
-                </BrowserRouter>
-            </LocaleProvider>
-        )
-    }
+  private tabRouteComponents: TabRouteElement[] = [
+    { path: '/richtext', tabName: 'Richtext', Component: RichtextView },
+    { path: '/markdown', tabName: 'Markdown', Component: MarkdownView }
+  ];
+  public render() {
+    return (
+      <LocaleProvider locale={zhCN}>
+        <BrowserRouter>
+          <>
+            <Corner />
+            <TabRoute components={this.tabRouteComponents} />
+          </>
+        </BrowserRouter>
+      </LocaleProvider>
+    )
+  }
 }

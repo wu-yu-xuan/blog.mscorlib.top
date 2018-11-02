@@ -1,58 +1,58 @@
 .fix-container {
-    $container-size: 60px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: $container-size;
-    width: $container-size;
-    z-index: 10;
-    &:hover {
-        .mask {
-            transform: rotate3d(0, 1, 0, 180deg) rotate(45deg);
-            .triangle {
-                box-shadow: 0 0 2px #aaa;
-            }
-        }
-    }
+  $container-size: 60px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: $container-size;
+  width: $container-size;
+  z-index: 10;
+  &:hover {
     .mask {
-        height: $container-size * 1.414;
-        width: $container-size * 1.414;
-        overflow: hidden;
-        transform: rotate(-45deg) translateX(-1px);
-        transform-origin: left top;
-        transition: .6s ease-in-out;
-        position: absolute;
-        .triangle {
-            width: $container-size;
-            height: $container-size;
-            transform: rotate(45deg);
-            transform-origin: left top;
-            background: #fff;
-            transition: .6s;
-        }
+      transform: rotate3d(0, 1, 0, 180deg) rotate(45deg);
+      .triangle {
+        box-shadow: 0 0 2px #aaa;
+      }
     }
-    .icon-container {
-        height: $container-size * 1.414;
-        width: $container-size * 1.414;
-        display: block;
-        overflow: hidden;
-        transform: rotate(-45deg);
-        transform-origin: left top;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #ddd;
-        color: rgba($color: #000000, $alpha: .65);
-        &:hover,
-        &:active,
-        &:link {
-            color: rgba($color: #000000, $alpha: .65);
-        }
-        .icon {
-            transform: rotate(90deg);
-            transform-origin: left top;
-            font-size: 30px;
-        }
+  }
+  .mask {
+    height: $container-size * 1.414;
+    width: $container-size * 1.414;
+    overflow: hidden;
+    transform: rotate(-45deg) translateX(-1px);
+    transform-origin: left top;
+    transition: .6s ease-in-out;
+    position: absolute;
+    .triangle {
+      width: $container-size;
+      height: $container-size;
+      transform: rotate(45deg);
+      transform-origin: left top;
+      background: #fff;
+      transition: .6s;
     }
+  }
+  .icon-container {
+    height: $container-size * 1.414;
+    width: $container-size * 1.414;
+    display: block;
+    overflow: hidden;
+    transform: rotate(-45deg);
+    transform-origin: left top;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ddd;
+    color: rgba($color: #000000, $alpha: .65);
+    &:hover,
+    &:active,
+    &:link {
+      color: rgba($color: #000000, $alpha: .65);
+    }
+    .icon {
+      transform: rotate(90deg);
+      transform-origin: left top;
+      font-size: $container-size / 2;
+    }
+  }
 }

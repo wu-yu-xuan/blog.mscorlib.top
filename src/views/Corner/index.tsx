@@ -3,17 +3,16 @@ import * as style from './style.scss';
 import { Icon } from 'antd';
 
 export default class Corner extends React.PureComponent {
-    public render() {
-        return (
-            <div className={style.fixContainer}>
-                <a className={style.iconContainer} title="star me on github!" href="//github.com/wu-yu-xuan/wu-yu-xuan.github.io">
-                    <Icon type="github" className={style.icon} />
-                </a>
-                <div className={style.mask}>
-                    <div className={style.triangle} />
-                </div>
-
-            </div>
-        )
-    }
+  public render() {
+    return (
+      <div className={style.fixContainer}>
+        <a className={style.iconContainer} title="star me on github!" href="//github.com/wu-yu-xuan/wu-yu-xuan.github.io">
+          <Icon type="github" className={style.icon} />
+        </a>
+        <div className={style.mask}>
+          <div className={style.triangle} />
+        </div>
+      </div>
+    )
+  }
 }
