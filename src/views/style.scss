@@ -42,10 +42,12 @@ html,
     transform: translateX(-20%);
     opacity: 0;
     transition: .3s ease-in;
+    z-index: -1;
   }
   &.exit-done {
     transform: translateX(-20%);
     opacity: 0;
+    z-index: -1;
   }
 }
 

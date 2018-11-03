@@ -8,18 +8,30 @@ export const renderText = (text: string): React.ReactNode => {
       return (
         <React.Fragment key={index}>
           {renderText(value)}
-          {index !== text.length - 1 && value.match(new RegExp('.+ {2,}$')) && <br />}
+          {index !== text.length - 1 && value.match(/.+ {2,}$/) && <br />}
         </React.Fragment>
       )
     });
   }
-  const strongAndEm = text.match(new RegExp('[*_]{3}(.+?)[*_]{3}'));
+  const link = text.match(/\[(.+?)\]\((.+?)\)/);
+  if (link) {
+    const [match, value, target] = link;
+    const { index } = link;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <a className={style.link} href={target} title={target}>{renderText(value)}</a>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const strongAndEm = text.match(/[*_]{3}(.+?)[*_]{3}/);
   if (strongAndEm) {
     const [match, value] = strongAndEm;
     const { index } = strongAndEm;
     return (
       <>
-        {text.slice(0, index)}
+        {renderText(text.slice(0, index))}
         <strong className={style.strong}>
           <em className={style.em}>{value}</em>
         </strong>
@@ -27,43 +39,55 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const strong = text.match(new RegExp('[*_]{2}(.+?)[*_]{2}'));
+  const strong = text.match(/[*_]{2}(.+?)[*_]{2}/);
   if (strong) {
     const [match, value] = strong;
     const { index } = strong;
     return (
       <>
-        {text.slice(0, index)}
+        {renderText(text.slice(0, index))}
         <strong className={style.strong}>{value}</strong>
         {renderText(text.slice(index + match.length))}
       </>
     )
   }
-  const em = text.match(new RegExp('[*_](.+?)[*_]'));
+  const em = text.match(/[*_](.+?)[*_]/);
   if (em) {
     const [match, value] = em;
     const { index } = em;
     return (
       <>
-        {text.slice(0, index)}
+        {renderText(text.slice(0, index))}
         <em className={style.em}>{value}</em>
         {renderText(text.slice(index + match.length))}
       </>
     )
   }
-  const code = text.match(new RegExp('`(.+?)`'));
+  const code = text.match(/`(.+?)`/);
   if (code) {
     const [match, value] = code;
     const { index } = code;
     return (
       <>
-        {text.slice(0, index)}
+        {renderText(text.slice(0, index))}
         <code className={style.code}>{value}</code>
         {renderText(text.slice(index + match.length))}
       </>
     )
   }
-  return text.trim();
+  const url = text.match(/<(.+?)>/);
+  if (url) {
+    const [match, value] = url;
+    const { index } = url;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <a className={style.link} title={value} href={value}>{value}</a>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  return text;
 }
 
 export default class TextRender extends React.PureComponent<Tokens.Text>{

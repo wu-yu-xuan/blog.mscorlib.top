@@ -11,9 +11,9 @@ import MyMarkdownView from './MyMarkdownView';
 
 export default class App extends React.Component {
   private tabRouteComponents: TabRouteElement[] = [
+    { path: '/mymarkdown', tabName: 'MyMarkdown', Component: MyMarkdownView },
     { path: '/richtext', tabName: 'Richtext', Component: RichtextView },
     { path: '/markdown', tabName: 'Markdown', Component: MarkdownView },
-    { path: '/mymarkdown', tabName: 'MyMarkdown', Component: MyMarkdownView }
   ];
   public render() {
     return (
