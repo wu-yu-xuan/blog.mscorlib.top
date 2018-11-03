@@ -4,12 +4,14 @@ import * as style from './style.scss';
 import HeadingRender from './HeadingRender';
 import HrRender from './HrRender';
 import ParagraphRender from './ParagraphRender';
+import TextRender from './TextRender';
 
 interface MarkdownRenderProps {
   source: string;
   heading?: React.ComponentType<Tokens.Heading>;
   hr?: React.ComponentType<Tokens.Hr>;
   paragraph?: React.ComponentType<Tokens.Paragraph>;
+  text?: React.ComponentType<Tokens.Text>;
 }
 
 export default class MarkdownRender extends React.PureComponent<MarkdownRenderProps>{
@@ -18,6 +20,7 @@ export default class MarkdownRender extends React.PureComponent<MarkdownRenderPr
     heading: HeadingRender,
     hr: HrRender,
     paragraph: ParagraphRender,
+    text: TextRender
   }
   public render() {
     const { source } = this.props;
