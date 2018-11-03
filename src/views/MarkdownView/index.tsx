@@ -3,7 +3,7 @@ import * as style from './style.scss';
 import MarkdownRender from './MarkdownRender';
 import { EditorState, Editor } from 'draft-js';
 
-export default class MarkdownView extends React.Component<{}, { editorState: EditorState }> {
+export default class MarkdownView extends React.PureComponent<{}, { editorState: EditorState }> {
   constructor(props: {}) {
     super(props);
     this.state = {

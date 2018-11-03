@@ -282,6 +282,13 @@ module.exports = {
               },
               {
                 loader:require.resolve('sass-loader')
+              },
+              {
+                loader: require.resolve('sass-resources-loader'),
+                options:
+                {
+                  resources: [path.resolve(paths.appSrc, './style/*.scss')]
+                }
               }
             ],
           },

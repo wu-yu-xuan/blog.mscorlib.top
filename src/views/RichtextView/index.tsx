@@ -3,7 +3,7 @@ import { Editor, EditorState, RichUtils, DraftHandleValue } from 'draft-js';
 import * as style from './style.scss';
 import 'draft-js/dist/Draft.css';
 
-export default class RichtextView extends React.Component<{}, { editorState: EditorState }>{
+export default class RichtextView extends React.PureComponent<{}, { editorState: EditorState }>{
   constructor(props: {}) {
     super(props);
     this.state = {
