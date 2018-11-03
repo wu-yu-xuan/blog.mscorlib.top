@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@types/draft-js": "^0.10.26",
+    "@types/marked": "^0.4.2",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-syntax-highlighter": "^0.0.7",
     "@types/react-transition-group": "^2.0.14",
@@ -27,6 +28,7 @@
     "jest": "20.0.4",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "marked": "^0.5.1",
     "node-sass": "^4.9.4",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",

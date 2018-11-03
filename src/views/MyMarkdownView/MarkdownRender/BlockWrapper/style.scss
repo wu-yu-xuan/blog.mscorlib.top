@@ -1,0 +1,12 @@
+.block-wrapper {
+  $border-width: 3px;
+  $left-padding-width: 5px;
+  display: block;
+  padding-left: $left-padding-width;
+  margin-left: -$border-width - $left-padding-width;
+  border-left: solid transparent $border-width;
+  transition: .3s;
+  &:hover {
+    border-left-color: $primary-color;
+  }
+}

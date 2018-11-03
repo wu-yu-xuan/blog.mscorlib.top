@@ -6,12 +6,14 @@ import MarkdownView from './MarkdownView';
 import RichtextView from './RichtextView';
 import TabRoute, { TabRouteElement } from './TabRoute';
 import Corner from './Corner';
+import MyMarkdownView from './MyMarkdownView';
 
 
 export default class App extends React.Component {
   private tabRouteComponents: TabRouteElement[] = [
     { path: '/richtext', tabName: 'Richtext', Component: RichtextView },
-    { path: '/markdown', tabName: 'Markdown', Component: MarkdownView }
+    { path: '/markdown', tabName: 'Markdown', Component: MarkdownView },
+    { path: '/mymarkdown', tabName: 'MyMarkdown', Component: MyMarkdownView }
   ];
   public render() {
     return (

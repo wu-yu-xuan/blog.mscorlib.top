@@ -1,0 +1,6 @@
+@for $depth from 1 through 6 {
+  .h#{$depth}{
+    font-size: $font-size-base + (6 - $depth) * 2px;
+    font-weight: bold;
+  }
+}
