@@ -1,6 +1,8 @@
 @for $depth from 1 through 6 {
-  .h#{$depth}{
-    font-size: $font-size-base + (6 - $depth) * 2px;
+  .h#{$depth} {
+    font-size: $font-size-base + (7 - $depth) * 2px;
+    line-height: $font-size-base + (7 - $depth) * 2px;
     font-weight: bold;
+    margin-top: .5em;
   }
 }

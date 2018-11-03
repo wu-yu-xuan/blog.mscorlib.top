@@ -10,7 +10,7 @@ export default class HeadingRender extends React.PureComponent<Tokens.Heading>{
     const Tag = `h${depth}`
     return (
       <BlockWrapper>
-        <Tag className={style[Tag]}>{renderText(text)}</Tag>
+        <Tag className={style[Tag]} id={text}>{renderText(text)}</Tag>
       </BlockWrapper>
     )
   }

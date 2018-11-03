@@ -3,18 +3,21 @@ import { lexer, Tokens } from 'marked';
 import * as style from './style.scss';
 import HeadingRender from './HeadingRender';
 import HrRender from './HrRender';
+import ParagraphRender from './ParagraphRender';
 
 interface MarkdownRenderProps {
   source: string;
   heading?: React.ComponentType<Tokens.Heading>;
   hr?: React.ComponentType<Tokens.Hr>;
+  paragraph?: React.ComponentType<Tokens.Paragraph>;
 }
 
 export default class MarkdownRender extends React.PureComponent<MarkdownRenderProps>{
   public static defaultProps: MarkdownRenderProps = {
     source: '',
     heading: HeadingRender,
-    hr: HrRender
+    hr: HrRender,
+    paragraph: ParagraphRender,
   }
   public render() {
     const { source } = this.props;
