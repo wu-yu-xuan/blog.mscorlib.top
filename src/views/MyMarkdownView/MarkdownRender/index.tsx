@@ -5,6 +5,7 @@ import HeadingRender from './HeadingRender';
 import HrRender from './HrRender';
 import ParagraphRender from './ParagraphRender';
 import TextRender from './TextRender';
+import HtmlRender from './HtmlRender';
 
 interface MarkdownRenderProps {
   source: string;
@@ -12,6 +13,7 @@ interface MarkdownRenderProps {
   hr?: React.ComponentType<Tokens.Hr>;
   paragraph?: React.ComponentType<Tokens.Paragraph>;
   text?: React.ComponentType<Tokens.Text>;
+  html?: React.ComponentType<Tokens.HTML>;
 }
 
 export default class MarkdownRender extends React.PureComponent<MarkdownRenderProps>{
@@ -20,7 +22,8 @@ export default class MarkdownRender extends React.PureComponent<MarkdownRenderPr
     heading: HeadingRender,
     hr: HrRender,
     paragraph: ParagraphRender,
-    text: TextRender
+    text: TextRender,
+    html: HtmlRender
   }
   public render() {
     const { source } = this.props;

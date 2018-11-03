@@ -37,13 +37,24 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const em = text.match(new RegExp('[*_]{1}(.+?)[*_]{1}'));
+  const em = text.match(new RegExp('[*_](.+?)[*_]'));
   if (em) {
     const [match, value] = em;
     const { index } = em;
     return (
       <>
         <em className={style.em}>{value}</em>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const code = text.match(new RegExp('`(.+?)`'));
+  if (code) {
+    const [match, value] = code;
+    const { index } = code;
+    return (
+      <>
+        <code className={style.code}>{value}</code>
         {renderText(text.slice(index + match.length))}
       </>
     )
