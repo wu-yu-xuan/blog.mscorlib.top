@@ -13,6 +13,18 @@ export const renderText = (text: string): React.ReactNode => {
       )
     });
   }
+  const titleLink = text.match(/\[(.+?)\]\((.+?) +"(.*?)"\)/);
+  if (titleLink) {
+    const [match, value, target, title] = titleLink;
+    const { index } = titleLink;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <a className={style.link} href={target} title={title}>{renderText(value)}</a>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
   const link = text.match(/\[(.+?)\]\((.+?)\)/);
   if (link) {
     const [match, value, target] = link;
