@@ -4,5 +4,14 @@
     line-height: $font-size-base + (7 - $depth) * 2px;
     font-weight: bold;
     margin-top: .5em;
+    &:hover .link {
+      opacity: 1;
+    }
+    .link {
+      opacity: 0;
+      margin-left: .5em;
+      transition: .3s;
+      font-size: .8em;
+    }
   }
 }

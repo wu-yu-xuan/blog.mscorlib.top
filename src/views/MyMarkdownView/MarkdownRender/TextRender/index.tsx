@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export const renderText = (text: string) => {
   if (!text.includes('\n')) {
-    return text;
+    return text.trim();
   }
   return text.split('\n').map((value, index) => {
     return (
