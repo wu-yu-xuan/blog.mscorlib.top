@@ -19,6 +19,7 @@ export const renderText = (text: string): React.ReactNode => {
     const { index } = strongAndEm;
     return (
       <>
+        {text.slice(0, index)}
         <strong className={style.strong}>
           <em className={style.em}>{value}</em>
         </strong>
@@ -32,6 +33,7 @@ export const renderText = (text: string): React.ReactNode => {
     const { index } = strong;
     return (
       <>
+        {text.slice(0, index)}
         <strong className={style.strong}>{value}</strong>
         {renderText(text.slice(index + match.length))}
       </>
@@ -43,6 +45,7 @@ export const renderText = (text: string): React.ReactNode => {
     const { index } = em;
     return (
       <>
+        {text.slice(0, index)}
         <em className={style.em}>{value}</em>
         {renderText(text.slice(index + match.length))}
       </>
@@ -54,6 +57,7 @@ export const renderText = (text: string): React.ReactNode => {
     const { index } = code;
     return (
       <>
+        {text.slice(0, index)}
         <code className={style.code}>{value}</code>
         {renderText(text.slice(index + match.length))}
       </>

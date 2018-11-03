@@ -31,7 +31,7 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
     const matchIndex = this.findMatchIndex();
     return (
       <>
-        <Tabs activeKey={matchIndex.toString()}>
+        <Tabs activeKey={matchIndex.toString()} className={style.tabs}>
           {components.map(({ tabName, path }, index) => tabName && (
             <TabPane tab={<NavLink to={path} className={style.tab}>{tabName}</NavLink>} key={index.toString()} />
           ))}
