@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BlockWrapper from './BlockWrapper';
 
 export interface ListRenderProps {
   ordered: boolean;
@@ -10,8 +11,16 @@ export default class ListRender extends React.PureComponent<ListRenderProps>{
   public render() {
     const { ordered, start, children } = this.props;
     if (ordered) {
-      return <ol start={Number(start)}>{children}</ol>
+      return (
+        <BlockWrapper>
+          <ol start={Number(start)}>{children}</ol>
+        </BlockWrapper>
+      )
     }
-    return <ul>{children}</ul>
+    return (
+      <BlockWrapper>
+        <ul>{children}</ul>
+      </BlockWrapper>
+    )
   }
 }

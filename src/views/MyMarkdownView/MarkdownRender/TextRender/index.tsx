@@ -21,7 +21,7 @@ export const renderText = (text: string): React.ReactNode => {
       <>
         {renderText(text.slice(0, index))}
         <a className={style.link} href={target}>
-          <img src={imgSrc} title={alt} alt={alt} />
+          <img className={style.img} src={imgSrc} title={alt} alt={alt} />
         </a>
         {renderText(text.slice(index + match.length))}
       </>
@@ -34,7 +34,7 @@ export const renderText = (text: string): React.ReactNode => {
     return (
       <>
         {renderText(text.slice(0, index))}
-        <img src={target} title={title} alt={alt} />
+        <img className={style.img} src={target} title={title} alt={alt} />
         {renderText(text.slice(index + match.length))}
       </>
     )
@@ -46,7 +46,7 @@ export const renderText = (text: string): React.ReactNode => {
     return (
       <>
         {renderText(text.slice(0, index))}
-        <img src={target} title={alt} alt={alt} />
+        <img className={style.img} src={target} title={alt} alt={alt} />
         {renderText(text.slice(index + match.length))}
       </>
     )
