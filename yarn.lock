@@ -27,6 +27,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@types/classnames@^2.2.6":
+  version "2.2.6"
+  resolved "http://registry.npm.taobao.org/@types/classnames/download/@types/classnames-2.2.6.tgz#dbe8a666156d556ed018e15a4c65f08937c3f628"
+
 "@types/draft-js@^0.10.26":
   version "0.10.26"
   resolved "http://registry.npm.taobao.org/@types/draft-js/download/@types/draft-js-0.10.26.tgz#0b02324b7981cbab32d23cd0a1d968bbf576757b"

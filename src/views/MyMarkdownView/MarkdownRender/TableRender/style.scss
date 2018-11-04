@@ -16,6 +16,18 @@
   border: $border-color-base 1px solid;
 }
 
-.td{
+.td {
   padding: 16px;
+  border-bottom: $border-color-base 1px solid;
+}
+
+.th {
+  background-color: #fafafa;
+}
+
+.tr {
+  transition: .3s;
+  &:hover {
+    background-color: #e6f7ff;
+  }
 }
