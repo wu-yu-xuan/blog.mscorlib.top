@@ -1,0 +1,21 @@
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  border: $border-color-base 1px solid;
+}
+
+.td{
+  padding: 16px;
+}

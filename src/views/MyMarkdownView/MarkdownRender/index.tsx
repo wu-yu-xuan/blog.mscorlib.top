@@ -10,6 +10,7 @@ import CodeRender from './CodeRender';
 import ListItemRender, { ListItemRenderProps } from './ListItemRender';
 import ListRender, { ListRenderProps } from './ListRender';
 import BlockquoteRender from './BlockquoteRender';
+import TableRender from './TableRender';
 
 interface MarkdownRenderProps {
   source: string;
@@ -22,6 +23,7 @@ interface MarkdownRenderProps {
   list_item?: React.ComponentType<ListItemRenderProps>;
   list?: React.ComponentType<ListRenderProps>;
   blockquote?: React.ComponentType<Tokens.BlockquoteStart>;
+  table?: React.ComponentType<Tokens.Table>;
 }
 
 export default class MarkdownRender extends React.PureComponent<MarkdownRenderProps>{
@@ -35,7 +37,8 @@ export default class MarkdownRender extends React.PureComponent<MarkdownRenderPr
     code: CodeRender,
     list_item: ListItemRender,
     list: ListRender,
-    blockquote: BlockquoteRender
+    blockquote: BlockquoteRender,
+    table: TableRender
   }
   private renderComponents = (lexList: marked.TokensList | marked.Token[]): React.ReactNode => {
     let depth = 0;

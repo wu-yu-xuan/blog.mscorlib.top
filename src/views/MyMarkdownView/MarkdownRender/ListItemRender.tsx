@@ -8,7 +8,6 @@ export interface ListItemRenderProps{
 
 export default class ListItemRender extends React.PureComponent<ListItemRenderProps>{
   public render() {
-    console.log('ListItemRenderProps; ', this.props);
     return <li>{this.props.children}</li>
   }
 }
