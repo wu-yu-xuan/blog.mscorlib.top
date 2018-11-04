@@ -137,6 +137,18 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
+  const strikethrough = text.match(/~~(.+?)~~/);
+  if (strikethrough) {
+    const [match, value] = strikethrough;
+    const { index } = strikethrough;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <del className={style.del}>{value}</del>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
   return text;
 }
 

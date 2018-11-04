@@ -22,3 +22,14 @@
     text-decoration: underline;
   }
 }
+
+.del {
+  text-decoration: none;
+  background-color: $text-color;
+  color: transparent;
+  transition: .3s;
+  &:hover {
+    color: $text-color;
+    background-color: transparent;
+  }
+}

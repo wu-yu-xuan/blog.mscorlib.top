@@ -7,6 +7,8 @@ import ParagraphRender from './ParagraphRender';
 import TextRender from './TextRender';
 import HtmlRender from './HtmlRender';
 import CodeRender from './CodeRender';
+import ListItemRender, { ListItemRenderProps } from './ListItemRender';
+import ListRender, { ListRenderProps } from './ListRender';
 
 interface MarkdownRenderProps {
   source: string;
@@ -16,6 +18,8 @@ interface MarkdownRenderProps {
   text?: React.ComponentType<Tokens.Text>;
   html?: React.ComponentType<Tokens.HTML>;
   code?: React.ComponentType<Tokens.Code>;
+  list_item?: React.ComponentType<ListItemRenderProps>;
+  list?: React.ComponentType<ListRenderProps>;
 }
 
 export default class MarkdownRender extends React.PureComponent<MarkdownRenderProps>{
@@ -26,15 +30,49 @@ export default class MarkdownRender extends React.PureComponent<MarkdownRenderPr
     paragraph: ParagraphRender,
     text: TextRender,
     html: HtmlRender,
-    code: CodeRender
+    code: CodeRender,
+    list_item: ListItemRender,
+    list: ListRender
   }
+  private renderComponents = (lexList: marked.TokensList | marked.Token[]): React.ReactNode => {
+    let depth = 0;
+    return lexList.map((token, key) => {
+      if (token.type.endsWith('_end')) {
+        depth--;
+      }
+      if (token.type.endsWith('_start')) {
+        depth++;
+      }
+      if (depth === 1 && token.type.endsWith('_start')) {
+        const startName = token.type;
+        const endName = token.type.replace('start', 'end');
+        let deep = 1;
+        const endIndex = key + 1 + lexList.slice(key + 1).findIndex(val => {
+          if (val.type === startName) {
+            deep++;
+          }
+          if (val.type === endName) {
+            deep--;
+          }
+          return !deep;
+        });
+        const Component: React.ComponentType = this.props[token.type.replace('_start', '')];
+        return Component && (
+          <Component {...token} key={key}>
+            {this.renderComponents(lexList.slice(key + 1, endIndex))}
+          </Component>
+        )
+      }
+      if (depth) {
+        return null;
+      }
+      const SimpleComponent: React.ComponentType = this.props[token.type];
+      return SimpleComponent && <SimpleComponent {...token} key={key} />;
+    });
+  };
   public render() {
     const { source } = this.props;
     const lexList = lexer(source);
-    const result = lexList.map((token, key) => {
-      const Component: React.ComponentType = this.props[token.type];
-      return Component && <Component {...token} key={key} />;
-    })
-    return <div className={style.markdownContainer}>{result}</div>
+    return <div className={style.markdownContainer}>{this.renderComponents(lexList)}</div>
   }
 }
