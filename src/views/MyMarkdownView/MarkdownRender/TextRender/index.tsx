@@ -13,6 +13,44 @@ export const renderText = (text: string): React.ReactNode => {
       )
     });
   }
+  const titleImgLink = text.match(/\[!\[(.+?)\]\((.+?)\)\]\((.+?)\)/);
+  if (titleImgLink) {
+    const [match, alt, imgSrc, target] = titleImgLink;
+    const { index } = titleImgLink;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <a className={style.link} href={target}>
+          <img src={imgSrc} title={alt} alt={alt} />
+        </a>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const titleImg = text.match(/!\[(.+?)\]\((.+?) +"(.*?)"\)/)
+  if (titleImg) {
+    const [match, alt, target, title] = titleImg;
+    const { index } = titleImg;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <img src={target} title={title} alt={alt} />
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const img = text.match(/!\[(.+?)\]\((.+?)\)/)
+  if (img) {
+    const [match, alt, target] = img;
+    const { index } = img;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <img src={target} title={alt} alt={alt} />
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
   const titleLink = text.match(/\[(.+?)\]\((.+?) +"(.*?)"\)/);
   if (titleLink) {
     const [match, value, target, title] = titleLink;
