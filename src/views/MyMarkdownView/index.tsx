@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import MarkdownRender from './MarkdownRender';
+import MarkdownRender from '../../components/MarkdownRender';
 import { EditorState, Editor } from 'draft-js';
 
 export default class MyMarkdownView extends React.PureComponent<{}, { editorState: EditorState }> {

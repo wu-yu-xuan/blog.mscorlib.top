@@ -4,7 +4,7 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { BrowserRouter } from 'react-router-dom';
 import MarkdownView from './MarkdownView';
 import RichtextView from './RichtextView';
-import TabRoute, { TabRouteElement } from './TabRoute';
+import TabRoute, { TabRouteElement } from '../components/TabRoute';
 import Corner from './Corner';
 import MyMarkdownView from './MyMarkdownView';
 import './style.scss';
