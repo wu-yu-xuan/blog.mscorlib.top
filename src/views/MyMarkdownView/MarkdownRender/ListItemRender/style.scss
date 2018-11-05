@@ -1,0 +1,6 @@
+.checkbox {
+  cursor: default;
+  & * {
+    cursor: default;
+  }
+}
