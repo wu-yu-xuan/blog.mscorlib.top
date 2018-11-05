@@ -25,6 +25,7 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
+const makeMarkdownList = require('./makeMarkdownList');
 
 const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
@@ -97,7 +98,13 @@ measureFileSizesBeforeBuild(paths.appBuild)
       printBuildError(err);
       process.exit(1);
     }
-  ).then(() => fs.writeFileSync(`${paths.appBuild}/404.html`, fs.readFileSync(`${paths.appBuild}/index.html`)));
+  )
+  .then(async () => {
+    await fs.writeFile(`${paths.appBuild}/404.html`, await fs.readFile(`${paths.appBuild}/index.html`));
+    console.log('404 page done');
+  }).then(async () => {
+    await makeMarkdownList(paths.appBuild);
+  });
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
