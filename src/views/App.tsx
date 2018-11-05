@@ -7,7 +7,7 @@ import RichtextView from './RichtextView';
 import TabRoute, { TabRouteElement } from './TabRoute';
 import Corner from './Corner';
 import MyMarkdownView from './MyMarkdownView';
-
+import './style.scss';
 
 export default class App extends React.Component {
   private tabRouteComponents: TabRouteElement[] = [
