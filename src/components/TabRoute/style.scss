@@ -9,6 +9,8 @@
 
 .tab-route-content-wrapper {
   position: relative;
+  overflow-x: hidden;
+  min-height: calc(100vh - 60px);
 }
 
 .tab-route-content {

@@ -10,6 +10,7 @@ const { TabPane } = Tabs;
 export interface TabRouteElement {
   path: string;
   tabName: string;
+  documentTitle?: string;
   Component: React.ComponentType
 }
 
@@ -29,6 +30,9 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
   public render() {
     const { components } = this.props;
     const matchIndex = this.findMatchIndex();
+    if (components[matchIndex].documentTitle) {
+      document.title = components[matchIndex].documentTitle;
+    }
     return (
       <div className={style.tabContainer}>
         <Tabs activeKey={matchIndex.toString()} className={style.tabs}>
