@@ -30,7 +30,7 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
     const { components } = this.props;
     const matchIndex = this.findMatchIndex();
     return (
-      <>
+      <div className={style.tabContainer}>
         <Tabs activeKey={matchIndex.toString()} className={style.tabs}>
           {components.map(({ tabName, path }, index) => tabName && (
             <TabPane tab={<NavLink to={path} className={style.tab}>{tabName}</NavLink>} key={index.toString()} />
@@ -50,7 +50,7 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
             </CSSTransition>
           ))}
         </div>
-      </>
+      </div>
     )
   }
 })

@@ -8,15 +8,10 @@
 }
 
 .tab-route-content-wrapper {
-  height: calc(100% - 60px);
-  width: 90%;
-  overflow: hidden;
   position: relative;
-  margin: 0 auto
 }
 
 .tab-route-content {
-  height: 100%;
   width: 100%;
   position: absolute;
   &.enter {
@@ -42,12 +37,17 @@
 }
 
 .tabs {
-  width: 90%;
-  margin: 0 auto;
   :global {
     .ant-tabs-tab {
       padding: 0;
       height: 45px;
     }
   }
+}
+
+.tab-container {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  min-height: 100vh;
 }
