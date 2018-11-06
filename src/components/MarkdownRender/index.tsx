@@ -24,6 +24,7 @@ interface MarkdownRenderProps {
   list?: React.ComponentType<ListRenderProps>;
   blockquote?: React.ComponentType<Tokens.BlockquoteStart>;
   table?: React.ComponentType<Tokens.Table>;
+  onDidUpdate?(): void;
 }
 
 export default class MarkdownRender extends React.PureComponent<MarkdownRenderProps>{
@@ -76,6 +77,9 @@ export default class MarkdownRender extends React.PureComponent<MarkdownRenderPr
       return SimpleComponent && <SimpleComponent {...token} key={key} />;
     });
   };
+  public componentDidUpdate() {
+    this.props.onDidUpdate && this.props.onDidUpdate();
+  }
   public render() {
     const { source } = this.props;
     const lexList = lexer(source);

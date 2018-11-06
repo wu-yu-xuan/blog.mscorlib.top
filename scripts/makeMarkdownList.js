@@ -12,7 +12,6 @@ module.exports = async (outputFolder) => {
       resultArray.push({
         birthTime: fileState.birthtimeMs,
         modifyTime: fileState.mtimeMs,
-        path: `/markdown/${file}`,
         title: path.basename(file, '.md')
       });
     }

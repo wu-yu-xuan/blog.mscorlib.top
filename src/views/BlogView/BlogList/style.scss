@@ -1,0 +1,40 @@
+.blog-list-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.blog-list-item-container {
+  height: 100px;
+  width: 45%;
+  margin: 1px 1px 20px 1px;
+  transition: .3s;
+  box-shadow: 0 1px 2px $border-color-base;
+  border-radius: $border-radius-base;
+  &:hover {
+    box-shadow: $box-shadow-base;
+  }
+  .title {
+    display: block;
+    height: 70px;
+    font-size: $font-size-base * 2;
+    color: $text-color;
+    line-height: 70px;
+    padding: 0 16px;
+    border-bottom: 1px solid $border-color-base;
+    transition: .3s;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+  .footer{
+    height: 30px;
+    padding:  0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .text{
+      font-size: $font-size-base;
+      color: $text-color-secondary;
+    }
+  }
+}

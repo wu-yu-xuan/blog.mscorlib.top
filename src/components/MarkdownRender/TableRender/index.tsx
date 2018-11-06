@@ -7,7 +7,6 @@ import { renderText } from '../TextRender';
 
 export default class TableRender extends React.Component<Tokens.Table>{
   public render() {
-    console.log(this.props);
     const { header, align, cells } = this.props;
     return (
       <BlockWrapper>

@@ -2,8 +2,8 @@
   $container-size: 60px;
   $sqrt2: 1.41422135623;
   position: fixed;
-  right: 0;
-  top: 0;
+  right: -1px;
+  top: -1px;
   height: $container-size;
   width: $container-size;
   z-index: 10;
