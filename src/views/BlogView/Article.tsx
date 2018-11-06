@@ -18,7 +18,14 @@ export default class Article extends React.Component<RouteComponentProps<{ title
       loading: true
     };
   }
-  private handleMarkdownRenderUpdate = () => this.setState({ loading: false });
+  private handleMarkdownRenderUpdate = () => {
+    this.setState({ loading: false });
+    setTimeout(() => {
+      const target = this.props.location.hash && document.querySelector(this.props.location.hash);
+      target && target.scrollIntoView();
+    }, 500);
+
+  };
   public async componentDidMount() {
     const response = await fetch(`/markdown/${this.props.match.params.title}.md`);
     if (!response.ok) {

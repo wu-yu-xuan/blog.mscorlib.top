@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as style from './style.scss';
 import { Tokens } from 'marked';
+import HtmlRender from '../HtmlRender';
 
 export const renderText = (text: string): React.ReactNode => {
   if (text.includes('\n')) {
@@ -125,7 +126,19 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const url = text.match(/<(.+?)>/);
+  const complexHtml = text.match(/(<.+?>.*?<\/.+?>)/);
+  if (complexHtml) {
+    const [match] = complexHtml;
+    const { index } = complexHtml;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <HtmlRender text={match} type="html" pre={false} />
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const url = text.match(/<(.+?\..+?)>/);
   if (url) {
     const [match, value] = url;
     const { index } = url;
@@ -133,6 +146,18 @@ export const renderText = (text: string): React.ReactNode => {
       <>
         {renderText(text.slice(0, index))}
         <a className={style.link} title={value} href={value}>{value}</a>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const simpleHtml = text.match(/(<.+?\/?>)/);
+  if (simpleHtml) {
+    const [match] = simpleHtml;
+    const { index } = simpleHtml;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <HtmlRender text={match} type="html" pre={false} />
         {renderText(text.slice(index + match.length))}
       </>
     )

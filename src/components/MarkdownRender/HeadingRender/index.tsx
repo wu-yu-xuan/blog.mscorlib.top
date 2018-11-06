@@ -10,7 +10,7 @@ export default class HeadingRender extends React.PureComponent<Tokens.Heading>{
     const { depth, text } = this.props;
     const Tag = `h${depth}`;
     const idMatch = text.match(/(.+) +{#(.+)}/);
-    const id = idMatch ? idMatch[2] : text;
+    const id = (idMatch ? idMatch[2] : text).replace(/ /g, '-').toLowerCase();
     const txt = idMatch ? idMatch[1] : text;
     return (
       <BlockWrapper>
