@@ -23,7 +23,7 @@ export default class Article extends React.Component<RouteComponentProps<{ title
   private handleMarkdownRenderUpdate = () => {
     this.setState({ loading: false });
     setTimeout(() => {
-      const target = this.props.location.hash && document.querySelector(this.props.location.hash);
+      const target = this.props.location.hash && document.querySelector(decodeURI(this.props.location.hash));
       target && target.scrollIntoView();
     }, 500);
 
