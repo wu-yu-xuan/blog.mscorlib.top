@@ -102,6 +102,8 @@ measureFileSizesBeforeBuild(paths.appBuild)
   .then(async () => {
     await fs.writeFile(`${paths.appBuild}/404.html`, await fs.readFile(`${paths.appBuild}/index.html`));
     console.log('404 page done');
+    await fs.writeFile(`${outputFolder}/README.md`, await fs.readFile(`${await fs.realpath(process.cwd())}/README.md`));
+    console.log('README.md done');
   }).then(async () => {
     await makeMarkdownList(paths.appBuild);
   });
