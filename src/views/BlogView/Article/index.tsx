@@ -2,6 +2,8 @@ import * as React from 'react';
 import { RouteComponentProps, Redirect } from 'react-router';
 import MarkdownRender from 'src/components/MarkdownRender';
 import { Skeleton } from 'antd';
+import * as classNames from 'classnames';
+import * as style from './style.scss';
 
 interface ArticleState {
   error: boolean;
@@ -51,7 +53,7 @@ export default class Article extends React.Component<RouteComponentProps<{ title
     return (
       <>
         <Skeleton loading={loading} active={true} children={false} title={false} paragraph={{ rows: 6 }} />
-        <div hidden={loading}>
+        <div hidden={loading} className={classNames({ [style.article]: !loading })}>
           <MarkdownRender source={markdown} onDidUpdate={this.handleMarkdownRenderUpdate} />
         </div>
       </>
