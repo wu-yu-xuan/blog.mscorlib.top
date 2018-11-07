@@ -65,3 +65,6 @@ typings/
 
 # vscode cache
 .vscode
+
+# markdown list
+public/markdown/list.json

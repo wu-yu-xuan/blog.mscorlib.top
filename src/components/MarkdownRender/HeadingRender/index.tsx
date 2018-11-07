@@ -4,6 +4,7 @@ import { renderText } from '../TextRender';
 import BlockWrapper from '../BlockWrapper';
 import * as style from './style.scss';
 import { Icon } from 'antd';
+import * as classNames from 'classnames';
 
 export default class HeadingRender extends React.PureComponent<Tokens.Heading>{
   public render() {
@@ -14,7 +15,7 @@ export default class HeadingRender extends React.PureComponent<Tokens.Heading>{
     const txt = idMatch ? idMatch[1] : text;
     return (
       <BlockWrapper>
-        <Tag className={style[Tag]} id={id}>
+        <Tag className={classNames(style.h, style[Tag])} id={id}>
           {renderText(txt)}
           <a href={`#${id}`} className={style.link}>
             <Icon type="link" />

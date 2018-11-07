@@ -1,22 +1,25 @@
+.h {
+  font-weight: bold;
+  margin-top: .5em;
+  &:hover .link {
+    opacity: 1;
+  }
+  &:target {
+    animation-name: target;
+    animation-duration: .9s;
+  }
+  .link {
+    opacity: 0;
+    margin-left: .5em;
+    transition: .3s;
+    font-size: .8em;
+  }
+}
+
 @for $depth from 1 through 6 {
   .h#{$depth} {
     font-size: $font-size-base + (7 - $depth) * 2px;
     line-height: $font-size-base + (7 - $depth) * 2px;
-    font-weight: bold;
-    margin-top: .5em;
-    &:hover .link {
-      opacity: 1;
-    }
-    &:target {
-      animation-name: target;
-      animation-duration: .9s;
-    }
-    .link {
-      opacity: 0;
-      margin-left: .5em;
-      transition: .3s;
-      font-size: .8em;
-    }
   }
 }
 
@@ -24,7 +27,8 @@
   0% {
     background-color: initial;
   }
-  30% {
+  20%,
+  60% {
     background-color: rgba(27, 31, 35, .05);
   }
   100% {
