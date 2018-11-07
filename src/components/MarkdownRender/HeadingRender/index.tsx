@@ -5,6 +5,7 @@ import BlockWrapper from '../BlockWrapper';
 import * as style from './style.scss';
 import { Icon } from 'antd';
 import * as classNames from 'classnames';
+import HrRender from '../HrRender';
 
 export default class HeadingRender extends React.PureComponent<Tokens.Heading>{
   public render() {
@@ -21,6 +22,7 @@ export default class HeadingRender extends React.PureComponent<Tokens.Heading>{
             <Icon type="link" />
           </a>
         </Tag>
+        {depth === 1 && <HrRender type="hr" />}
       </BlockWrapper>
     )
   }

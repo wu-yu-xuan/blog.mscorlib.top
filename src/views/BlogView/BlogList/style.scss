@@ -1,6 +1,7 @@
 .blog-list-container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .blog-list-item-container {
@@ -26,13 +27,13 @@
       color: $primary-color;
     }
   }
-  .footer{
+  .footer {
     height: 30px;
-    padding:  0 16px;
+    padding: 0 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .text{
+    .text {
       font-size: $font-size-base;
       color: $text-color-secondary;
     }

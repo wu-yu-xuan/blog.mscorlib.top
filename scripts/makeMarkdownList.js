@@ -3,6 +3,7 @@ const paths = require('../config/paths');
 const fs = require('fs-extra');
 
 module.exports = async (outputFolder) => {
+  await fs.writeFile(`${outputFolder}/markdown/readme.md`, await fs.readFile(`${await fs.realpath(process.cwd())}/README.md`));
   const markdownFolderPath = `${paths.appPublic}/markdown`;
   const fileList = await fs.readdir(markdownFolderPath);
   const resultArray = [];
