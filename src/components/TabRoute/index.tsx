@@ -27,17 +27,21 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
     }
     return result;
   }
-  public render() {
+  private handleLinkClick = (e: React.MouseEvent) => {
     const { components } = this.props;
     const matchIndex = this.findMatchIndex();
     if (components[matchIndex].documentTitle) {
       document.title = components[matchIndex].documentTitle;
     }
+  }
+  public render() {
+    const { components } = this.props;
+    const matchIndex = this.findMatchIndex();
     return (
       <div className={style.tabContainer}>
         <Tabs activeKey={matchIndex.toString()} className={style.tabs}>
           {components.map(({ tabName, path }, index) => tabName && (
-            <TabPane tab={<NavLink to={path} className={style.tab}>{tabName}</NavLink>} key={index.toString()} />
+            <TabPane tab={<NavLink to={path} className={style.tab} onClick={this.handleLinkClick}>{tabName}</NavLink>} key={index.toString()} />
           ))}
         </Tabs>
         <div className={style.tabRouteContentWrapper}>

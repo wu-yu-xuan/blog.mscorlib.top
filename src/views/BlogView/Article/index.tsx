@@ -29,7 +29,9 @@ export default class Article extends React.Component<RouteComponentProps<{ title
 
   };
   public async componentDidMount() {
-    const response = await fetch(`/markdown/${this.props.match.params.title}.md`);
+    const { title } = this.props.match.params;
+    document.title = `${title} - wyx's blog`;
+    const response = await fetch(`/markdown/${title}.md`);
     if (!response.ok) {
       this.setState({
         markdown: '# error, request timed out'
