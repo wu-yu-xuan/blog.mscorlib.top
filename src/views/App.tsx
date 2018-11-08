@@ -10,8 +10,8 @@ import './style.scss';
 
 export default class App extends React.Component {
   private tabRouteComponents: TabRouteElement[] = [
-    { path: '/blog', tabName: 'Blog', documentTitle: `wyx's blog`, Component: BlogView },
-    { path: '/markdonwn', tabName: 'Markdown', documentTitle: `wyx's markdown playground`, Component: MarkdownView }
+    { path: '/blog', tabName: 'Blog', Component: BlogView },
+    { path: '/markdonwn', tabName: 'Markdown', Component: MarkdownView }
   ];
   public render() {
     return (

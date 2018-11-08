@@ -10,7 +10,6 @@ const { TabPane } = Tabs;
 export interface TabRouteElement {
   path: string;
   tabName: string;
-  documentTitle?: string;
   Component: React.ComponentType
 }
 
@@ -27,13 +26,6 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
     }
     return result;
   }
-  private handleLinkClick = (e: React.MouseEvent) => {
-    const { components } = this.props;
-    const matchIndex = this.findMatchIndex();
-    if (components[matchIndex].documentTitle) {
-      document.title = components[matchIndex].documentTitle;
-    }
-  }
   public render() {
     const { components } = this.props;
     const matchIndex = this.findMatchIndex();
@@ -41,12 +33,12 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
       <div className={style.tabContainer}>
         <Tabs activeKey={matchIndex.toString()} className={style.tabs}>
           {components.map(({ tabName, path }, index) => tabName && (
-            <TabPane tab={<NavLink to={path} className={style.tab} onClick={this.handleLinkClick}>{tabName}</NavLink>} key={index.toString()} />
+            <TabPane tab={<NavLink to={path} className={style.tab}>{tabName}</NavLink>} key={index.toString()} />
           ))}
         </Tabs>
         <div className={style.tabRouteContentWrapper}>
           {components.map(({ Component }, index) => Component && (
-            <CSSTransition in={index === matchIndex} timeout={300} key={index} mountOnEnter={true} classNames={{
+            <CSSTransition in={index === matchIndex} timeout={300} key={index} mountOnEnter={true} unmountOnExit={true} classNames={{
               enterActive: style.enterActive,
               enter: style.enter,
               exitActive: style.exitActive,

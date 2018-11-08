@@ -21,6 +21,7 @@ export default class BlogList extends React.Component<{}, BlogListState> {
     };
   }
   public async componentDidMount() {
+    document.title = `wyx's blog`;
     const response = await fetch('/markdown/list.json');
     if (!response.ok) {
       this.setState({
@@ -39,7 +40,7 @@ export default class BlogList extends React.Component<{}, BlogListState> {
   public render() {
     return (
       <div className={style.blogListContainer} >
-        {this.state.blogSummarys.map((blogSummary, key) => <BlogListItem {...blogSummary} key={key} />)}
+        {this.state.blogSummarys.sort((a, b) => b.modifyTime - a.modifyTime).map((blogSummary, key) => <BlogListItem {...blogSummary} key={key} />)}
       </div>
     )
   }

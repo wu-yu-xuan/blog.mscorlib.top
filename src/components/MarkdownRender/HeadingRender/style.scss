@@ -20,6 +20,7 @@
   .h#{$depth} {
     font-size: $font-size-base + (7 - $depth) * 2px;
     line-height: $font-size-base + (7 - $depth) * 2px;
+    font-weight: 400 + (6 - $depth) * 100
   }
 }
 

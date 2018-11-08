@@ -13,6 +13,9 @@ export default class MarkdownView extends React.PureComponent<{}, { editorState:
   private handleChange = (editorState: EditorState) => {
     this.setState({ editorState });
   }
+  public componentDidMount() {
+    document.title = `wyx's markdown playground`;
+  }
   public render() {
     return (
       <section className={style.flex}>
