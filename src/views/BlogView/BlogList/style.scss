@@ -6,11 +6,16 @@
 
 .blog-list-item-container {
   height: 100px;
-  width: 45%;
   margin: 1px 1px 20px 1px;
   transition: .3s;
   box-shadow: 0 1px 2px $border-color-base;
   border-radius: $border-radius-base;
+  @include width-mobile {
+    width: 90%;
+  }
+  @include width-pc {
+    width: 45%;
+  }
   &:hover {
     box-shadow: 0 4px 8px $border-color-base;
   }

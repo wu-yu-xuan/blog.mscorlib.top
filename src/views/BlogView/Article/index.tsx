@@ -55,9 +55,9 @@ export default class Article extends React.Component<RouteComponentProps<{ title
     return (
       <>
         <Skeleton loading={loading} active={true} children={false} title={false} paragraph={{ rows: 6 }} />
-        <div hidden={loading} className={classNames({ [style.article]: !loading })}>
+        <article hidden={loading} className={classNames({ [style.article]: !loading })}>
           <MarkdownRender source={markdown} onDidUpdate={this.handleMarkdownRenderUpdate} />
-        </div>
+        </article>
       </>
     )
   }

@@ -5,14 +5,17 @@ import HtmlRender from '../HtmlRender';
 
 export const renderText = (text: string): React.ReactNode => {
   if (text.includes('\n')) {
-    return text.split('\n').map((value, index) => {
-      return (
-        <React.Fragment key={index}>
-          {renderText(value)}
-          {index !== text.length - 1 && value.match(/.+ {2,}$/) && <br />}
-        </React.Fragment>
-      )
-    });
+    return renderText(text.replace(/\n/g, ' '));
+  }
+  const breakEnd = text.match(/^(.+) {2,}$/);
+  if (breakEnd) {
+    const [, textLeft] = breakEnd;
+    return (
+      <>
+        {renderText(textLeft)}
+        <br />
+      </>
+    )
   }
   const titleImgLink = text.match(/\[!\[(.+?)\]\((.+?)\)\]\((.+?)\)/);
   if (titleImgLink) {
@@ -179,6 +182,8 @@ export const renderText = (text: string): React.ReactNode => {
 
 export default class TextRender extends React.PureComponent<Tokens.Text>{
   public render() {
-    return renderText(this.props.text);
+    return (
+      <>{renderText(this.props.text)} </>
+    );
   }
 }

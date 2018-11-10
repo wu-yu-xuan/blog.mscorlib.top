@@ -1,0 +1,14 @@
+// ipad's width is 768px
+$width-breakpoint: 768px;
+
+@mixin width-pc {
+  @media screen and (min-width: $width-breakpoint){
+    @content
+  }
+}
+
+@mixin width-mobile {
+  @media screen and (max-width: $width-breakpoint - 1px){
+    @content
+  }
+}
