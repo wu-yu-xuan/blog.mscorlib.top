@@ -3,7 +3,6 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { Tabs } from 'antd';
 import { NavLink } from 'react-router-dom';
 import * as style from './style.scss';
-import { CSSTransition } from 'react-transition-group';
 
 const { TabPane } = Tabs;
 
@@ -32,24 +31,12 @@ export default withRouter(class TabRoute extends React.Component<RouteComponentP
     return (
       <div className={style.tabContainer}>
         <Tabs activeKey={matchIndex.toString()} className={style.tabs}>
-          {components.map(({ tabName, path }, index) => tabName && (
-            <TabPane tab={<NavLink to={path} className={style.tab}>{tabName}</NavLink>} key={index.toString()} />
+          {components.map(({ tabName, Component, path }, index) => tabName && (
+            <TabPane tab={<NavLink to={path} className={style.tab}>{tabName}</NavLink>} key={index.toString()} >
+              <Component />
+            </TabPane>
           ))}
         </Tabs>
-        <div className={style.tabRouteContentWrapper}>
-          {components.map(({ Component }, index) => Component && (
-            <CSSTransition in={index === matchIndex} timeout={300} key={index} mountOnEnter={true} unmountOnExit={true} classNames={{
-              enterActive: style.enterActive,
-              enter: style.enter,
-              exitActive: style.exitActive,
-              exitDone: style.exitDone
-            }}>
-              <div className={style.tabRouteContent}>
-                <Component />
-              </div>
-            </CSSTransition>
-          ))}
-        </div>
       </div>
     )
   }

@@ -6,7 +6,6 @@ import TabRoute, { TabRouteElement } from '../components/TabRoute';
 import Corner from './Corner';
 import BlogView from './BlogView';
 import MarkdownView from './MarkdownView';
-import './style.scss';
 
 export default class App extends React.Component {
   private tabRouteComponents: TabRouteElement[] = [
