@@ -2,6 +2,9 @@
   animation-name: fade-in;
   animation-timing-function: ease-out;
   animation-duration: .3s;
+  @include width-pc {
+    width: 90%;
+  }
 }
 
 @keyframes fade-in {
@@ -13,4 +16,16 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.anchor {
+  width: 10%;
+  padding-top: 50px;
+  @include width-mobile {
+    display: none;
+  }
+}
+
+.article-container {
+  display: flex;
 }
