@@ -129,7 +129,7 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const complexHtml = text.match(/(<.+?>.*?<\/.+?>)/);
+  const complexHtml = text.match(/(<(.+?)>.*?<\/\2>)/);
   if (complexHtml) {
     const [match] = complexHtml;
     const { index } = complexHtml;
