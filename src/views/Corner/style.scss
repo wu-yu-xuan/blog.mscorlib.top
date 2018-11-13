@@ -7,6 +7,9 @@
   height: $container-size;
   width: $container-size;
   z-index: 10;
+  @include width-mobile {
+    display: none;
+  }
   &:hover {
     .mask {
       transform: rotate3d(0, 1, 0, 180deg) rotate(45deg);

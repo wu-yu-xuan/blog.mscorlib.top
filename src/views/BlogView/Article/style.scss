@@ -5,6 +5,9 @@
   @include width-pc {
     width: 90%;
   }
+  @include width-mobile {
+    width: 100%;
+  }
 }
 
 @keyframes fade-in {
