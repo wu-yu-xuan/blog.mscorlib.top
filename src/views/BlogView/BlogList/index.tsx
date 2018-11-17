@@ -33,7 +33,6 @@ export default class BlogList extends React.Component<{}, BlogListState> {
   }
   private handleRadioChange = (e: RadioChangeEvent) => this.setState({ sortBy: e.target.value })
   public async componentDidMount() {
-    document.title = `wyx's blog`;
     const response = await fetch('/markdown/list.json');
     if (!response.ok) {
       this.setState({

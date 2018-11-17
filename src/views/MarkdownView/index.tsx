@@ -16,9 +16,6 @@ export default class MarkdownView extends React.PureComponent<{}, { editorState:
     this.setState({ editorState });
   }
   private handleClick = (e: React.MouseEvent) => this.editorRef.current.focus()
-  public componentDidMount() {
-    document.title = `wyx's markdown playground`;
-  }
   public render() {
     return (
       <section className={style.flex}>

@@ -9,8 +9,8 @@ import MarkdownView from './MarkdownView';
 
 export default class App extends React.Component {
   private tabRouteComponents: TabRouteElement[] = [
-    { path: '/blog', tabName: 'Blog', Component: BlogView },
-    { path: '/markdonwn', tabName: 'Markdown', Component: MarkdownView }
+    { path: '/blog', tabName: 'Blog', title: 'wyx\'s blog', Component: BlogView },
+    { path: '/markdonwn', tabName: 'Markdown', title: 'wyx\'s markdown playground', Component: MarkdownView }
   ];
   public render() {
     return (
