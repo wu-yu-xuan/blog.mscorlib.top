@@ -12,7 +12,7 @@ export default class BlogListItem extends React.PureComponent<BlogSummary>{
     const { title, birthTime, modifyTime } = this.props;
     return (
       <div className={style.blogListItemContainer}>
-        <Link to={`/blog/${title}`} className={style.title} title={title}>
+        <Link to={`/blog/${title.replace(/ /g, '-')}`} className={style.title} title={title}>
           {title}
         </Link>
         <div className={style.footer}>
