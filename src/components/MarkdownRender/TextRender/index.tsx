@@ -17,6 +17,44 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
+  const strongAndEm = text.match(/([*_])([*_])([*_])(.+?)\3\2\1/);
+  if (strongAndEm) {
+    const [match, , , , value] = strongAndEm;
+    const { index } = strongAndEm;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <strong className={style.strong}>
+          <em className={style.em}>{renderText(value)}</em>
+        </strong>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const strong = text.match(/([*_])([*_])(.+?)\2\1/);
+  if (strong) {
+    const [match, , , value] = strong;
+    const { index } = strong;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <strong className={style.strong}>{renderText(value)}</strong>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
+  const em = text.match(/([*_])(.+?)\1/);
+  if (em) {
+    const [match, , value] = em;
+    const { index } = em;
+    return (
+      <>
+        {renderText(text.slice(0, index))}
+        <em className={style.em}>{renderText(value)}</em>
+        {renderText(text.slice(index + match.length))}
+      </>
+    )
+  }
   const titleImgLink = text.match(/\[!\[(.+?)\]\((.+?)\)\]\((.+?)\)/);
   if (titleImgLink) {
     const [match, alt, imgSrc, target] = titleImgLink;
@@ -75,44 +113,6 @@ export const renderText = (text: string): React.ReactNode => {
       <>
         {renderText(text.slice(0, index))}
         <a className={style.link} href={target} title={target}>{renderText(value)}</a>
-        {renderText(text.slice(index + match.length))}
-      </>
-    )
-  }
-  const strongAndEm = text.match(/[*_]{3}(.+?)[*_]{3}/);
-  if (strongAndEm) {
-    const [match, value] = strongAndEm;
-    const { index } = strongAndEm;
-    return (
-      <>
-        {renderText(text.slice(0, index))}
-        <strong className={style.strong}>
-          <em className={style.em}>{value}</em>
-        </strong>
-        {renderText(text.slice(index + match.length))}
-      </>
-    )
-  }
-  const strong = text.match(/[*_]{2}(.+?)[*_]{2}/);
-  if (strong) {
-    const [match, value] = strong;
-    const { index } = strong;
-    return (
-      <>
-        {renderText(text.slice(0, index))}
-        <strong className={style.strong}>{value}</strong>
-        {renderText(text.slice(index + match.length))}
-      </>
-    )
-  }
-  const em = text.match(/[*_](.+?)[*_]/);
-  if (em) {
-    const [match, value] = em;
-    const { index } = em;
-    return (
-      <>
-        {renderText(text.slice(0, index))}
-        <em className={style.em}>{value}</em>
         {renderText(text.slice(index + match.length))}
       </>
     )
