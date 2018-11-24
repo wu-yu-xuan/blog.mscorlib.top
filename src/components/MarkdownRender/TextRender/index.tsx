@@ -81,14 +81,14 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const img = text.match(/!\[(.+?)\]\((.+?)\)/)
+  const img = text.match(/!\[(.+?)?\]\((.+?)\)/)
   if (img) {
     const [match, alt, target] = img;
     const { index } = img;
     return (
       <>
         {renderText(text.slice(0, index))}
-        <img className={style.img} src={target} title={alt} alt={alt} />
+        <img className={style.img} src={target} title={alt||target} alt={alt||target} />
         {renderText(text.slice(index + match.length))}
       </>
     )
