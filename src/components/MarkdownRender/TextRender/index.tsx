@@ -17,9 +17,9 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const strongAndEm = text.match(/([*_])([*_])([*_])(.+?)\3\2\1/);
+  const strongAndEm = text.match(/\*{3}(.+?)\*{3}/);
   if (strongAndEm) {
-    const [match, , , , value] = strongAndEm;
+    const [match, value] = strongAndEm;
     const { index } = strongAndEm;
     return (
       <>
@@ -31,9 +31,9 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const strong = text.match(/([*_])([*_])(.+?)\2\1/);
+  const strong = text.match(/\*{2}(.+?)\*{2}/);
   if (strong) {
-    const [match, , , value] = strong;
+    const [match, value] = strong;
     const { index } = strong;
     return (
       <>
@@ -43,9 +43,9 @@ export const renderText = (text: string): React.ReactNode => {
       </>
     )
   }
-  const em = text.match(/([*_])(.+?)\1/);
+  const em = text.match(/\*(.+?)\*/);
   if (em) {
-    const [match, , value] = em;
+    const [match, value] = em;
     const { index } = em;
     return (
       <>
