@@ -203,3 +203,6 @@ Flexbox的一个关键特性是能够设置flex元素沿主轴方向和交叉轴
 <iframe src="https://mdn.github.io/css-examples/flexbox/basics/justify-content.html" height="380" class="live-sample-frame" frameborder="0" width="100%"></iframe>
 
 在以后的文章中，为了更好的理解它们怎么使用，我们会更深入的探索这些属性。然而，这些简单的例子对大多数应用都很有帮助。
+
+## Reference From
+[flex 布局的基本概念 - CSS：层叠样式表 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
