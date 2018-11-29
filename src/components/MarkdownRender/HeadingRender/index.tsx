@@ -22,7 +22,7 @@ export default class HeadingRender extends React.PureComponent<Tokens.Heading>{
             <Icon type="link" />
           </a>
         </Tag>
-        {depth === 1 && <HrRender type="hr" />}
+        {depth === 1 && <HrRender />}
       </BlockWrapper>
     )
   }

@@ -15,7 +15,7 @@ import TableRender from './TableRender';
 interface MarkdownRenderProps {
   source: string;
   heading?: React.ComponentType<Tokens.Heading>;
-  hr?: React.ComponentType<Tokens.Hr>;
+  hr?: React.ComponentType;
   paragraph?: React.ComponentType<Tokens.Paragraph>;
   text?: React.ComponentType<Tokens.Text>;
   html?: React.ComponentType<Tokens.HTML>;
