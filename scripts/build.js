@@ -99,13 +99,14 @@ measureFileSizesBeforeBuild(paths.appBuild)
       process.exit(1);
     }
   )
-  .then(async () => {
-    await fs.writeFile(`${paths.appBuild}/404.html`, await fs.readFile(`${paths.appBuild}/index.html`));
-    console.log('404 page done');
-    await fs.writeFile(`${paths.appBuild}/README.md`, await fs.readFile(`${await fs.realpath(process.cwd())}/README.md`));
-    console.log('README.md done');
-  }).then(async () => {
-    await makeMarkdownList(paths.appBuild);
+  .then(() => {
+    Promise.all([(async () => {
+      await fs.writeFile(`${paths.appBuild}/404.html`, await fs.readFile(`${paths.appBuild}/index.html`));
+      console.log('404 page done');
+    })(), (async () => {
+      await fs.writeFile(`${paths.appBuild}/README.md`, await fs.readFile(`${await fs.realpath(process.cwd())}/README.md`));
+      console.log('README.md done');
+    })(), makeMarkdownList(paths.appBuild)])
   });
 
 // Create the production build and print the deployment instructions.

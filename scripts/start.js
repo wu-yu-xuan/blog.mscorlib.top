@@ -100,7 +100,7 @@ choosePort(HOST, DEFAULT_PORT)
       });
     });
   })
-  .then(async () => await makeMarkdownList(paths.appPublic))
+  .then(() => makeMarkdownList(paths.appPublic))
   .catch(err => {
     if (err && err.message) {
       console.log(err.message);
