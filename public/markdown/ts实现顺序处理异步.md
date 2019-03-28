@@ -32,8 +32,8 @@ default: 1010.684ms
 default: 3001.969ms
 ```
 
-好吧,这会不会太简单了.
-如果不用ES7的骚气语法,改怎么实现呢?
+好吧,这会不会太简单了.  
+如果不用ES7的骚气语法,该怎么实现呢?
 
 ```typescript
 async function each(promises: Array<Promise<any> | PromiseLike<any>>) {
