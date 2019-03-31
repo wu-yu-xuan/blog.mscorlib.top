@@ -6,6 +6,16 @@ import keyWords from './keyWords';
 
 export default class CodeRender extends React.PureComponent<Tokens.Code>{
   private renderCode = (code: string): React.ReactNode => {
+    const mutilCommentMatch = code.match(/(\/\*[\w\W]*\*\/)/);
+    if (mutilCommentMatch) {
+      return (
+        <>
+          {this.renderCode(code.slice(0, mutilCommentMatch.index))}
+          <span className={style.comment}>{mutilCommentMatch[0]}</span>
+          {this.renderCode(code.slice(mutilCommentMatch.index + mutilCommentMatch[0].length))}
+        </>
+      )
+    }
     const commentMatch = code.match(/(\/\/.*)$/m);
     if (commentMatch) {
       return (
