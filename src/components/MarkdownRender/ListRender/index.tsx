@@ -6,22 +6,20 @@ export interface ListRenderProps {
   ordered: boolean;
   start?: number | string;
   type: string;
+  children: React.ReactNode;
 }
 
-export default class ListRender extends React.PureComponent<ListRenderProps>{
-  public render() {
-    const { ordered, start, children } = this.props;
-    if (ordered) {
-      return (
-        <BlockWrapper>
-          <ol start={Number(start)} className={list}>{children}</ol>
-        </BlockWrapper>
-      )
-    }
+export default React.memo(function ListRender({ ordered, start, children }: ListRenderProps) {
+  if (ordered) {
     return (
       <BlockWrapper>
-        <ul className={list}>{children}</ul>
+        <ol start={Number(start)} className={list}>{children}</ol>
       </BlockWrapper>
     )
   }
-}
+  return (
+    <BlockWrapper>
+      <ul className={list}>{children}</ul>
+    </BlockWrapper>
+  )
+});

@@ -26,22 +26,12 @@ class MyEvent {
     return (this.listenerMap.get(type) || []).map(l => l.listener);
   }
   public trigger(type: string, ...args: any[]) {
-    this.listenerMap.set(type, (this.listenerMap.get(type) || []).reduce<IListener[]>((acc, cur) => {
-      cur.listener(...args);
-      if (!cur.options.once) {
-        acc.push(cur);
-      }
-      return acc;
-    }, []));
+    const old = this.listenerMap.get(type) || [];
+    old.forEach(v => v.listener(...args));
+    this.listenerMap.set(type, old.filter(v => !v.options.once));
   }
   public remove(type: string, listener: (...args: any[]) => void) {
-    const result = this.listenerMap.get(type) || [];
-    const index = result.findIndex(l => l.listener === listener);
-    if (index === -1) {
-      return;
-    }
-    result.splice(index, 1);
-    this.listenerMap.set(type, result);
+    this.listenerMap.set(type, (this.listenerMap.get(type) || []).filter(v => v.listener === listener));
   }
   public removeAll(type: string) {
     this.listenerMap.set(type, []);
@@ -49,14 +39,11 @@ class MyEvent {
 }
 
 const e = new MyEvent();
-function t(sth: string) {
-  console.log(sth);
-}
-e.on('wyx', t);
+e.on('wyx', console.log);
 e.once('wyx', () => console.log('222'));
 e.trigger('wyx', '111');
 e.trigger('wyx', '333');
-e.remove('wyx', t);
+e.remove('wyx', console.log);
 e.trigger('wyx');
 ```
 

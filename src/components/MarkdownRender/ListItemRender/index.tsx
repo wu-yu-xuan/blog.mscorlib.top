@@ -6,15 +6,13 @@ export interface ListItemRenderProps {
   checked?: boolean;
   task: boolean;
   type: string;
+  children: React.ReactNode;
 }
 
-export default class ListItemRender extends React.PureComponent<ListItemRenderProps>{
-  public render() {
-    const { checked, task } = this.props;
-    return (
-      <li>
-        {task ? <Checkbox checked={checked} className={style.checkbox}>{this.props.children}</Checkbox> : this.props.children}
-      </li>
-    )
-  }
-}
+export default React.memo(function ListItemRender({ checked, task, children }: ListItemRenderProps) {
+  return (
+    <li>
+      {task ? <Checkbox checked={checked} className={style.checkbox}>{children}</Checkbox> : children}
+    </li>
+  )
+});

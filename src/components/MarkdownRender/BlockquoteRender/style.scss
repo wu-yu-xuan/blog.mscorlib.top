@@ -3,12 +3,15 @@
   color: #6a737d;
   background-color: rgba(224, 224, 224, .15);
   margin: 0;
+
   @include width-pc {
     padding: .2em 1em;
   }
+
   @include width-mobile {
     padding: .2em .5em;
   }
+
   ol,
   ul {
     margin: 0;

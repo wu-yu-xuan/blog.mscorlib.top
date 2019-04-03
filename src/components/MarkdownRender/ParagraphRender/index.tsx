@@ -4,12 +4,10 @@ import * as style from './style.scss';
 import { renderText } from '../TextRender';
 import BlockWrapper from '../BlockWrapper';
 
-export default class ParagraphRender extends React.PureComponent<Tokens.Paragraph>{
-  public render() {
-    return (
-      <BlockWrapper>
-        <p className={style.p}>{renderText(this.props.text)}</p>
-      </BlockWrapper>
-    )
-  }
-}
+export default React.memo(function ParagraphRender({ text }: Tokens.Paragraph) {
+  return (
+    <BlockWrapper>
+      <p className={style.p}>{renderText(text)}</p>
+    </BlockWrapper>
+  )
+});
