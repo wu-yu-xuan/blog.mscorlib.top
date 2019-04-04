@@ -4,28 +4,19 @@ import MarkdownRender from '../../components/MarkdownRender';
 import { EditorState, Editor } from 'draft-js';
 import * as classNames from 'classnames';
 
-export default class MarkdownView extends React.PureComponent<{}, { editorState: EditorState }> {
-  private editorRef = React.createRef<Editor>();
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      editorState: EditorState.createEmpty()
-    };
-  }
-  private handleChange = (editorState: EditorState) => {
-    this.setState({ editorState });
-  }
-  private handleClick = (e: React.MouseEvent) => this.editorRef.current.focus()
-  public render() {
-    return (
-      <section className={style.flex}>
-        <section className={classNames(style.frame, style.text)} onClick={this.handleClick} >
-          <Editor editorState={this.state.editorState} onChange={this.handleChange} stripPastedStyles={true} ref={this.editorRef} />
-        </section>
-        <section className={style.frame}>
-          <MarkdownRender source={this.state.editorState.getCurrentContent().getPlainText()} />
-        </section>
+export default React.memo(function MarkdownView() {
+  const editorRef = React.useRef<Editor>(null);
+  const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
+  const handleClick = React.useCallback((e: React.MouseEvent) => editorRef.current.focus(), [editorRef.current]);
+
+  return (
+    <section className={style.flex}>
+      <section className={classNames(style.frame, style.text)} onClick={handleClick} >
+        <Editor editorState={editorState} onChange={setEditorState} stripPastedStyles={true} ref={editorRef} />
       </section>
-    )
-  }
-}
+      <section className={style.frame}>
+        <MarkdownRender source={editorState.getCurrentContent().getPlainText()} />
+      </section>
+    </section>
+  )
+})

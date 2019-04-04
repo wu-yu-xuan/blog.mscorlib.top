@@ -5,6 +5,7 @@
   height: 90vh;
   width: 100%;
   padding: 1px;
+
   .frame {
     overflow: auto;
     width: 50%;
@@ -13,7 +14,8 @@
     padding: 3px;
     white-space: pre-wrap;
   }
-  .text{
+
+  .text {
     cursor: text;
   }
 }
