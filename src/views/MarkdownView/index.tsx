@@ -15,10 +15,9 @@ export default React.memo(function MarkdownView() {
     <section className={style.flex}>
       <CodeRender
         className={classNames(style.frame, style.text)}
-        autoFocus={true}
         value={code}
         onChange={setCodeMirror}
-        options={{ mode: 'markdown', lineWrapping: true }}
+        options={{ mode: 'markdown', lineWrapping: true, autofocus: true }}
       />
       <section className={style.frame}>
         <MarkdownRender source={code} />

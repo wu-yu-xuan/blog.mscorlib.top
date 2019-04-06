@@ -4,13 +4,12 @@ import 'codemirror/lib/codemirror.css';
 
 interface ICodeRender {
   className: string;
-  autoFocus: boolean;
   options: CodeMirror.EditorConfiguration;
   value: string;
   onChange: (value: string) => void;
 }
 
-export default function CodeRender({ className, autoFocus, options, value, onChange }: ICodeRender) {
+export default function CodeRender({ className, options, value, onChange }: ICodeRender) {
   const textareaRef = React.useRef<HTMLTextAreaElement>();
   const codemirrorRef = React.useRef<CodeMirror.EditorFromTextArea>();
   React.useEffect(() => {
@@ -20,7 +19,7 @@ export default function CodeRender({ className, autoFocus, options, value, onCha
     return () => {
       codemirrorRef.current.toTextArea();
     }
-  }, [textareaRef.current]);
+  }, []);
   React.useEffect(() => {
     // prevent cursor or focus lost
     if (codemirrorRef.current && codemirrorRef.current.getValue() !== value) {
@@ -34,7 +33,7 @@ export default function CodeRender({ className, autoFocus, options, value, onCha
         autoComplete="off"
         autoCapitalize="off"
         autoCorrect="off"
-        autoFocus={autoFocus}
+        autoFocus={!!options.autofocus}
       />
     </div>
   )
