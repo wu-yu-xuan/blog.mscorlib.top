@@ -6,17 +6,14 @@ import 'codemirror/mode/markdown/markdown';
 import CodeRender from './CodeRender';
 
 export default React.memo(function MarkdownView() {
-  const [code, setCode] = React.useState('');
-
-  // prevent console warning
-  const setCodeMirror = React.useCallback((newCodeMirror) => setCode(newCodeMirror), []);
+  const [code, setCode] = useLocalStorage('markdown');
 
   return (
     <section className={style.flex}>
       <CodeRender
         className={classNames(style.frame, style.text)}
         value={code}
-        onChange={setCodeMirror}
+        onChange={setCode}
         options={{ mode: 'markdown', lineWrapping: true, autofocus: true }}
       />
       <section className={style.frame}>
@@ -25,3 +22,25 @@ export default React.memo(function MarkdownView() {
     </section>
   )
 })
+
+function useLocalStorage(key: string): [
+  string, (value: string) => void
+] {
+  const [localState, setLocalState] = React.useState(() => localStorage.getItem(key) || '');
+  const updateLocalState = React.useCallback((value: string) => {
+    setLocalState(value);
+    localStorage.setItem(key, value);
+  }, []);
+  React.useEffect(() => {
+    function syncStorage(e: StorageEvent) {
+      if (e.key === key) {
+        // 在同一个页面内发生的改变不会起作用——在相同域名下的其他页面（如一个新标签或 iframe）发生的改变才会起作用
+        // 所以,这里并不会递归
+        setLocalState(e.newValue);
+      }
+    }
+    window.addEventListener('storage', syncStorage);
+    return () => window.removeEventListener('storage', syncStorage)
+  }, []);
+  return [localState, updateLocalState];
+}
