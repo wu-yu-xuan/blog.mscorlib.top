@@ -1,21 +1,27 @@
 import * as React from 'react';
 import * as style from './style.scss';
 import MarkdownRender from '../../components/MarkdownRender';
-import { EditorState, Editor } from 'draft-js';
 import * as classNames from 'classnames';
+import 'codemirror/mode/markdown/markdown';
+import CodeRender from './CodeRender';
 
 export default React.memo(function MarkdownView() {
-  const editorRef = React.useRef<Editor>(null);
-  const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
-  const handleClick = React.useCallback((e: React.MouseEvent) => editorRef.current.focus(), [editorRef.current]);
+  const [code, setCode] = React.useState('');
+
+  // prevent console warning
+  const setCodeMirror = React.useCallback((newCodeMirror) => setCode(newCodeMirror), []);
 
   return (
     <section className={style.flex}>
-      <section className={classNames(style.frame, style.text)} onClick={handleClick} >
-        <Editor editorState={editorState} onChange={setEditorState} stripPastedStyles={true} ref={editorRef} />
-      </section>
+      <CodeRender
+        className={classNames(style.frame, style.text)}
+        autoFocus={true}
+        value={code}
+        onChange={setCodeMirror}
+        options={{ mode: 'markdown', lineWrapping: true }}
+      />
       <section className={style.frame}>
-        <MarkdownRender source={editorState.getCurrentContent().getPlainText()} />
+        <MarkdownRender source={code} />
       </section>
     </section>
   )

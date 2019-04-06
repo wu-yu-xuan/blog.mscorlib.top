@@ -18,4 +18,19 @@
   .text {
     cursor: text;
   }
+
+  :global {
+    .CodeMirror {
+      height: 100%;
+    }
+
+    .CodeMirror-selected,
+    .CodeMirror-focused .CodeMirror-selected,
+    .CodeMirror-line::selection,
+    .CodeMirror-line>span::selection,
+    .CodeMirror-line>span>span::selection {
+      background: #1890ff;
+      color: #fff;
+    }
+  }
 }

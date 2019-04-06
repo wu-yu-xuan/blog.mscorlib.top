@@ -18,7 +18,7 @@ export interface BlogSummary {
   birthTime: number;
 }
 
-export default React.memo(function BlogList() {
+export default function BlogList() {
   const blogSummarys = useBlogSummarys();
   const [sortBy, handleRadioChange] = useSortBy();
 
@@ -40,7 +40,7 @@ export default React.memo(function BlogList() {
       </div>
     </>
   )
-})
+}
 
 function useBlogSummarys() {
   const [blogSummarys, setBlogSummarys] = React.useState<BlogSummary[]>([]);
