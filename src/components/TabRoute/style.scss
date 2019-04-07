@@ -7,36 +7,6 @@
   display: block;
 }
 
-.tab-route-content-wrapper {
-  position: relative;
-  overflow: visible;
-}
-
-.tab-route-content {
-  width: 100%;
-  position: absolute;
-  &.enter {
-    transform: translateX(20%);
-    opacity: .3;
-  }
-  &.enter-active {
-    transform: translateX(0);
-    opacity: 1;
-    transition: .3s ease-out;
-  }
-  &.exit-active {
-    transform: translateX(-20%);
-    opacity: 0;
-    transition: .3s ease-in;
-    z-index: -1;
-  }
-  &.exit-done {
-    transform: translateX(-20%);
-    opacity: 0;
-    z-index: -1;
-  }
-}
-
 .tabs {
   :global {
     .ant-tabs-tab {
