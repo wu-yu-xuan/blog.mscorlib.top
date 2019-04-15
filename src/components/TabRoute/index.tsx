@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router';
 import { Tabs } from 'antd';
 import { NavLink } from 'react-router-dom';
 import * as style from './style.scss';
+import { useRouter } from './useRouter';
 
 const { TabPane } = Tabs;
 
@@ -17,13 +17,8 @@ export interface TabRouteProps {
   components: TabRouteElement[];
 }
 
-export default withRouter(function TabRoute({ location, components }: TabRouteProps & RouteComponentProps) {
-  const [activeKey, setActiveKey] = React.useState(() => (
-    Math.max(0, components.findIndex(({ path }) => !!location.pathname.match(new RegExp(`^${path}`, 'i')))).toString()
-  ));
-  React.useEffect(() => {
-    document.title = components[activeKey].title;
-  }, [activeKey]);
+export default function TabRoute({ components }: TabRouteProps) {
+  const [activeKey, setActiveKey] = useActiveKey(components);
   return (
     <div className={style.tabContainer}>
       <Tabs activeKey={activeKey} className={style.tabs} onChange={setActiveKey}>
@@ -35,4 +30,18 @@ export default withRouter(function TabRoute({ location, components }: TabRoutePr
       </Tabs>
     </div>
   )
-})
+}
+
+function useActiveKey(components: TabRouteElement[]): [
+  string,
+  React.Dispatch<React.SetStateAction<string>>
+] {
+  const { location } = useRouter();
+  const [activeKey, setActiveKey] = React.useState(() => (
+    Math.max(0, components.findIndex(({ path }) => !!location.pathname.match(new RegExp(`^${path}`, 'i')))).toString()
+  ));
+  React.useEffect(() => {
+    document.title = components[activeKey].title;
+  }, [activeKey]);
+  return [activeKey, setActiveKey];
+}
