@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tokens } from 'marked';
-import { renderText } from '../TextRender';
+import TextRender from '../TextRender';
 import BlockWrapper from '../BlockWrapper';
 import * as style from './style.scss';
 import { Icon } from 'antd';
@@ -15,7 +15,7 @@ export default React.memo(function HeadingRender({ depth, text }: Tokens.Heading
   return (
     <BlockWrapper>
       <Tag className={classNames(style.h, style[Tag])} id={id}>
-        {renderText(txt)}
+        <TextRender text={txt} />
         <a href={`#${id}`} className={style.link}>
           <Icon type="link" />
         </a>

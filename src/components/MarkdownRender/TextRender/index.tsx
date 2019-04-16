@@ -1,189 +1,157 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import { Tokens } from 'marked';
 import HtmlRender from '../HtmlRender';
+import RegJSXMap, { IRegJSXMap } from '../RegJSXMap';
 
-export const renderText = (text: string): React.ReactNode => {
-  if (text.includes('\n')) {
-    return renderText(text.replace(/\n/g, ' '));
-  }
-  const breakEnd = text.match(/^(.+) {2,}$/);
-  if (breakEnd) {
-    const [, textLeft] = breakEnd;
+const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>([
+  [/^(.+) {2,}$/, ([, textLeft]) => {
     return (
       <>
-        {renderText(textLeft)}
+        {RegJSXMap(textLeft, map)}
         <br />
       </>
     )
-  }
-  const strongAndEm = text.match(/\*{3}(.+?)\*{3}/);
-  if (strongAndEm) {
+  }], [/\*{3}(.+?)\*{3}/, strongAndEm => {
     const [match, value] = strongAndEm;
-    const { index } = strongAndEm;
+    const { index, input } = strongAndEm;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <strong className={style.strong}>
-          <em className={style.em}>{renderText(value)}</em>
+          <em className={style.em}>{RegJSXMap(value, map)}</em>
         </strong>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const strong = text.match(/\*{2}(.+?)\*{2}/);
-  if (strong) {
+  }], [/\*{2}(.+?)\*{2}/, strong => {
     const [match, value] = strong;
-    const { index } = strong;
+    const { index, input } = strong;
     return (
       <>
-        {renderText(text.slice(0, index))}
-        <strong className={style.strong}>{renderText(value)}</strong>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(0, index), map)}
+        <strong className={style.strong}>{RegJSXMap(value, map)}</strong>
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const em = text.match(/\*(.+?)\*/);
-  if (em) {
+  }], [/\*(.+?)\*/, em => {
     const [match, value] = em;
-    const { index } = em;
+    const { index, input } = em;
     return (
       <>
-        {renderText(text.slice(0, index))}
-        <em className={style.em}>{renderText(value)}</em>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(0, index), map)}
+        <em className={style.em}>{RegJSXMap(value, map)}</em>
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const titleImgLink = text.match(/\[!\[(.+?)\]\((.+?)\)\]\((.+?)\)/);
-  if (titleImgLink) {
+  }], [/\[!\[(.+?)\]\((.+?)\)\]\((.+?)\)/, titleImgLink => {
     const [match, alt, imgSrc, target] = titleImgLink;
-    const { index } = titleImgLink;
+    const { index, input } = titleImgLink;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <a className={style.link} href={target}>
           <img className={style.img} src={imgSrc} title={alt} alt={alt} />
         </a>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const titleImg = text.match(/!\[(.+?)\]\((.+?) +"(.*?)"\)/)
-  if (titleImg) {
+  }], [/!\[(.+?)\]\((.+?) +"(.*?)"\)/, titleImg => {
     const [match, alt, target, title] = titleImg;
-    const { index } = titleImg;
+    const { index, input } = titleImg;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <img className={style.img} src={target} title={title} alt={alt} />
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const img = text.match(/!\[(.+?)?\]\((.+?)\)/)
-  if (img) {
+  }], [/!\[(.+?)?\]\((.+?)\)/, img => {
     const [match, alt, target] = img;
-    const { index } = img;
+    const { index, input } = img;
     return (
       <>
-        {renderText(text.slice(0, index))}
-        <img className={style.img} src={target} title={alt||target} alt={alt||target} />
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(0, index), map)}
+        <img className={style.img} src={target} title={alt || target} alt={alt || target} />
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const titleLink = text.match(/\[(.+?)\]\((.+?) +"(.*?)"\)/);
-  if (titleLink) {
+  }], [/\[(.+?)\]\((.+?) +"(.*?)"\)/, titleLink => {
     const [match, value, target, title] = titleLink;
-    const { index } = titleLink;
+    const { index, input } = titleLink;
     return (
       <>
-        {renderText(text.slice(0, index))}
-        <a className={style.link} href={target} title={title}>{renderText(value)}</a>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(0, index), map)}
+        <a className={style.link} href={target} title={title}>{RegJSXMap(value, map)}</a>
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const link = text.match(/\[(.+?)\]\((.+?)\)/);
-  if (link) {
+  }], [/\[(.+?)\]\((.+?)\)/, link => {
     const [match, value, target] = link;
-    const { index } = link;
+    const { index, input } = link;
     return (
       <>
-        {renderText(text.slice(0, index))}
-        <a className={style.link} href={target} title={target}>{renderText(value)}</a>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(0, index), map)}
+        <a className={style.link} href={target} title={target}>{RegJSXMap(value, map)}</a>
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const code = text.match(/`(.+?)`/);
-  if (code) {
+  }], [/`(.+?)`/, code => {
     const [match, value] = code;
-    const { index } = code;
+    const { index, input } = code;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <code className={style.code}>{value}</code>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const complexHtml = text.match(/(<(.+?)>.*?<\/\2>)/);
-  if (complexHtml) {
+  }], [/(<(.+?)>.*?<\/\2>)/, complexHtml => {
     const [match] = complexHtml;
-    const { index } = complexHtml;
+    const { index, input } = complexHtml;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <HtmlRender text={match} type="html" pre={false} />
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const url = text.match(/<(.+?\..+?)>/);
-  if (url) {
+  }], [/<(.+?\..+?)>/, url => {
     const [match, value] = url;
-    const { index } = url;
+    const { index, input } = url;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <a className={style.link} title={value} href={value}>{value}</a>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const simpleHtml = text.match(/(<.+?\/?>)/);
-  if (simpleHtml) {
+  }], [/(<.+?\/?>)/, simpleHtml => {
     const [match] = simpleHtml;
-    const { index } = simpleHtml;
+    const { index, input } = simpleHtml;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <HtmlRender text={match} type="html" pre={false} />
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  const strikethrough = text.match(/~~(.+?)~~/);
-  if (strikethrough) {
+  }], [/~~(.+?)~~/, strikethrough => {
     const [match, value] = strikethrough;
-    const { index } = strikethrough;
+    const { index, input } = strikethrough;
     return (
       <>
-        {renderText(text.slice(0, index))}
+        {RegJSXMap(input.slice(0, index), map)}
         <del className={style.del}>{value}</del>
-        {renderText(text.slice(index + match.length))}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }
-  return text;
+  }], [/[\w\W]*/, ({ input }) => <span>{input}</span>]
+]);
+
+interface IText {
+  text: string;
 }
 
-export default class TextRender extends React.PureComponent<Tokens.Text>{
-  public render() {
-    return (
-      <>{renderText(this.props.text)} </>
-    );
-  }
+export default function TextRender({ text }: IText) {
+  return RegJSXMap(text.replace(/\n/g, ' '), map);
 }
