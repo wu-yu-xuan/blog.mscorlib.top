@@ -6,7 +6,7 @@
 
 ```typescript
 function format(num: number) {
-  return num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+  return num.toString().replace(/(\d)(?=(?:\d{3})+(\.\d*)?$)/g, '$1,');
 }
 ```
 
@@ -14,14 +14,14 @@ function format(num: number) {
 
 ```typescript
 function format(num: number) {
-  const str = num.toString();
+  const [str, decimal] = num.toString().split('.');
   let length = str.length;
   const arr = [];
   while (length > 0) {
     arr.unshift(str.slice(Math.max(length - 3, 0), length));
     length -= 3;
   }
-  return arr.join(',');
+  return decimal ? arr.join(',') + '.' + decimal : arr.join(',');
 }
 ```
 
