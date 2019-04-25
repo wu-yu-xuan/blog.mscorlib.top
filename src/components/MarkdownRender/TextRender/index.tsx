@@ -145,7 +145,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
         {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
-  }], [/[\w\W]*/, ({ input }) => <span>{input}</span>]
+  }], [/[\w\W]*/, ({ input }) => input && <span>{input}</span>]
 ]);
 
 interface IText {
