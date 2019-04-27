@@ -2,9 +2,11 @@
   animation-name: fade-in;
   animation-timing-function: ease-out;
   animation-duration: .3s;
+
   @include width-pc {
     width: 90%;
   }
+
   @include width-mobile {
     width: 100%;
   }
@@ -15,17 +17,10 @@
     opacity: 0;
     transform: translateY(100px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-.anchor {
-  width: 10%;
-  padding-top: 50px;
-  @include width-mobile {
-    display: none;
   }
 }
 

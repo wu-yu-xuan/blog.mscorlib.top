@@ -1,0 +1,8 @@
+.anchor {
+  width: 10%;
+  padding-top: 50px;
+
+  @include width-mobile {
+    display: none;
+  }
+}

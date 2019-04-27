@@ -1,95 +1,79 @@
 import * as React from 'react';
 import { RouteComponentProps, Redirect } from 'react-router';
 import MarkdownRender from 'src/components/MarkdownRender';
-import { Skeleton, Anchor } from 'antd';
+import { Skeleton } from 'antd';
 import * as classNames from 'classnames';
 import * as style from './style.scss';
+import Catalog, { Heading } from './Catalog';
 
-const { Link } = Anchor;
+export default function Article({ match }: RouteComponentProps<{ title: string }>) {
+  const articleRef = React.useRef<HTMLElement>();
+  const [markdown, error] = useMarkdown(match.params.title);
+  const [headings, loading, handleMarkdownRenderUpdate] = useHeadings(articleRef.current);
+  if (error) {
+    return <Redirect to='/blog' />; 
+  }
+  return (
+    <div className={style.articleContainer}>
+      <Skeleton loading={loading} active={true} children={false} title={false} paragraph={{ rows: 6 }} />
+      <article ref={articleRef} hidden={loading} className={classNames({ [style.article]: !loading })}>
+        <MarkdownRender source={markdown} onDidUpdate={handleMarkdownRenderUpdate} />
+      </article>
+      <Catalog headings={headings} />
+    </div>
+  )
 
-interface Heading {
-  id: string;
-  text: string;
-  children: Heading[]
 }
 
-interface ArticleState {
-  error: boolean;
-  markdown: string;
-  loading: boolean;
-  headings: Heading[];
-}
-
-export default class Article extends React.Component<RouteComponentProps<{ title: string }>, ArticleState>{
-  constructor(props: RouteComponentProps<{ title: string }>) {
-    super(props);
-    this.state = {
-      error: false,
-      markdown: '',
-      loading: true,
-      headings: []
-    };
-  }
-  private handleMarkdownRenderUpdate = () => {
-    this.setState({ loading: false }, async () => {
-      const target = this.props.location.hash && document.querySelector(decodeURI(this.props.location.hash));
-      target && target.scrollIntoView({ block: 'center' });
-      const headings = await this.getHeadings();
-      this.setState({ headings });
-    });
-  };
-  private getHeadings = async () => {
-    const result: Heading[] = [];
-    const headings: HTMLHeadingElement[] = Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,h6'));
-    for (const heading of headings) {
-      ((heading.tagName.toLowerCase() === 'h1' || heading.tagName.toLowerCase() === 'h2') ? result : result[result.length - 1].children).push({
-        id: heading.id,
-        text: heading.textContent,
-        children: []
-      });
-    }
-    return result;
-  }
-  public async componentDidMount() {
-    const { title } = this.props.match.params;
+function useMarkdown(title: string): [string, boolean] {
+  const [error, setError] = React.useState(false);
+  const [markdown, setMarkdown] = React.useState('');
+  React.useEffect(() => {
     document.title = `${title} - wyx's blog`;
-    const response = await fetch(`/markdown/${title.replace(/-/g, ' ')}.md`);
-    if (!response.ok) {
-      this.setState({
-        markdown: '# error, request timed out'
-      });
-      return;
+    (async () => {
+      const response = await fetch(`/markdown/${title.replace(/-/g, ' ')}.md`);
+      if (!response.ok) {
+        setMarkdown('# error, request timed out');
+        return;
+      }
+      if (!response.headers.get('Content-Type').includes('text/markdown')) {
+        setError(true);
+        return;
+      }
+      setMarkdown(await response.text());
+    })();
+  }, [title]);
+  return [markdown, error];
+}
+
+function getHeadings(el: HTMLElement) {
+  return Array.from(el.querySelectorAll('h1,h2,h3,h4,h5,h6')).reduce<Heading[]>((re, v) => {
+    const tag = v.tagName.toLowerCase();
+    ((tag === 'h1' || tag === 'h2') ? re : re[re.length - 1].children).push({
+      id: v.id,
+      text: v.textContent,
+      children: []
+    });
+    return re;
+  }, []);
+}
+
+function useHeadings(el: HTMLElement): [
+  Heading[],
+  boolean,
+  () => void
+] {
+  const [headings, setHeadings] = React.useState<Heading[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const handleMarkdownRenderUpdate = React.useCallback(() => {
+    setLoading(false);
+  }, []);
+  React.useEffect(() => {
+    if (!loading) {
+      const target = location.hash && document.getElementById(decodeURI(location.hash.slice(1)));
+      target && target.scrollIntoView({ block: 'center' });
+      setHeadings(getHeadings(el));
     }
-    if (!response.headers.get('Content-Type').includes('text/markdown')) {
-      this.setState({
-        error: true
-      });
-      return;
-    }
-    const markdown = await response.text();
-    this.setState({ markdown });
-  }
-  public render() {
-    const { error, markdown, loading, headings } = this.state;
-    if (error) {
-      return <Redirect to='/blog' />;
-    }
-    return (
-      <div className={style.articleContainer}>
-        <Skeleton loading={loading} active={true} children={false} title={false} paragraph={{ rows: 6 }} />
-        <article hidden={loading} className={classNames({ [style.article]: !loading })}>
-          <MarkdownRender source={markdown} onDidUpdate={this.handleMarkdownRenderUpdate} />
-        </article>
-        <div className={style.anchor}>
-          <Anchor offsetTop={90}>
-            {headings.map((value, key) => (
-              <Link href={`#${value.id}`} title={value.text} key={key} >
-                {!!value.children.length && value.children.map((smallHeading, index) => <Link href={`#${smallHeading.id}`} title={smallHeading.text} key={index} />)}
-              </Link>
-            ))}
-          </Anchor>
-        </div>
-      </div>
-    )
-  }
+  }, [loading]);
+  return [headings, loading, handleMarkdownRenderUpdate];
 }
