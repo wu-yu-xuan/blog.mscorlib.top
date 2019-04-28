@@ -25,10 +25,12 @@ function format(num: number) {
 }
 ```
 
-## 方法三: 终极解法
+## 方法三: 懒人解法
 
 ```typescript
 function format(num: number) {
   return num.toLocaleString('en-US');
 }
 ```
+
+这个解法有个缺点,就是只会四舍五入保留三位小数,比如 2.3326 -> 2.333
