@@ -14,9 +14,18 @@
  * @param {constructor} Parent 基类
  */
 function extend(Child, Parent) {
-  function F() { }
-  F.prototype = Parent.prototype;
-  Child.prototype = new F();
+  /**
+   * 下面一行相当于
+   * function F() { }
+   * F.prototype = Parent.prototype;
+   * Child.prototype = new F();
+   */
+  Child.prototype = Object.create(Parent.prototype);
   Child.prototype.constructor = Child;
 }
 ```
+
+## 引用
+
+- [ts实现Object.create和new](./ts实现Object.create和new)
+- [Object​.create() - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create#%E7%94%A8_Object.create%E5%AE%9E%E7%8E%B0%E7%B1%BB%E5%BC%8F%E7%BB%A7%E6%89%BF)
