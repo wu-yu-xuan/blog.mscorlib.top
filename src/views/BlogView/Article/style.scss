@@ -2,6 +2,7 @@
   animation-name: fade-in;
   animation-timing-function: ease-out;
   animation-duration: .3s;
+  margin-bottom: 60px;
 
   @include width-pc {
     width: 90%;
