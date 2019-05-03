@@ -3,58 +3,60 @@ import { Tokens } from 'marked';
 import BlockWrapper from '../BlockWrapper';
 import * as style from './style.scss';
 import keyWords from './keyWords';
+import RegJSXMap, { IRegJSXMap } from '../RegJSXMap';
 
-export default class CodeRender extends React.PureComponent<Tokens.Code>{
-  private renderCode = (code: string): React.ReactNode => {
-    const mutilCommentMatch = code.match(/(\/\*[\w\W]*?\*\/)/);
-    if (mutilCommentMatch) {
-      return (
-        <>
-          {this.renderCode(code.slice(0, mutilCommentMatch.index))}
-          <span className={style.comment}>{mutilCommentMatch[0]}</span>
-          {this.renderCode(code.slice(mutilCommentMatch.index + mutilCommentMatch[0].length))}
-        </>
-      )
-    }
-    const commentMatch = code.match(/(\/\/.*)$/m);
-    if (commentMatch) {
-      return (
-        <>
-          {this.renderCode(code.slice(0, commentMatch.index))}
-          <span className={style.comment}>{commentMatch[0]}</span>
-          {this.renderCode(code.slice(commentMatch.index + commentMatch[0].length))}
-        </>
-      )
-    }
-    const wordMatch = code.match(/\w+/);
-    if (!wordMatch) {
-      return code;
-    }
+const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>([
+  [/(\/\*[\w\W]*?\*\/)/, mutilCommentMatch => {
+    return (
+      <>
+        {RegJSXMap(mutilCommentMatch.input.slice(0, mutilCommentMatch.index), map)}
+        <span className={style.comment}>{mutilCommentMatch[0]}</span>
+        {RegJSXMap(mutilCommentMatch.input.slice(mutilCommentMatch.index + mutilCommentMatch[0].length), map)}
+      </>
+    )
+  }], [/(\/\/.*)$/m, commentMatch => {
+    return (
+      <>
+        {RegJSXMap(commentMatch.input.slice(0, commentMatch.index), map)}
+        <span className={style.comment}>{commentMatch[0]}</span>
+        {RegJSXMap(commentMatch.input.slice(commentMatch.index + commentMatch[0].length), map)}
+      </>
+    )
+  }], [/(['"]).*\1/m, stringMatch => {
+    return (
+      <>
+        {RegJSXMap(stringMatch.input.slice(0, stringMatch.index), map)}
+        <span className={style.string}>{stringMatch[0]}</span>
+        {RegJSXMap(stringMatch.input.slice(stringMatch.index + stringMatch[0].length), map)}
+      </>
+    )
+  }], [/\w+/, wordMatch => {
+    const { index, input } = wordMatch;
     const [match] = wordMatch;
-    const { index } = wordMatch;
-    if (keyWords.includes(match)) {
+    if (keyWords.includes(wordMatch[0])) {
       return (
         <>
-          {code.slice(0, index)}
+          {input.slice(0, index)}
           <span className={style.keyword}>{match}</span>
-          {this.renderCode(code.slice(index + match.length))}
+          {RegJSXMap(input.slice(index + match.length), map)}
         </>
       )
     }
     return (
       <>
-        {code.slice(0, index + match.length)}
-        {this.renderCode(code.slice(index + match.length))}
+        {input.slice(0, index + match.length)}
+        {RegJSXMap(input.slice(index + match.length), map)}
       </>
     );
-  }
-  public render() {
-    return (
-      <BlockWrapper>
-        <pre className={style.pre}>
-          <code>{this.renderCode(this.props.text)}</code>
-        </pre>
-      </BlockWrapper>
-    )
-  }
-}
+  }], [/[\w\W]*/, ({ input }) => input && <span>{input}</span>]
+])
+
+export default React.memo(function CodeRender({ text }: Tokens.Code) {
+  return (
+    <BlockWrapper>
+      <pre className={style.pre}>
+        <code>{RegJSXMap(text, map)}</code>
+      </pre>
+    </BlockWrapper>
+  )
+})
