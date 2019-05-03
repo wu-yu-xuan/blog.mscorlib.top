@@ -22,7 +22,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
         {RegJSXMap(commentMatch.input.slice(commentMatch.index + commentMatch[0].length), map)}
       </>
     )
-  }], [/(['"]).*\1/m, stringMatch => {
+  }], [/(['"]).*?\1/m, stringMatch => {
     return (
       <>
         {RegJSXMap(stringMatch.input.slice(0, stringMatch.index), map)}
