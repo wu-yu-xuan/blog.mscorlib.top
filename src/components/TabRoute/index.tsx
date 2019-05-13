@@ -19,11 +19,12 @@ export interface TabRouteProps {
 
 export default function TabRoute({ components }: TabRouteProps) {
   const [activeKey, setActiveKey] = useActiveKey(components);
+  const setTitle = (key: number) => () => document.title = components[key].title;
   return (
     <div className={style.tabContainer}>
       <Tabs activeKey={activeKey} className={style.tabs} onChange={setActiveKey}>
         {components.map(({ tabName, Component, path }, index) => tabName && (
-          <TabPane tab={<NavLink to={path} className={style.tab}>{tabName}</NavLink>} key={index.toString()}>
+          <TabPane tab={<NavLink to={path} onClick={setTitle(index)} className={style.tab}>{tabName}</NavLink>} key={index.toString()}>
             <Component />
           </TabPane>
         ))}
