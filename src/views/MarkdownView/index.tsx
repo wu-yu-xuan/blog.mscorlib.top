@@ -12,7 +12,7 @@ export default React.memo(function MarkdownView() {
     <section className={style.flex}>
       <CodeRender
         className={classNames(style.frame, style.text)}
-        value={code}
+        defaultValue={code}
         onChange={setCode}
         options={{ mode: 'markdown', lineWrapping: true, autofocus: true }}
       />
