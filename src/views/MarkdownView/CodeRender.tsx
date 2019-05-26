@@ -25,10 +25,8 @@ export default function CodeRender({ className, options, value = '', defaultValu
   React.useEffect(() => {
     codemirrorRef.current = CodeMirror.fromTextArea(textareaRef.current, options);
     codemirrorRef.current.setValue(defaultValue);
-    codemirrorRef.current.on('change', (e) => onChange(e.getValue()));
-    return () => {
-      codemirrorRef.current.toTextArea();
-    }
+    codemirrorRef.current.on('change', e => onChange(e.getValue()));
+    return codemirrorRef.current.toTextArea;
   }, []);
   React.useEffect(() => {
     // prevent cursor or focus lost

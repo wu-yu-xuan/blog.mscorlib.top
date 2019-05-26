@@ -138,10 +138,14 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
   }], [/~~(.+?)~~/, strikethrough => {
     const [match, value] = strikethrough;
     const { index, input } = strikethrough;
+    /**
+     * 这个del的写法是致敬萌娘百科的
+     * @see https://zh.moegirl.org/
+     */ 
     return (
       <>
         {RegJSXMap(input.slice(0, index), map)}
-        <del className={style.del}>{value}</del>
+        <del title="你知道的太多了" className={style.del}>{value}</del>
         {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
