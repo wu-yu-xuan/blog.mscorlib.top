@@ -208,67 +208,37 @@ obj.a.b[1].c = 4;
 
 ## 结果
 
-> get value: {"b":[{"c":1}]}
->
-> get value: [{"c":1}]
->
-> get value: 1
->
-> get value: 1
->
-> get value: [{"c":1}]
->
-> get value: 1
->
-> get value: {"b":[{"c":1}]}
->
-> get value: 1
->
-> get value: [{"c":1}]
->
-> set value: 1 -> 2
->
-> get value: 2
->
-> get value: [{"c":2}]
->
-> get value: 2
->
-> get value: {"b":[{"c":2}]}
->
-> get value: 2
->
-> get value: [{"c":2}]
->
-> get value: 3
->
-> get value: 2
->
-> get value: 2
->
-> get value: 3
->
-> set value: [{"c":2}] -> [{"c":2},{"c":3}]
->
-> get value: 2
->
-> get value: 3
->
-> get value: [{"c":2},{"c":3}]
->
-> get value: 2
->
-> get value: 3
->
-> get value: {"b":[{"c":2},{"c":3}]}
->
-> get value: 2
->
-> get value: 3
->
-> get value: [{"c":2},{"c":3}]
->
-> set value: 3 -> 4
+> get value: {"b":[{"c":1}]}  
+> get value: [{"c":1}]  
+> get value: 1  
+> get value: 1  
+> get value: [{"c":1}]  
+> get value: 1  
+> get value: {"b":[{"c":1}]}  
+> get value: 1  
+> get value: [{"c":1}]  
+> set value: 1 -> 2  
+> get value: 2  
+> get value: [{"c":2}]  
+> get value: 2  
+> get value: {"b":[{"c":2}]}  
+> get value: 2  
+> get value: [{"c":2}]  
+> get value: 3  
+> get value: 2  
+> get value: 2  
+> get value: 3  
+> set value: [{"c":2}] -> [{"c":2},{"c":3}]  
+> get value: 2  
+> get value: 3  
+> get value: [{"c":2},{"c":3}]  
+> get value: 2  
+> get value: 3  
+> get value: {"b":[{"c":2},{"c":3}]}  
+> get value: 2  
+> get value: 3  
+> get value: [{"c":2},{"c":3}]  
+> set value: 3 -> 4  
 
 思考一下,这个输出和自己意料之中的一样吗?
 
