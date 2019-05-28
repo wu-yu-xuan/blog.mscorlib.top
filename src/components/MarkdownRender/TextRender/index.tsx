@@ -4,11 +4,22 @@ import HtmlRender from '../HtmlRender';
 import RegJSXMap, { IRegJSXMap } from '../RegJSXMap';
 
 const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>([
-  [/^(.+) {2,}$/, ([, textLeft]) => {
+  [/^(.+) {2,}$/m, Br => {
+    const [match, value] = Br;
+    const { index, input } = Br;
     return (
       <>
-        {RegJSXMap(textLeft, map)}
+        {RegJSXMap(value, map)}
         <br />
+        {RegJSXMap(input.slice(index + match.length), map)}
+      </>
+    )
+  }], [/(.+)\n/, newLine => {
+    const [match, value] = newLine;
+    const { index, input } = newLine;
+    return (
+      <>
+        {RegJSXMap(value, map)} {RegJSXMap(input.slice(index + match.length), map)}
       </>
     )
   }], [/\*{3}(.+?)\*{3}/, strongAndEm => {
@@ -141,7 +152,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
     /**
      * 这个del的写法是致敬萌娘百科的
      * @see https://zh.moegirl.org/
-     */ 
+     */
     return (
       <>
         {RegJSXMap(input.slice(0, index), map)}
@@ -157,5 +168,5 @@ interface IText {
 }
 
 export default function TextRender({ text }: IText) {
-  return RegJSXMap(text.replace(/\n/g, ' '), map);
+  return RegJSXMap(text, map);
 }
