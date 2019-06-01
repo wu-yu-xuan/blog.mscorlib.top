@@ -20,13 +20,13 @@ export default React.memo(function MarkdownView() {
         <MarkdownRender source={code} />
       </section>
     </section>
-  )
-})
+  );
+});
 
-function useLocalStorage(key: string): [
-  string, (value: string) => void
-] {
-  const [localState, setLocalState] = React.useState(() => localStorage.getItem(key) || '');
+function useLocalStorage(key: string): [string, (value: string) => void] {
+  const [localState, setLocalState] = React.useState(
+    () => localStorage.getItem(key) || ''
+  );
   const updateLocalState = React.useCallback((value: string) => {
     setLocalState(value);
     localStorage.setItem(key, value);
@@ -40,7 +40,7 @@ function useLocalStorage(key: string): [
       }
     }
     window.addEventListener('storage', syncStorage);
-    return () => window.removeEventListener('storage', syncStorage)
+    return () => window.removeEventListener('storage', syncStorage);
   }, []);
   return [localState, updateLocalState];
 }

@@ -92,16 +92,9 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*":
+"@types/react@*", "@types/react@^16.8.13":
   version "16.8.13"
   resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.8.13.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-16.8.13.tgz#a82b15aad9ab91c40edca0d6889b7745ae24f053"
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
-
-"@types/react@^16.8.13":
-  version "16.8.13"
-  resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.8.13.tgz#a82b15aad9ab91c40edca0d6889b7745ae24f053"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
