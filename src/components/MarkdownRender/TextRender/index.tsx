@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as style from './style.scss';
 import HtmlRender from '../HtmlRender';
 import RegJSXMap, { IRegJSXMap } from '../RegJSXMap';
+import Image from 'react-zmage';
 
 const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
   [
@@ -85,7 +86,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
           <>
             {RegJSXMap(input.slice(0, index), map)}
             <a className={style.link} href={target}>
-              <img className={style.img} src={imgSrc} title={alt} alt={alt} />
+              <Image className={style.img} src={imgSrc} title={alt} alt={alt} />
             </a>
             {RegJSXMap(input.slice(index + match.length), map)}
           </>
@@ -100,7 +101,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
         return (
           <>
             {RegJSXMap(input.slice(0, index), map)}
-            <img className={style.img} src={target} title={title} alt={alt} />
+            <Image className={style.img} src={target} title={title} alt={alt} />
             {RegJSXMap(input.slice(index + match.length), map)}
           </>
         );
@@ -114,7 +115,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
         return (
           <>
             {RegJSXMap(input.slice(0, index), map)}
-            <img
+            <Image
               className={style.img}
               src={target}
               title={alt || target}
