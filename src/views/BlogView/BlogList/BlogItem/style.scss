@@ -1,0 +1,56 @@
+.blog-list-item-container {
+  margin: 10px 0;
+  transition: 0.3s;
+  box-shadow: 0 1px 2px $border-color-base;
+  border-radius: $border-radius-base;
+
+  @include width-mobile {
+    width: 90%;
+  }
+
+  @include width-pc {
+    width: 45%;
+    height: 100px;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 8px $border-color-base;
+  }
+
+  .title {
+    display: block;
+    font-size: $font-size-base * 2;
+    color: $text-color;
+    padding: 0 16px;
+    border-bottom: 1px solid $border-color-base;
+    transition: 0.3s;
+
+    @include width-mobile {
+      line-height: 36px;
+    }
+
+    @include width-pc {
+      line-height: 70px;
+      height: 70px;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: $primary-color;
+    }
+  }
+
+  .footer {
+    height: 30px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .text {
+      font-size: $font-size-base;
+      color: $text-color-secondary;
+    }
+  }
+}

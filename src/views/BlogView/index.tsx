@@ -6,8 +6,8 @@ import BlogList from './BlogList';
 export default function BlogView() {
   return (
     <Switch>
-      <Route path='/blog/:title' component={Article} />
+      <Route path="/blog/*" component={Article} />
       <Route component={BlogList} />
     </Switch>
-  )
+  );
 }

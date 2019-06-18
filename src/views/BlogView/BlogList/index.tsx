@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import BlogListItem from './BlogListItem';
+import BlogItem, { IBlogItem } from './BlogItem';
 import { Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
+import Types from './Types';
 
 const { Group, Button } = Radio;
 
@@ -11,16 +12,10 @@ enum Sort {
   modifyTime
 }
 
-export interface BlogSummary {
-  title: string;
-  path: string;
-  modifyTime: number;
-  birthTime: number;
-}
-
 export default function BlogList() {
   const blogSummarys = useBlogSummarys();
   const [sortBy, handleRadioChange] = useSortBy();
+  const [selections, setSelections] = React.useState<string[]>(['']);
 
   return (
     <>
@@ -31,29 +26,48 @@ export default function BlogList() {
           <Button value={Sort.birthTime}>发布时间</Button>
         </Group>
       </div>
-      <div className={style.blogListContainer} >
-        {
-          blogSummarys
-            .sort((a, b) => sortBy === Sort.modifyTime ? b.modifyTime - a.modifyTime : b.birthTime - a.birthTime)
-            .map((blogSummary, key) => <BlogListItem {...blogSummary} key={key} />)
-        }
+      <Types types={blogSummarys.map(v => v.types)} onChange={setSelections} />
+      <div className={style.blogListContainer}>
+        {selections
+          .reduce<IBlogItem[]>(
+            (prev, cur, index) =>
+              prev.filter(({ types }) =>
+                cur === ''
+                  ? types[index]
+                    ? !types[index].startsWith('.')
+                    : true
+                  : types[index] && types[index] === cur
+              ),
+            blogSummarys
+          )
+          .sort((a, b) =>
+            sortBy === Sort.modifyTime
+              ? b.modifyTime - a.modifyTime
+              : b.birthTime - a.birthTime
+          )
+          .map(blogSummary => (
+            <BlogItem {...blogSummary} key={blogSummary.hash} />
+          ))}
       </div>
     </>
-  )
+  );
 }
 
 function useBlogSummarys() {
-  const [blogSummarys, setBlogSummarys] = React.useState<BlogSummary[]>([]);
+  const [blogSummarys, setBlogSummarys] = React.useState<IBlogItem[]>([]);
   React.useEffect(() => {
     (async () => {
       const response = await fetch('/markdown/list.json');
       if (!response.ok) {
-        setBlogSummarys([{
-          title: 'unable to connect to the server',
-          path: '/blog/',
-          birthTime: 0,
-          modifyTime: 0
-        }]);
+        setBlogSummarys([
+          {
+            title: 'unable to connect to the server',
+            birthTime: 0,
+            modifyTime: 0,
+            hash: '',
+            types: []
+          }
+        ]);
         return;
       }
       setBlogSummarys(await response.json());
@@ -64,6 +78,9 @@ function useBlogSummarys() {
 
 function useSortBy(): [Sort, (e: RadioChangeEvent) => void] {
   const [sortBy, setSortBy] = React.useState<Sort>(Sort.modifyTime);
-  const handleRadioChange = React.useCallback((e: RadioChangeEvent) => setSortBy(e.target.value), []);
+  const handleRadioChange = React.useCallback(
+    (e: RadioChangeEvent) => setSortBy(e.target.value),
+    []
+  );
   return [sortBy, handleRadioChange];
 }

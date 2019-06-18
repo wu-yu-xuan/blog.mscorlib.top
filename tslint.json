@@ -1,14 +1,7 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-react",
-    "tslint-config-prettier"
-  ],
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts"
-    ]
+    "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
   },
   "rules": {
     "object-literal-sort-keys": false,
@@ -18,10 +11,8 @@
     "no-console": false,
     "max-classes-per-file": false,
     "only-arrow-functions": false,
-    "no-unused-expression": [
-      true,
-      "allow-fast-null-checks"
-    ]
+    "jsx-no-lambda": false,
+    "no-unused-expression": [true, "allow-fast-null-checks"]
   },
   "jsRules": {
     "object-literal-sort-keys": false,
