@@ -1,5 +1,5 @@
 {
-  "name": "wu-yu-xuan.github.io",
+  "name": "blog.mscorlib.top",
   "homepage": "https://blog.mscorlib.top",
   "version": "0.1.0",
   "private": true,
@@ -115,7 +115,7 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "C:\\Code\\Web\\wu-yu-xuan.github.io\\tsconfig.test.json"
+        "tsConfigFile": "./tsconfig.test.json"
       }
     }
   },
