@@ -6,7 +6,9 @@ import * as classNames from 'classnames';
 import * as style from './style.scss';
 import Catalog, { Heading } from './Catalog';
 
-export default function Article({match}: RouteComponentProps<{ title: string }>) {
+export default function Article({
+  match
+}: RouteComponentProps<{ title: string }>) {
   const articleRef = React.useRef<HTMLElement>();
   const [markdown, error] = useMarkdown(match.params[0]);
   const [headings, loading, handleMarkdownRenderUpdate] = useHeadings(
@@ -46,16 +48,15 @@ function useMarkdown(title: string): [string, boolean] {
   React.useEffect(() => {
     (async () => {
       const response = await fetch(`/markdown/${title.replace(/-/g, ' ')}.md`);
-      if (!response.ok) {
-        setMarkdown('# error, request timed out');
+      if (
+        response.ok &&
+        response.headers.get('Content-Type').includes('text/markdown')
+      ) {
+        setMarkdown(await response.text());
+        document.title = `${title.replace(/(^.*\/)/g, '')} - wyx's blog`;
         return;
       }
-      if (!response.headers.get('Content-Type').includes('text/markdown')) {
-        setError(true);
-        return;
-      }
-      setMarkdown(await response.text());
-      document.title = `${title.replace(/(^.*\/)/g,'')} - wyx's blog`;
+      setError(true);
     })();
   }, [title]);
   return [markdown, error];

@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as style from './style.scss';
 import { Tag } from 'antd';
 import * as classNames from 'classnames';
+import shouldHide from '../shouldHide';
 
 const { CheckableTag } = Tag;
 
@@ -10,7 +11,7 @@ interface ITypes {
   onChange(types: string[]): void;
 }
 
-export default function Types({ types, onChange }: ITypes) {
+export default React.memo(function Types({ types, onChange }: ITypes) {
   const [tags, selections, onSelect] = useTypes({ types, onChange });
 
   return (
@@ -24,7 +25,7 @@ export default function Types({ types, onChange }: ITypes) {
                 key={column}
                 onChange={() => onSelect(row, column)}
                 className={classNames({
-                  [style.hidden]: v.startsWith('.') && v !== selections[row]
+                  [style.hidden]: shouldHide(v) && v !== selections[row]
                 })}
               >
                 {v || '全部'}
@@ -34,7 +35,7 @@ export default function Types({ types, onChange }: ITypes) {
       ))}
     </div>
   );
-}
+});
 
 function useTypes({
   types,
@@ -82,8 +83,8 @@ function getTags(types: string[][], selections: string[]) {
       ])
     );
     prev.push([
-      ...tmpArr.filter(v => !v.startsWith('.')).sort(),
-      ...tmpArr.filter(v => v.startsWith('.')).sort()
+      ...tmpArr.filter(v => !shouldHide(v)).sort(),
+      ...tmpArr.filter(v => shouldHide(v)).sort()
     ]);
     return prev;
   }, []);

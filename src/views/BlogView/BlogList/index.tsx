@@ -4,6 +4,7 @@ import BlogItem, { IBlogItem } from './BlogItem';
 import { Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import Types from './Types';
+import shouldHide from './shouldHide';
 
 const { Group, Button } = Radio;
 
@@ -34,7 +35,7 @@ export default function BlogList() {
               prev.filter(({ types }) =>
                 cur === ''
                   ? types[index]
-                    ? !types[index].startsWith('.')
+                    ? !shouldHide(types[index])
                     : true
                   : types[index] && types[index] === cur
               ),
