@@ -47,13 +47,14 @@ function useMarkdown(title: string): [string, boolean] {
   const [markdown, setMarkdown] = React.useState('');
   React.useEffect(() => {
     (async () => {
-      const response = await fetch(`/markdown/${title.replace(/-/g, ' ')}.md`);
+      const realTitle = title.replace(/-/g, ' ');
+      const response = await fetch(`/markdown/${realTitle}.md`);
       if (
         response.ok &&
         response.headers.get('Content-Type').includes('text/markdown')
       ) {
         setMarkdown(await response.text());
-        document.title = `${title.replace(/(^.*\/)/g, '')} - wyx's blog`;
+        document.title = `${realTitle.replace(/(^.*\/)/g, '')} - wyx's blog`;
         return;
       }
       setError(true);
