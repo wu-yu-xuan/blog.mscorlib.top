@@ -1,4 +1,4 @@
-# Mac Shell 调教指南
+# Mac Shell PS1 调教指南
 
 假定以下所用用户名为**root**, 当然, 实际过程中建议不要玩**root**
 
