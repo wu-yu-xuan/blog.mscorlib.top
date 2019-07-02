@@ -1,6 +1,6 @@
 # Mac Shell PS1 调教指南
 
-假定以下所用用户名为**root**, 当然, 实际过程中建议不要玩**root**
+假定以下所用用户名为**root**,~~ 连`sudo`都懒得写 233,~~ 当然, 实际过程中建议不要玩**root**
 
 在`/etc/bashrc`中, 可以看到, Mac PS1 的默认值为:
 
@@ -14,7 +14,7 @@ PS1='\h:\W \u\$ '
 
 emmmm, 为还是觉得 Linux 风格的 PS1 好看, 于是在`~/.bash_profile`中加入以下代码:
 
-```shell
+```bash
 export PS1="\u@\h:\W\$"
 ```
 
@@ -47,9 +47,9 @@ hostname alibaba-inc
 然后再谷歌, 发现了 `scutil`, 然后执行下列命令:
 
 ```shell
-root@alibaba-inc:~#scutil --get HostName
+$ scutil --get HostName
 HostName: not set
-root@alibaba-inc:~#scutil --get LocalHostName
+$ scutil --get LocalHostName
 alibaba-inc
 ```
 
