@@ -34,50 +34,6 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
       }
     ],
     [
-      /([*\-_])([*\-_])([*\-_])(.+?)\3\2\1/,
-      strongAndEm => {
-        const [match, , , , value] = strongAndEm;
-        const { index, input } = strongAndEm;
-        return (
-          <>
-            {RegJSXMap(input.slice(0, index), map)}
-            <strong className={style.strong}>
-              <em className={style.em}>{RegJSXMap(value, map)}</em>
-            </strong>
-            {RegJSXMap(input.slice(index + match.length), map)}
-          </>
-        );
-      }
-    ],
-    [
-      /\*{2}(.+?)\*{2}/,
-      strong => {
-        const [match, value] = strong;
-        const { index, input } = strong;
-        return (
-          <>
-            {RegJSXMap(input.slice(0, index), map)}
-            <strong className={style.strong}>{RegJSXMap(value, map)}</strong>
-            {RegJSXMap(input.slice(index + match.length), map)}
-          </>
-        );
-      }
-    ],
-    [
-      /\*(.+?)\*/,
-      em => {
-        const [match, value] = em;
-        const { index, input } = em;
-        return (
-          <>
-            {RegJSXMap(input.slice(0, index), map)}
-            <em className={style.em}>{RegJSXMap(value, map)}</em>
-            {RegJSXMap(input.slice(index + match.length), map)}
-          </>
-        );
-      }
-    ],
-    [
       /\[!\[(.+?)\]\((.+?)\)\]\((.+?)\)/,
       titleImgLink => {
         const [match, alt, imgSrc, target] = titleImgLink;
@@ -153,6 +109,50 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
             <a className={style.link} href={target} title={target}>
               {RegJSXMap(value, map)}
             </a>
+            {RegJSXMap(input.slice(index + match.length), map)}
+          </>
+        );
+      }
+    ],
+    [
+      /([*\-_])([*\-_])([*\-_])(.+?)\3\2\1/,
+      strongAndEm => {
+        const [match, , , , value] = strongAndEm;
+        const { index, input } = strongAndEm;
+        return (
+          <>
+            {RegJSXMap(input.slice(0, index), map)}
+            <strong className={style.strong}>
+              <em className={style.em}>{RegJSXMap(value, map)}</em>
+            </strong>
+            {RegJSXMap(input.slice(index + match.length), map)}
+          </>
+        );
+      }
+    ],
+    [
+      /([*\-_])([*\-_])(.+?)\2\1/,
+      strong => {
+        const [match, , , value] = strong;
+        const { index, input } = strong;
+        return (
+          <>
+            {RegJSXMap(input.slice(0, index), map)}
+            <strong className={style.strong}>{RegJSXMap(value, map)}</strong>
+            {RegJSXMap(input.slice(index + match.length), map)}
+          </>
+        );
+      }
+    ],
+    [
+      /([*\-_])(.+?)\1/,
+      em => {
+        const [match, , value] = em;
+        const { index, input } = em;
+        return (
+          <>
+            {RegJSXMap(input.slice(0, index), map)}
+            <em className={style.em}>{RegJSXMap(value, map)}</em>
             {RegJSXMap(input.slice(index + match.length), map)}
           </>
         );

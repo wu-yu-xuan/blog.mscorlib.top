@@ -154,14 +154,10 @@ async function updateListJson(markdownList, markdownListFileName) {
   for (const fullFileName of allFileName) {
     const fileContent = await fs.readFile(fullFileName, UTF_8);
     const title = path.basename(fullFileName, MD_EXT);
-
-    /**
-     * +1是考虑到‘/’的长度
-     * `title.length + MD_EXT.length` 是短文件名的长度
-     */
-    const types = fullFileName
-      .slice(markdownFolderPath.length + 1, -(title.length + MD_EXT.length + 1))
-      .split('/');
+    const types = path
+      .dirname(path.relative(markdownFolderPath, fullFileName))
+      .split('/')
+      .filter(t => t && t !== '.');
     const fileState = await fs.stat(fullFileName);
     const hash = getHash(fileContent);
     const birthTime = getBirthTime(hash, title, fileState.birthtimeMs);
