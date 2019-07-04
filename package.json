@@ -65,7 +65,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "deploy": "gh-pages -d build -b master"
+    "deploy": "gh-pages -d build -b master -t"
   },
   "devDependencies": {
     "@types/jest": "^23.3.7",
