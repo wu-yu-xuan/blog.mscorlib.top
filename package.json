@@ -3,6 +3,11 @@
   "homepage": "https://blog.mscorlib.top",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wu-yu-xuan/blog.mscorlib.top.git"
+  },
+  "license": "MIT",
   "dependencies": {
     "@types/classnames": "^2.2.6",
     "@types/codemirror": "^0.0.72",

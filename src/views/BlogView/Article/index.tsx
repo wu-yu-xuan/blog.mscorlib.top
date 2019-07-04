@@ -57,7 +57,9 @@ function useMarkdown(title: string): [string, boolean] {
       }
       // 有时候 github page 服务器更新太慢导致没找到文章, 这时候直接请求 github
       const retryResponse = await fetch(
-        `https://raw.githubusercontent.com/wu-yu-xuan/blog.mscorlib.top/master/markdown/${realTitle}.md`
+        `https://raw.githubusercontent.com/${process.env.GIT_USER}/${
+          process.env.GIT_REPO
+        }/master/markdown/${realTitle}.md`
       );
       if (
         retryResponse.ok &&

@@ -13,10 +13,11 @@ to use this project as your own blog, use the following steps:
 1. `fork` and `clone` it
 2. run `git checkout source` to switch to branch source
 3. run `yarn` to install dependencies
-4. run `git rm public/markdown/*` to delete this project's markdown and put your own markdown blog into this folder
-5. run `yarn build` to build it,
+4. modify `package.json` with you own info, especially `repository.url`
+5. run `git rm public/markdown/*` to delete this project's markdown and put your own markdown blog into this folder
+6. run `yarn build` to build it,
    > NOTE: it may have error while first building, however building twice could fix it
-6. run `yarn deploy` if you want to deploy it on your master branch
+7. run `yarn deploy` if you want to deploy it on your master branch
 
 ## Acknowledgment
 
