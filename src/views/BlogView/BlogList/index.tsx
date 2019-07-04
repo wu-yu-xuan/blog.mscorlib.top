@@ -3,7 +3,7 @@ import * as style from './style.scss';
 import BlogItem, { IBlogItem } from './BlogItem';
 import { Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
-import Types from './Types';
+import Types, { ALL_TEXT } from './Types';
 import shouldHide from './shouldHide';
 
 const { Group, Button } = Radio;
@@ -32,13 +32,16 @@ export default function BlogList() {
         {selections
           .reduce<IBlogItem[]>(
             (prev, cur, index) =>
-              prev.filter(({ types }) =>
-                cur === ''
-                  ? types[index]
-                    ? !shouldHide(types[index])
-                    : true
-                  : types[index] && types[index] === cur
-              ),
+              prev.filter(({ types }) => {
+                // 当前选中项为‘全部’
+                if (cur === ALL_TEXT) {
+                  // 只要当前项不应该隐藏则全部显示
+                  return types[index] ? !shouldHide(types[index]) : true;
+                } else {
+                  // 否则显示与当前选中项相同的
+                  return types[index] && types[index] === cur;
+                }
+              }),
             blogSummarys
           )
           .sort((a, b) =>

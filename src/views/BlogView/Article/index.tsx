@@ -6,9 +6,7 @@ import * as classNames from 'classnames';
 import * as style from './style.scss';
 import Catalog, { Heading } from './Catalog';
 
-export default function Article({
-  match
-}: RouteComponentProps<{ title: string }>) {
+export default function Article({ match }: RouteComponentProps) {
   const articleRef = React.useRef<HTMLElement>();
   const [markdown, error] = useMarkdown(match.params[0]);
   const [headings, loading, handleMarkdownRenderUpdate] = useHeadings(

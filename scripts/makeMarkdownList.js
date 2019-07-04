@@ -156,7 +156,7 @@ async function updateListJson(markdownList, markdownListFileName) {
     const title = path.basename(fullFileName, MD_EXT);
     const types = path
       .dirname(path.relative(markdownFolderPath, fullFileName))
-      .split('/')
+      .split(path.sep)
       .filter(t => t && t !== '.');
     const fileState = await fs.stat(fullFileName);
     const hash = getHash(fileContent);

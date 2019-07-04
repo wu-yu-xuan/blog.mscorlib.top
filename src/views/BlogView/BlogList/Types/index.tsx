@@ -6,6 +6,8 @@ import shouldHide from '../shouldHide';
 
 const { CheckableTag } = Tag;
 
+export const ALL_TEXT = '全部';
+
 interface ITypes {
   types: string[][];
   onChange(types: string[]): void;
@@ -18,6 +20,7 @@ export default React.memo(function Types({ types, onChange }: ITypes) {
     <div className={style.outerContainer}>
       {tags.map((arr, row) => (
         <div className={style.tagContainer} key={row}>
+          {/* 考虑到`[ALL_TEXT]`的情况, 此时并不需要渲染 */}
           {arr.length > 1 &&
             arr.map((v, column) => (
               <CheckableTag
@@ -28,7 +31,7 @@ export default React.memo(function Types({ types, onChange }: ITypes) {
                   [style.hidden]: shouldHide(v) && v !== selections[row]
                 })}
               >
-                {v || '全部'}
+                {v}
               </CheckableTag>
             ))}
         </div>
@@ -41,7 +44,7 @@ function useTypes({
   types,
   onChange
 }: ITypes): [string[][], string[], (row: number, column: number) => void] {
-  const [selections, setSelections] = React.useState<string[]>(['']);
+  const [selections, setSelections] = React.useState<string[]>([ALL_TEXT]);
   const [tags, setTags] = React.useState<string[][]>(() =>
     getTags(types, selections)
   );
@@ -49,8 +52,8 @@ function useTypes({
     const newSelections = [...selections];
     newSelections[row] = tags[row][column];
     newSelections.splice(row + 1);
-    if (newSelections[row] !== '') {
-      newSelections.push('');
+    if (newSelections[row] !== ALL_TEXT) {
+      newSelections.push(ALL_TEXT);
     }
     setSelections(newSelections);
     setTags(getTags(types, newSelections));
@@ -59,7 +62,7 @@ function useTypes({
     onChange(selections);
   }, [selections]);
   React.useEffect(() => {
-    const newSelections = [''];
+    const newSelections = [ALL_TEXT];
     setSelections(newSelections);
     setTags(getTags(types, newSelections));
   }, [types.length]);
@@ -78,8 +81,8 @@ function getTags(types: string[][], selections: string[]) {
                 selections[index - 1] &&
                 v[index - 1] === selections[index - 1])
           )
-          .map(v => v[index] || ''),
-        ''
+          .map(v => v[index] || ALL_TEXT),
+        ALL_TEXT
       ])
     );
     prev.push([
