@@ -115,50 +115,6 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
       }
     ],
     [
-      /([*\-_])([*\-_])([*\-_])(.+?)\3\2\1/,
-      strongAndEm => {
-        const [match, , , , value] = strongAndEm;
-        const { index, input } = strongAndEm;
-        return (
-          <>
-            {RegJSXMap(input.slice(0, index), map)}
-            <strong className={style.strong}>
-              <em className={style.em}>{RegJSXMap(value, map)}</em>
-            </strong>
-            {RegJSXMap(input.slice(index + match.length), map)}
-          </>
-        );
-      }
-    ],
-    [
-      /([*\-_])([*\-_])(.+?)\2\1/,
-      strong => {
-        const [match, , , value] = strong;
-        const { index, input } = strong;
-        return (
-          <>
-            {RegJSXMap(input.slice(0, index), map)}
-            <strong className={style.strong}>{RegJSXMap(value, map)}</strong>
-            {RegJSXMap(input.slice(index + match.length), map)}
-          </>
-        );
-      }
-    ],
-    [
-      /([*\-_])(.+?)\1/,
-      em => {
-        const [match, , value] = em;
-        const { index, input } = em;
-        return (
-          <>
-            {RegJSXMap(input.slice(0, index), map)}
-            <em className={style.em}>{RegJSXMap(value, map)}</em>
-            {RegJSXMap(input.slice(index + match.length), map)}
-          </>
-        );
-      }
-    ],
-    [
       /`(.+?)`/,
       code => {
         const [match, value] = code;
@@ -231,6 +187,51 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
             <del title="你知道的太多了" className={style.del}>
               {value}
             </del>
+            {RegJSXMap(input.slice(index + match.length), map)}
+          </>
+        );
+      }
+    ],
+
+    [
+      /([*\-_])([*\-_])([*\-_])(.+?)\3\2\1/,
+      strongAndEm => {
+        const [match, , , , value] = strongAndEm;
+        const { index, input } = strongAndEm;
+        return (
+          <>
+            {RegJSXMap(input.slice(0, index), map)}
+            <strong className={style.strong}>
+              <em className={style.em}>{RegJSXMap(value, map)}</em>
+            </strong>
+            {RegJSXMap(input.slice(index + match.length), map)}
+          </>
+        );
+      }
+    ],
+    [
+      /([*\-_])([*\-_])(.+?)\2\1/,
+      strong => {
+        const [match, , , value] = strong;
+        const { index, input } = strong;
+        return (
+          <>
+            {RegJSXMap(input.slice(0, index), map)}
+            <strong className={style.strong}>{RegJSXMap(value, map)}</strong>
+            {RegJSXMap(input.slice(index + match.length), map)}
+          </>
+        );
+      }
+    ],
+    [
+      /([*\-_])(.+?)\1/,
+      em => {
+        const [match, , value] = em;
+        const { index, input } = em;
+        return (
+          <>
+            {RegJSXMap(input.slice(0, index), map)}
+            <em className={style.em}>{RegJSXMap(value, map)}</em>
             {RegJSXMap(input.slice(index + match.length), map)}
           </>
         );
