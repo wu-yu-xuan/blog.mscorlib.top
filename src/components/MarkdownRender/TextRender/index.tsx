@@ -194,7 +194,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
     ],
 
     [
-      /([*\-_])([*\-_])([*\-_])(.+?)\3\2\1/,
+      /([*_])([*_])([*_])(.+?)\3\2\1/,
       strongAndEm => {
         const [match, , , , value] = strongAndEm;
         const { index, input } = strongAndEm;
@@ -210,7 +210,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
       }
     ],
     [
-      /([*\-_])([*\-_])(.+?)\2\1/,
+      /([*_])([*_])(.+?)\2\1/,
       strong => {
         const [match, , , value] = strong;
         const { index, input } = strong;
@@ -224,7 +224,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
       }
     ],
     [
-      /([*\-_])(.+?)\1/,
+      /([*_])(.+?)\1/,
       em => {
         const [match, , value] = em;
         const { index, input } = em;
