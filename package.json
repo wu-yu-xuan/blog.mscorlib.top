@@ -9,10 +9,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@types/classnames": "^2.2.6",
-    "@types/codemirror": "^0.0.72",
-    "@types/marked": "^0.4.2",
-    "@types/react-router-dom": "^4.3.2",
     "antd": "^3.10.3",
     "autoprefixer": "7.1.6",
     "babel-jest": "20.0.3",
@@ -73,10 +69,14 @@
     "deploy": "gh-pages -d build -b master -t"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.6",
+    "@types/codemirror": "^0.0.72",
     "@types/jest": "^23.3.7",
+    "@types/marked": "^0.4.2",
     "@types/node": "^10.12.0",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.0.9",
+    "@types/react-router-dom": "^4.3.2",
     "typescript": "^3.1.3"
   },
   "jest": {
