@@ -66,7 +66,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "deploy": "gh-pages -d build -b master -t"
+    "deploy": "gh-pages -d build -b master -t",
+    "git": "git push && yarn build && yarn deploy"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.6",
