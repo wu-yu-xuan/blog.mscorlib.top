@@ -6,6 +6,12 @@ import * as classNames from 'classnames';
 import * as style from './style.scss';
 import Catalog, { Heading } from './Catalog';
 
+const isDev = process.env.NODE_ENV === 'development';
+
+function containDotFile(path: string) {
+  return path.startsWith('.') || path.includes('/.');
+}
+
 export default function Article({ match }: RouteComponentProps) {
   const articleRef = React.useRef<HTMLElement>();
   const [markdown, error] = useMarkdown(match.params[0]);
@@ -46,26 +52,19 @@ function useMarkdown(title: string): [string, boolean] {
   React.useEffect(() => {
     (async () => {
       const realTitle = title.replace(/-/g, ' ');
-      const response = await fetch(`/markdown/${realTitle}.md`);
+      // 沙雕 GitHub page, 不支持 dotFile
+      const response = await fetch(
+        !isDev && containDotFile(realTitle)
+          ? `https://raw.githubusercontent.com/${process.env.GIT_USER}/${
+              process.env.GIT_REPO
+            }/master/markdown/${realTitle}.md`
+          : `/markdown/${realTitle}.md`
+      );
       if (
         response.ok &&
         response.headers.get('Content-Type').includes('text/markdown')
       ) {
         setMarkdown(await response.text());
-        document.title = `${realTitle.replace(/(^.*\/)/g, '')} - wyx's blog`;
-        return;
-      }
-      // 有时候 github page 服务器更新太慢导致没找到文章, 这时候直接请求 github
-      const retryResponse = await fetch(
-        `https://raw.githubusercontent.com/${process.env.GIT_USER}/${
-          process.env.GIT_REPO
-        }/master/markdown/${realTitle}.md`
-      );
-      if (
-        retryResponse.ok &&
-        retryResponse.headers.get('Content-Type').includes('text/plain')
-      ) {
-        setMarkdown(await retryResponse.text());
         document.title = `${realTitle.replace(/(^.*\/)/g, '')} - wyx's blog`;
         return;
       }
