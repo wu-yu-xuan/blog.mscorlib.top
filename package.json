@@ -66,7 +66,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "deploy": "gh-pages -d build -b master",
+    "deploy": "gh-pages -d build -b master -d",
     "git": "git push && yarn build && yarn deploy"
   },
   "devDependencies": {
