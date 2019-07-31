@@ -107,4 +107,27 @@ source ss proxy
 . ss proxy
 ```
 
-不过还是感觉不优雅, 期待更优雅的解法
+---
+
+最终还是懒得多写一个点号..., 于是就放进了 `~/.bash_profile` 里:
+
+```bash
+function ss() {
+  case $1 in
+    "proxy")
+      export ALL_PROXY=socks5://127.0.0.1:1086
+      echo "proxy to 127.0.0.1:1086"
+      ;;
+    "unproxy")
+      unset ALL_PROXY
+      echo "unproxy success"
+      ;;
+    *)
+      echo "unknow command, expect proxy or unproxy"
+      ;;
+  esac
+}
+export -f ss
+```
+
+但是这样 `env` 就又长又丑, 简直逼死强迫症
