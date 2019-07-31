@@ -62,7 +62,9 @@ function useMarkdown(title: string): [string, boolean] {
       );
       if (
         response.ok &&
-        response.headers.get('Content-Type').includes('text/markdown')
+        ['text/markdown', 'text/plain'].some(v =>
+          response.headers.get('Content-Type').includes(v)
+        )
       ) {
         setMarkdown(await response.text());
         document.title = `${realTitle.replace(/(^.*\/)/g, '')} - wyx's blog`;
@@ -78,7 +80,7 @@ function getHeadings(el: HTMLElement) {
   return Array.from(el.querySelectorAll('h1,h2,h3,h4,h5,h6')).reduce<Heading[]>(
     (re, v) => {
       const tag = v.tagName.toLowerCase();
-      (tag === 'h1' || tag === 'h2' ? re : re[re.length - 1].children).push({
+      (['h1', 'h2'].includes(tag) ? re : re[re.length - 1].children).push({
         id: v.id,
         text: v.textContent,
         children: []
