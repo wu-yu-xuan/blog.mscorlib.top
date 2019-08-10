@@ -12,7 +12,8 @@
     "max-classes-per-file": false,
     "only-arrow-functions": false,
     "jsx-no-lambda": false,
-    "no-unused-expression": [true, "allow-fast-null-checks"]
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "radix": false
   },
   "jsRules": {
     "object-literal-sort-keys": false,

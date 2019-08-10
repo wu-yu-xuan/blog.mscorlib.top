@@ -3,6 +3,7 @@ import * as style from './style.scss';
 import HtmlRender from '../HtmlRender';
 import RegJSXMap, { IRegJSXMap } from '../RegJSXMap';
 import Image from 'react-zmage';
+import Emoji from './Emoji';
 
 const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
   [
@@ -28,6 +29,26 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
         return (
           <>
             {RegJSXMap(value, map)}{' '}
+            {RegJSXMap(input.slice(index + match.length), map)}
+          </>
+        );
+      }
+    ],
+    [
+      /~~(.+?)~~/,
+      strikethrough => {
+        const [match, value] = strikethrough;
+        const { index, input } = strikethrough;
+        /**
+         * 这个del的写法是致敬萌娘百科的
+         * @see https://zh.moegirl.org/
+         */
+        return (
+          <>
+            {RegJSXMap(input.slice(0, index), map)}
+            <del title="你知道的太多了" className={style.del}>
+              {RegJSXMap(value, map)}
+            </del>
             {RegJSXMap(input.slice(index + match.length), map)}
           </>
         );
@@ -173,26 +194,19 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
       }
     ],
     [
-      /~~(.+?)~~/,
-      strikethrough => {
-        const [match, value] = strikethrough;
-        const { index, input } = strikethrough;
-        /**
-         * 这个del的写法是致敬萌娘百科的
-         * @see https://zh.moegirl.org/
-         */
+      /:([\d\w_+-]+?):/,
+      emoji => {
+        const [match, value] = emoji;
+        const { index, input } = emoji;
         return (
           <>
             {RegJSXMap(input.slice(0, index), map)}
-            <del title="你知道的太多了" className={style.del}>
-              {value}
-            </del>
+            <Emoji type={value} />
             {RegJSXMap(input.slice(index + match.length), map)}
           </>
         );
       }
     ],
-
     [
       /([*_])([*_])([*_])(.+?)\3\2\1/,
       strongAndEm => {
@@ -237,6 +251,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
         );
       }
     ],
+
     [/[\w\W]*/, ({ input }) => input && <span>{input}</span>]
   ]
 );
