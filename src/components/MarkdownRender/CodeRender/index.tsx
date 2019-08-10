@@ -17,6 +17,7 @@ export default React.memo(function CodeRender({ text, lang }: Tokens.Code) {
 });
 
 function getRegJSXMap(lang: string) {
+  console.log(lang);
   if (!lang) {
     return other[1];
   }
