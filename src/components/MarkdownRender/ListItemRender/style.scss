@@ -1,5 +1,6 @@
 .checkbox {
   cursor: default;
+  font-size: $font-size-base + 2px;
   & * {
     cursor: default;
   }

@@ -9,10 +9,27 @@ export interface ListItemRenderProps {
   children: React.ReactNode;
 }
 
-export default React.memo(function ListItemRender({ checked, task, children }: ListItemRenderProps) {
+export default React.memo(function ListItemRender({
+  checked,
+  task,
+  children
+}: ListItemRenderProps) {
+  const isArray = Array.isArray(children);
   return (
     <li>
-      {task ? <Checkbox checked={checked} className={style.checkbox}>{children}</Checkbox> : children}
+      {task ? (
+        <>
+          {/** 不这样判断的话, li 的小圆点会沉底, 很丑 */}
+          <Checkbox checked={checked} className={style.checkbox}>
+            {isArray
+              ? (children as React.ReactNodeArray).slice(0, 1)
+              : children}
+          </Checkbox>
+          {isArray && (children as React.ReactNodeArray).slice(1)}
+        </>
+      ) : (
+        children
+      )}
     </li>
-  )
+  );
 });
