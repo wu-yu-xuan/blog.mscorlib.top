@@ -9,7 +9,7 @@ import MarkdownView from './MarkdownView';
 
 const tabRouteComponents: TabRouteElement[] = [
   { path: '/blog', tabName: 'Blog', title: 'wyx\'s blog', Component: BlogView },
-  { path: '/markdonwn', tabName: 'Markdown', title: 'wyx\'s markdown playground', Component: MarkdownView }
+  { path: '/markdown', tabName: 'Markdown', title: 'wyx\'s markdown playground', Component: MarkdownView }
 ];
 
 export default function App() {
