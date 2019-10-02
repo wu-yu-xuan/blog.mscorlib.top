@@ -9,7 +9,6 @@
     "interface-name": false,
     "member-ordering": false,
     "no-console": false,
-    "max-classes-per-file": false,
     "only-arrow-functions": false,
     "jsx-no-lambda": false,
     "no-unused-expression": [true, "allow-fast-null-checks"],

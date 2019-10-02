@@ -6,7 +6,7 @@ import 'codemirror/mode/markdown/markdown';
 import CodeRender from './CodeRender';
 
 export default React.memo(function MarkdownView() {
-  const [code, setCode] = useLocalStorage('markdown');
+  const [code, setCode] = useLocalStorage('markdown', '# type markdown here');
 
   return (
     <section className={style.flex}>
@@ -23,9 +23,12 @@ export default React.memo(function MarkdownView() {
   );
 });
 
-function useLocalStorage(key: string): [string, (value: string) => void] {
+function useLocalStorage(
+  key: string,
+  defaultValue = ''
+): [string, (value: string) => void] {
   const [localState, setLocalState] = React.useState(
-    () => localStorage.getItem(key) || ''
+    () => localStorage.getItem(key) || defaultValue
   );
   const updateLocalState = React.useCallback((value: string) => {
     setLocalState(value);
