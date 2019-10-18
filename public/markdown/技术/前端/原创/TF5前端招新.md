@@ -94,3 +94,5 @@
 在图形学上取得的成就主要是可视化, 比如说 antV 或是 dataV
 
 至于操作系统, 据我所知暂时没有什么夺目的成绩, 这片沃土就交给在座的各位去开辟吧!
+
+![frontend mountain](/static/images/TF5前端招新/frontend-mountain.jpg)
