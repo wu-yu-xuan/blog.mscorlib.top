@@ -74,7 +74,8 @@ async function checkReadme(outputFolder, hash = '') {
       const markdownOutputFileName = path.resolve(
         outputFolder,
         MARKDOWN_FOLDER,
-        'readme.md'
+        '其他',
+        '_readme.md'
       );
       await fs.writeFile(
         markdownOutputFileName,
