@@ -8,6 +8,9 @@
     "url": "https://github.com/wu-yu-xuan/blog.mscorlib.top.git"
   },
   "license": "MIT",
+  "resolutions": {
+    "@types/react": "^16.9.11"
+  },
   "dependencies": {
     "antd": "^3.10.3",
     "autoprefixer": "7.1.6",
@@ -33,9 +36,9 @@
     "node-sass": "^4.9.4",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
-    "react": "^16.8.6",
+    "react": "^16.11.0",
     "react-dev-utils": "^5.0.2",
-    "react-dom": "^16.6.0",
+    "react-dom": "^16.11.0",
     "react-router-dom": "^5.0.0",
     "react-zmage": "^0.7.5",
     "resolve": "1.6.0",
@@ -71,8 +74,8 @@
     "@types/jest": "^23.3.7",
     "@types/marked": "^0.4.2",
     "@types/node": "^10.12.0",
-    "@types/react": "^16.8.13",
-    "@types/react-dom": "^16.0.9",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
     "@types/react-router-dom": "^4.3.2",
     "typescript": "^3.1.3"
   },
