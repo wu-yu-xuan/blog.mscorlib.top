@@ -5,6 +5,7 @@ import { Skeleton, message } from 'antd';
 import * as classNames from 'classnames';
 import * as style from './style.scss';
 import Catalog, { Heading } from './Catalog';
+import useFetch from 'src/useFetch';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -12,9 +13,9 @@ function containDotFile(path: string) {
   return path.startsWith('.') || path.includes('/.');
 }
 
-export default function Article({ match }: RouteComponentProps) {
+function TrueArticle({ title }: { title: string }) {
   const articleRef = React.useRef<HTMLElement>();
-  const [markdown, error] = useMarkdown(match.params[0]);
+  const [markdown, error] = useMarkdown(title);
   const [headings, loading, handleMarkdownRenderUpdate] = useHeadings(
     articleRef.current
   );
@@ -24,13 +25,6 @@ export default function Article({ match }: RouteComponentProps) {
   }
   return (
     <div className={style.articleContainer}>
-      <Skeleton
-        loading={loading}
-        active={true}
-        children={false}
-        title={false}
-        paragraph={{ rows: 6 }}
-      />
       <article
         ref={articleRef}
         hidden={loading}
@@ -46,34 +40,28 @@ export default function Article({ match }: RouteComponentProps) {
   );
 }
 
-function useMarkdown(title: string): [string, boolean] {
-  const [error, setError] = React.useState(false);
-  const [markdown, setMarkdown] = React.useState('');
-  React.useEffect(() => {
-    (async () => {
-      const realTitle = title.replace(/-/g, ' ');
-      // 沙雕 GitHub page, 不支持 dotFile
-      const response = await fetch(
-        !isDev && containDotFile(realTitle)
-          ? `https://raw.githubusercontent.com/${process.env.GIT_USER}/${
-              process.env.GIT_REPO
-            }/master/markdown/${realTitle}.md`
-          : `/markdown/${realTitle}.md`
-      );
-      if (
-        response.ok &&
-        ['text/markdown', 'text/plain'].some(v =>
-          response.headers.get('Content-Type').includes(v)
-        )
-      ) {
-        setMarkdown(await response.text());
-        document.title = `${realTitle.replace(/(^.*\/)/g, '')} - wyx's blog`;
-        return;
-      }
-      setError(true);
-    })();
-  }, [title]);
-  return [markdown, error];
+async function getMarkdown(title: string) {
+  const realTitle = title.replace(/-/g, ' ');
+  // 沙雕 GitHub page, 不支持 dotFile
+  const response = await fetch(
+    !isDev && containDotFile(realTitle)
+      ? `https://raw.githubusercontent.com/${process.env.GIT_USER}/${process.env.GIT_REPO}/master/markdown/${realTitle}.md`
+      : `/markdown/${realTitle}.md`
+  );
+  if (
+    response.ok &&
+    ['text/markdown', 'text/plain'].some(v =>
+      response.headers.get('Content-Type').includes(v)
+    )
+  ) {
+    document.title = `${realTitle.replace(/(^.*\/)/g, '')} - wyx's blog`;
+    return await response.text();
+  }
+  throw new Error();
+}
+
+function useMarkdown(title: string): [string, Error] {
+  return useFetch(getMarkdown, title);
 }
 
 function getHeadings(el: HTMLElement) {
@@ -107,4 +95,22 @@ function useHeadings(el: HTMLElement): [Heading[], boolean, () => void] {
     }
   }, [loading]);
   return [headings, loading, handleMarkdownRenderUpdate];
+}
+
+export default function Article({ match }: RouteComponentProps) {
+  return (
+    <React.Suspense
+      fallback={
+        <Skeleton
+          loading={true}
+          active={true}
+          children={false}
+          title={false}
+          paragraph={{ rows: 6 }}
+        />
+      }
+    >
+      <TrueArticle title={match.params[0]} />
+    </React.Suspense>
+  );
 }

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import * as style from './style.scss';
 import BlogItem, { IBlogItem } from './BlogItem';
-import { Radio } from 'antd';
+import { Radio, Skeleton } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import Types, { ALL_TEXT } from './Types';
 import shouldHide from './shouldHide';
+import useFetch from 'src/useFetch';
 
 const { Group, Button } = Radio;
 
@@ -13,7 +14,7 @@ enum Sort {
   modifyTime
 }
 
-export default function BlogList() {
+function RealBlogList() {
   const blogSummarys = useBlogSummarys();
   const [sortBy, handleRadioChange] = useSortBy();
   const [selections, setSelections] = React.useState<string[]>(['']);
@@ -57,27 +58,29 @@ export default function BlogList() {
   );
 }
 
+async function getBlogSummarys(): Promise<IBlogItem[]> {
+  const response = await fetch('/markdown/list.json');
+  if (!response.ok) {
+    throw new Error();
+  }
+  return await response.json();
+}
+
 function useBlogSummarys() {
-  const [blogSummarys, setBlogSummarys] = React.useState<IBlogItem[]>([]);
-  React.useEffect(() => {
-    (async () => {
-      const response = await fetch('/markdown/list.json');
-      if (!response.ok) {
-        setBlogSummarys([
-          {
-            title: 'unable to connect to the server',
-            birthTime: 0,
-            modifyTime: 0,
-            hash: '',
-            types: []
-          }
-        ]);
-        return;
+  const [blogSummarys, error] = useFetch(getBlogSummarys);
+  if (error) {
+    return [
+      {
+        title: 'unable to connect to the server',
+        birthTime: 0,
+        modifyTime: 0,
+        hash: '',
+        types: []
       }
-      setBlogSummarys(await response.json());
-    })();
-  }, []);
-  return blogSummarys;
+    ];
+  } else {
+    return blogSummarys;
+  }
 }
 
 function useSortBy(): [Sort, (e: RadioChangeEvent) => void] {
@@ -87,4 +90,22 @@ function useSortBy(): [Sort, (e: RadioChangeEvent) => void] {
     []
   );
   return [sortBy, handleRadioChange];
+}
+
+export default function BlogList() {
+  return (
+    <React.Suspense
+      fallback={
+        <Skeleton
+          loading={true}
+          active={true}
+          children={false}
+          title={false}
+          paragraph={{ rows: 6 }}
+        />
+      }
+    >
+      <RealBlogList />
+    </React.Suspense>
+  );
 }
