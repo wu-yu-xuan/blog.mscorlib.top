@@ -113,3 +113,35 @@ WinForm/WPF/QT/Win32/MFC 哪个不比它小, 顿时想弃坑了 233
 不过同可跨端, .Net Core/Java/Python 也不大了...
 
 算了算了, 大不了不编译成 exe, js 它不香吗, 大不了就 `yarn electron .`
+
+然后, 我发现, 我运行了 `yarn add antd` 后, 打包后的体积就变成了 200MB = =
+
+我擦, 不忍了, 去找原因吧
+
+原理是这样的:
+
+打包目录里哪些 dll 和 exe, 每个项目都是一样的, 唯一有区别的是 `release\win-unpacked\resources\app.asar` 这个文件
+
+打包时会把源码或指定目录下的文件压缩进这个文件中, 然后运行时在**解释**执行
+
+(我还以为编译成 exe 能加快运行速度呢, 看来是不对的)
+
+为什么这个文件会很大呢? 多半是把 `node_modules` 这个黑洞给打包进去了
+
+可以使用
+
+```shell
+yarn global add asar
+asar list app.asar
+```
+
+来验证这个猜想
+
+那么如何避免呢?
+
+1. `package.json` 中 `build.files` 字段不包含 `node_modules`
+2. 别把不需要打包进去的库放在 `dependencies` 里, 因为 `electron-builder` 会把 `dependencies` 全部打包进去
+
+那岂不是会语义冲突, 非常不优雅?
+
+其实还有一个办法就是双 `package.json`, 更不优雅 2333
