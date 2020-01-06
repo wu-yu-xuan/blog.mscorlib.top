@@ -145,3 +145,63 @@ asar list app.asar
 那岂不是会语义冲突, 非常不优雅?
 
 其实还有一个办法就是双 `package.json`, 更不优雅 2333
+
+## spawn yarn fail: ENOENT
+
+我希望能在编译完成时启动 electron 进行调试, 于是写下:
+
+```ts
+require('child_process').spawn('yarn', ['electron', '.']);
+```
+
+结果就报了如题的错误
+
+ENOENT 的意思是 _Error NO ENTity_, 即目标程序不存在
+
+我都用了几千年的 yarn 了怎么可能找不到呢?
+
+查阅[官方文档](https://nodejs.org/dist/latest-v10.x/docs/api/child_process.html#child_process_spawning_bat_and_cmd_files_on_windows):
+
+> The importance of the distinction between `child_process.exec()` and `child_process.execFile()` can vary based on platform. On Unix-type operating systems (Unix, Linux, macOS) `child_process.execFile()` can be more efficient because it does not spawn a shell by default. On Windows, however, .bat and .cmd files are not executable on their own without a terminal, and therefore cannot be launched using `child_process.execFile()`. When running on Windows, .bat and .cmd files can be invoked using `child_process.spawn()` with the shell option set, with `child_process.exec()`, or by spawning cmd.exe and passing the .bat or .cmd file as an argument (which is what the shell option and `child_process.exec()` do). In any case, if the script filename contains spaces it needs to be quoted.
+
+简而言之, 就是说要使用 `exec` 来启动 `yarn`, 因为 `yarn` 在 Windows 上是 `yarn.cmd` 的缩写
+
+## electron-devtools-installer
+
+在 webpack 的配置中, 有个字段为 [`node.__dirname`](https://webpack.js.org/configuration/node/#node__dirname)
+
+在 node 环境中, 每个 js 文件都有 `__dirname` 的字段, 代表其所处的文件夹
+
+webpack 需要知道如何处理这个变量, 是以 input 为准(即处理此变量), 还是以 output 为准(即不处理此变量)
+
+在[electron 官方的建议](https://electronjs.org/docs/api/browser-window#winloadurlurl-options)中:
+
+```ts
+let url = require('url').format({
+  protocol: 'file',
+  slashes: true,
+  pathname: require('path').join(__dirname, 'index.html')
+});
+
+win.loadURL(url);
+```
+
+言下之意就是 `__dirname` 以 output 为准
+
+然而在 `electron-devtools-installer` 中, 有类似于这样的代码
+
+```js
+require('child_process').spawn('node', [require('path').resolve(__dirname, '7z-lite/7z.js')]);
+```
+
+本意是使用 7z 来解压下载下来的 devtool, 然而这是谁写的代码, 站出来我保证不打死你 :angry:
+
+我真是第一次见这种操作 instead of import or require
+
+其言下之意就是 `__dirname` 以 input 为准
+
+矛盾!
+
+我尝试过改调用 electron 的写法, 发现没法做到
+
+最终的解决方法是区分环境, dev 时就处理 `__dirname`, prod 时就不处理 `__dirname`
