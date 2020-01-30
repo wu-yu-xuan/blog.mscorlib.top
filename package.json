@@ -19,8 +19,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.0.0",
-    "react-zmage": "^0.7.5",
-    "resolve": "1.6.0"
+    "react-zmage": "^0.7.5"
   },
   "scripts": {
     "start": "node scripts/start.js",
