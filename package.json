@@ -24,7 +24,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "deploy": "gh-pages -d build -b master -t",
+    "deploy": "gh-pages -d build",
     "git": "git push && yarn build && yarn deploy"
   },
   "devDependencies": {
