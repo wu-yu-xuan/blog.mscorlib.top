@@ -65,7 +65,7 @@ typings/
 
 # markdown list
 public/markdown/list.json
-public/markdown/readme.md
+public/markdown/其他/_readme.md
 src/tmp.ts
 
 # Mac cache
