@@ -45,7 +45,7 @@ async function getMarkdown(title: string) {
   // 沙雕 GitHub page, 不支持 dotFile
   const response = await fetch(
     !isDev && containDotFile(realTitle)
-      ? `https://raw.githubusercontent.com/${process.env.GIT_USER}/${process.env.GIT_REPO}/master/markdown/${realTitle}.md`
+      ? `https://raw.githubusercontent.com/${process.env.GIT_USER}/${process.env.GIT_REPO}/gh-pages/markdown/${realTitle}.md`
       : `/markdown/${realTitle}.md`
   );
   if (

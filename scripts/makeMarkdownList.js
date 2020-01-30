@@ -75,7 +75,7 @@ async function checkReadme(outputFolder, hash = '') {
         outputFolder,
         MARKDOWN_FOLDER,
         '其他',
-        '_readme.md'
+        'projectReadme.md'
       );
       await fs.writeFile(
         markdownOutputFileName,
