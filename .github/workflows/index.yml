@@ -15,7 +15,7 @@ jobs:
         # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         persist-credentials: 'false'
     - name: setup node
-      uses: ctions/setup-node@v1.1.0
+      uses: actions/setup-node@v1.1.0
     - name: node dependencies cache
       uses: actions/cache@v1.1.0
       with:
