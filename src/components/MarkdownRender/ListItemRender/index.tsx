@@ -6,14 +6,13 @@ export interface ListItemRenderProps {
   checked?: boolean;
   task: boolean;
   type: string;
-  children: React.ReactNode;
 }
 
 export default React.memo(function ListItemRender({
   checked,
   task,
   children
-}: ListItemRenderProps) {
+}: React.PropsWithChildren<ListItemRenderProps>) {
   const isArray = Array.isArray(children);
   return (
     <li>
