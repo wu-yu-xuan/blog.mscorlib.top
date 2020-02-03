@@ -16,7 +16,7 @@ to use this project as your own blog, use the following steps:
 4. run `git rm public/markdown/*` to delete this project's markdown and put your own markdown blog into this folder
 5. run `yarn build` to build it,
    > NOTE: it may have error while first building, however building twice could fix it
-6. run `yarn deploy` if you want to deploy it on your master branch
+6. use github actions to deploy, see [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages)
 
 ## Acknowledgment
 

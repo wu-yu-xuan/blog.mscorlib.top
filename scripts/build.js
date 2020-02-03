@@ -106,7 +106,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
     })(), (async () => {
       await fs.writeFile(`${paths.appBuild}/README.md`, await fs.readFile(`${await fs.realpath(process.cwd())}/README.md`));
       console.log('README.md done');
-    })(), makeMarkdownList(paths.appBuild)])
+    })()])
   });
 
 // Create the production build and print the deployment instructions.
