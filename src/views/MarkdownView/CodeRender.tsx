@@ -1,6 +1,6 @@
-import * as React from "react";
-import * as CodeMirror from "codemirror";
-import "codemirror/lib/codemirror.css";
+import * as React from 'react';
+import * as CodeMirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
 
 interface ICodeRender {
   className: string;
@@ -13,7 +13,7 @@ interface ICodeRender {
 export default function CodeRender({
   className,
   options,
-  defaultValue = "",
+  defaultValue = '',
   onChange
 }: ICodeRender) {
   const textareaRef = useCodeMirror({
@@ -44,7 +44,7 @@ function useCodeMirror({ options, defaultValue, onChange }: ICodeRender) {
       ...options
     });
     codemirrorRef.current.setValue(defaultValue);
-    codemirrorRef.current.on("change", e => {
+    codemirrorRef.current.on('change', e => {
       onChange(e.getValue());
     });
     return codemirrorRef.current.toTextArea;

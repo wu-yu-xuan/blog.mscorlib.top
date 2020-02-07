@@ -9,8 +9,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
   [
     [
       /^(\$|#|>)(\s.*)?$/m,
-      dollar => {
-        return (
+      dollar => (
           <>
             {RegJSXMap(dollar.input.slice(0, dollar.index), map)}
             <span className={style.keyword}>{dollar[1]}</span>
@@ -20,13 +19,11 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
               map
             )}
           </>
-        );
-      }
+        )
     ],
     [
       /(['"]).*?\1/m,
-      stringMatch => {
-        return (
+      stringMatch => (
           <>
             {RegJSXMap(stringMatch.input.slice(0, stringMatch.index), map)}
             <span className={style.string}>{stringMatch[0]}</span>
@@ -37,8 +34,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
               map
             )}
           </>
-        );
-      }
+        )
     ],
     [/[\w\W]*/, ({ input }) => input && <span>{input}</span>]
   ]

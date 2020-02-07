@@ -8,8 +8,13 @@ import BlogView from './BlogView';
 import MarkdownView from './MarkdownView';
 
 const tabRouteComponents: TabRouteElement[] = [
-  { path: '/blog', tabName: 'Blog', title: 'wyx\'s blog', Component: BlogView },
-  { path: '/markdown', tabName: 'Markdown', title: 'wyx\'s markdown playground', Component: MarkdownView }
+  { path: '/blog', tabName: 'Blog', title: "wyx's blog", Component: BlogView },
+  {
+    path: '/markdown',
+    tabName: 'Markdown',
+    title: "wyx's markdown playground",
+    Component: MarkdownView
+  }
 ];
 
 export default function App() {
@@ -22,5 +27,5 @@ export default function App() {
         </>
       </BrowserRouter>
     </LocaleProvider>
-  )
+  );
 }

@@ -1,6 +1,5 @@
 import { Modal } from 'antd';
 
-// tslint:disable:no-console
 // In production, we register a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
@@ -25,7 +24,7 @@ export default function register() {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(
-      process.env.PUBLIC_URL!,
+      process.env.PUBLIC_URL,
       window.location.toString()
     );
     if (publicUrl.origin !== window.location.origin) {
@@ -103,7 +102,7 @@ function checkValidServiceWorker(swUrl: string) {
       // Ensure service worker exists, and that we really are getting a JS file.
       if (
         response.status === 404 ||
-        response.headers.get('content-type')!.indexOf('javascript') === -1
+        !response.headers.get('content-type').includes('javascript')
       ) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then(registration => {

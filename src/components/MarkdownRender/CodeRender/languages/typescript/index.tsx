@@ -19,8 +19,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
   [
     [
       /(\/\*[\w\W]*?\*\/)/,
-      mutilCommentMatch => {
-        return (
+      mutilCommentMatch => (
           <>
             {RegJSXMap(
               mutilCommentMatch.input.slice(0, mutilCommentMatch.index),
@@ -34,13 +33,11 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
               map
             )}
           </>
-        );
-      }
+        )
     ],
     [
       /(\/\/.*)$/m,
-      commentMatch => {
-        return (
+      commentMatch => (
           <>
             {RegJSXMap(commentMatch.input.slice(0, commentMatch.index), map)}
             <span className={style.comment}>{commentMatch[0]}</span>
@@ -51,13 +48,11 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
               map
             )}
           </>
-        );
-      }
+        )
     ],
     [
       /(['"]).*?\1/m,
-      stringMatch => {
-        return (
+      stringMatch => (
           <>
             {RegJSXMap(stringMatch.input.slice(0, stringMatch.index), map)}
             <span className={style.string}>{stringMatch[0]}</span>
@@ -68,8 +63,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
               map
             )}
           </>
-        );
-      }
+        )
     ],
     [
       /\w+/,

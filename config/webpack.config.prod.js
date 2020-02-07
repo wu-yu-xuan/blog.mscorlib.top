@@ -442,8 +442,7 @@ module.exports = {
     // Perform type checking and linting in a separate process to speed up compilation
     new ForkTsCheckerWebpackPlugin({
       async: false,
-      tsconfig: paths.appTsProdConfig,
-      tslint: paths.appTsLint
+      tsconfig: paths.appTsProdConfig
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.
