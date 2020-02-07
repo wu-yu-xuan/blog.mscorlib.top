@@ -1,3 +1,5 @@
+import { Modal } from 'antd';
+
 // tslint:disable:no-console
 // In production, we register a service worker to serve assets from local cache.
 
@@ -70,7 +72,14 @@ function registerValidSW(swUrl: string) {
                 // the fresh content will have been added to the cache.
                 // It's the perfect time to display a 'New content is
                 // available; please refresh.' message in your web app.
-                console.log('New content is available; please refresh.');
+                Modal.confirm({
+                  title: '新版博客系统已准备就绪',
+                  content: '重载页面以完成更新',
+                  okText: '更新',
+                  cancelText: '取消',
+                  okType: 'primary',
+                  onOk: location.reload
+                });
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a
