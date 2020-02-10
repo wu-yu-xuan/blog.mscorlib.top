@@ -10,7 +10,9 @@ export default React.memo(function CodeRender({ text, lang }: Tokens.Code) {
   return (
     <BlockWrapper>
       <pre className={style.pre}>
-        <code lang={lang}>{RegJSXMap(text, getRegJSXMap(lang))}</code>
+        <code className={style.code} lang={lang}>
+          {RegJSXMap(text, getRegJSXMap(lang))}
+        </code>
       </pre>
     </BlockWrapper>
   );
