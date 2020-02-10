@@ -77,7 +77,7 @@ function registerValidSW(swUrl: string) {
                   okText: '更新',
                   cancelText: '取消',
                   okType: 'primary',
-                  onOk: location.reload
+                  onOk: () => location.reload()
                 });
               } else {
                 // At this point, everything has been precached.
