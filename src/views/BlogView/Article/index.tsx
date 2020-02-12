@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, Redirect } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 import MarkdownRender from 'src/components/MarkdownRender';
 import { Skeleton, message } from 'antd';
 import * as classNames from 'classnames';
@@ -97,20 +97,20 @@ function useHeadings(el: HTMLElement): [Heading[], boolean, () => void] {
   return [headings, loading, handleMarkdownRenderUpdate];
 }
 
-export default function Article({ match }: RouteComponentProps) {
+export default function Article() {
+  const title = useParams()[0];
   return (
     <React.Suspense
       fallback={
         <Skeleton
           loading={true}
           active={true}
-          children={false}
           title={false}
           paragraph={{ rows: 6 }}
         />
       }
     >
-      <TrueArticle title={match.params[0]} />
+      <TrueArticle title={title} />
     </React.Suspense>
   );
 }
