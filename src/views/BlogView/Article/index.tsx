@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Redirect, useParams } from 'react-router';
+import { Redirect, useParams } from 'web-router';
 import MarkdownRender from 'src/components/MarkdownRender';
 import { Skeleton, message } from 'antd';
 import * as classNames from 'classnames';
@@ -98,7 +98,7 @@ function useHeadings(el: HTMLElement): [Heading[], boolean, () => void] {
 }
 
 export default function Article() {
-  const title = useParams()[0];
+  const { title } = useParams<{ title: string }>();
   return (
     <React.Suspense
       fallback={

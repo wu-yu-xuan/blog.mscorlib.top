@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import { Link } from 'react-router-dom';
+import { Link } from 'web-router';
 
 function formatTime(time: number) {
   const date = new Date(time);

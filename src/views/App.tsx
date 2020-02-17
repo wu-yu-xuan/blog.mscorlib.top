@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'web-router';
 import TabRoute, { TabRouteElement } from '../components/TabRoute';
 import Corner from './Corner';
 import BlogView from './BlogView';
 import MarkdownView from './MarkdownView';
-
+import * as r from 'web-router';
+console.log(r.Link);
+console.log(r);
 const tabRouteComponents: TabRouteElement[] = [
   { path: '/blog', tabName: 'Blog', title: "wyx's blog", Component: BlogView },
   {
@@ -20,12 +22,10 @@ const tabRouteComponents: TabRouteElement[] = [
 export default function App() {
   return (
     <LocaleProvider locale={zhCN}>
-      <BrowserRouter>
-        <>
-          <Corner />
-          <TabRoute components={tabRouteComponents} />
-        </>
-      </BrowserRouter>
+      <Router>
+        <Corner />
+        <TabRoute components={tabRouteComponents} />
+      </Router>
     </LocaleProvider>
   );
 }

@@ -154,7 +154,6 @@ module.exports = {
           // Compile .tsx?
           {
             test: /\.(ts|tsx)$/,
-            include: paths.appSrc,
             use: [
               {
                 loader: require.resolve('ts-loader'),
