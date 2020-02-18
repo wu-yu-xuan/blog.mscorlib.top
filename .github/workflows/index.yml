@@ -28,5 +28,6 @@ jobs:
     - name: deploy
       uses: wu-yu-xuan/deploy-github-pages@master
       with:
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
         commit_message: ${{ github.event.head_commit.message }}
         
