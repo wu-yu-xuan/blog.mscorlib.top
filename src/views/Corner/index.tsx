@@ -12,9 +12,20 @@ export default React.memo(function Corner() {
       >
         <Icon type="github" className={style.icon} />
       </a>
-      <div className={style.mask}>
-        <div className={style.triangle} />
-      </div>
+      <div className={style.triangle} style={useSupressMountTransition()} />
     </div>
   );
 });
+
+/**
+ * 抑制挂载时由 default 样式变为当前样式的动画
+ */
+function useSupressMountTransition() {
+  const [transition, setTransition] = React.useState<React.CSSProperties>({
+    transition: 'none'
+  });
+  React.useEffect(() => {
+    setTimeout(() => setTransition({}), 50);
+  }, []);
+  return transition;
+}

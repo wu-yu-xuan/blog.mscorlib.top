@@ -1,6 +1,5 @@
 .fix-container {
   $container-size: 60px;
-  $sqrt2: 1.41422135623;
   position: fixed;
   right: -1px;
   top: -1px;
@@ -10,53 +9,44 @@
   @include width-mobile {
     display: none;
   }
-  &:hover {
-    .mask {
-      transform: rotate3d(0, 1, 0, 180deg) rotate(45deg);
-      .triangle {
-        box-shadow: 0 0 2px $border-color-base;
-      }
-    }
+  .triangle:hover,
+  .icon-container:hover ~ .triangle {
+    transform: rotate3d(-1, -1, 0, 180deg);
+    box-shadow: 0 0 2px $border-color-base;
+    background: #eee;
+    top: 0px;
+    left: 0px;
   }
-  .mask {
-    height: $container-size * $sqrt2;
-    width: $container-size * $sqrt2;
-    overflow: hidden;
-    transform: rotate(-45deg) translateX(-1px);
-    transform-origin: left top;
-    transition: .6s ease-in-out;
+  .triangle {
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    width: $container-size + 1;
+    height: $container-size + 1;
+    background: #fff;
+    transition: 0.6s ease-in-out;
     position: absolute;
-    .triangle {
-      width: $container-size;
-      height: $container-size;
-      transform: rotate(45deg);
-      transform-origin: left top;
-      background: #fff;
-      transition: .6s;
-    }
+    top: 1px;
+    left: -1px;
   }
   .icon-container {
-    height: $container-size * $sqrt2;
-    width: $container-size * $sqrt2;
-    display: block;
+    height: $container-size;
+    width: $container-size;
     overflow: hidden;
-    transform: rotate(-45deg);
-    transform-origin: left top;
-    position: absolute;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     background: #ddd;
     color: $text-color;
+    position: absolute;
     &:hover,
     &:active,
     &:link {
       color: $text-color;
     }
     .icon {
-      transform: rotate(90deg);
-      transform-origin: left top;
+      transform: rotate(45deg);
       font-size: $container-size / 2;
+      height: $container-size * 5 / 6;
     }
   }
 }
