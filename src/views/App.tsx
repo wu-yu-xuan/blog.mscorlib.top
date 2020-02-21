@@ -6,9 +6,7 @@ import TabRoute, { TabRouteElement } from '../components/TabRoute';
 import Corner from './Corner';
 import BlogView from './BlogView';
 import MarkdownView from './MarkdownView';
-import * as r from 'web-router';
-console.log(r.Link);
-console.log(r);
+
 const tabRouteComponents: TabRouteElement[] = [
   { path: '/blog', tabName: 'Blog', title: "wyx's blog", Component: BlogView },
   {

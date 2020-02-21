@@ -2,34 +2,33 @@ name: build and publish to github page
 
 on:
   push:
-    branches: 
+    branches:
       - master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: setup node
-      uses: actions/setup-node@v1.1.0
-    - name: node dependencies cache
-      uses: actions/cache@v1.1.0
-      with:
-        path: ~/.npm
-        key: ${{ runner.OS }}-node-modules-cache-${{ hashFiles('yarn.lock') }}
-    - name: install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        npm install -g yarn
-        yarn
-    - name: build
-      run: |
-        yarn build
-        cp ./README.md ./public/markdown/其他/projectReadme.md
-    - name: deploy
-      uses: wu-yu-xuan/deploy-github-pages@action
-      with:
-        personal_token: ${{ secrets.PERSONAL_TOKEN }}
-        commit_message: ${{ github.event.head_commit.message }}
-        
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1.1.0
+      - name: node dependencies cache
+        uses: actions/cache@v1.1.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-modules-cache-${{ hashFiles('yarn.lock') }}
+      - name: install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          npm install -g yarn
+          yarn
+      - name: build
+        run: |
+          yarn build
+          cp ./README.md ./build/markdown/其他/projectReadme.md
+      - name: deploy
+        uses: wu-yu-xuan/deploy-github-pages@action
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          commit_message: ${{ github.event.head_commit.message }}
