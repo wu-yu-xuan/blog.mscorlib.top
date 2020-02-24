@@ -54,7 +54,9 @@ async function getMarkdown(title: string) {
       response.headers.get('Content-Type').includes(v)
     )
   ) {
-    document.title = `${realTitle.replace(/(^.*\/)/g, '')} - wyx's blog`;
+    document.title = `${decodeURI(
+      realTitle.replace(/(^.*\/)/g, '')
+    )} - wyx's blog`;
     return await response.text();
   }
   throw new Error();
