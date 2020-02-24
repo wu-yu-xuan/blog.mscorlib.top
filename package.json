@@ -53,7 +53,7 @@
     "html-webpack-plugin": "2.29.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.9.4",
+    "node-sass": "^4.13.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "prettier": "^1.19.1",
