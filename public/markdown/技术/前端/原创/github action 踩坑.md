@@ -61,3 +61,42 @@ module.exports = {
 结果如图, 编译成功
 
 ![rollup-success](/static/images/github-action踩坑/rollup-success.png)
+
+## ignore package
+
+在运行时, 抛出了这样的错误:
+
+```
+cannot resolve module '@microsoft/typescript-etw'
+```
+
+原因是 `@microsoft/typescript-etw` 是仅运行在 Windows 平台上的 log lib
+
+为了全平台兼容性~~强迫症~~, 自然要 ignore 了
+
+于是我找到了 [proteriax/rollup-plugin-ignore](https://github.com/proteriax/rollup-plugin-ignore)
+
+距离我的预期还有点差距, 于是我稍作改动:
+
+```typescript
+function ignore(name) {
+  return {
+    resolveId(id) {
+      return id === name ? 'shit' : null;
+    },
+    load(id) {
+      return id === 'shit' ? emptyFile : null;
+    }
+  };
+}
+```
+
+结果报错:
+
+```
+[!] Error: 'shit' is imported as an external by  shit?commonjs-proxy, but is already an existing non-external module id.
+```
+
+那咋办哪, 后来我意外发现了 `@rollup/plugin-commonjs` 自带 ignore option, 凡是 ignore 的, 就会保留 `require`, 而非置顶
+
+达到目的, 完美
