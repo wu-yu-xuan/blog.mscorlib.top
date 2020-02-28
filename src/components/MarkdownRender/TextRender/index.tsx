@@ -150,7 +150,7 @@ const map: IRegJSXMap = new Map<RegExp, (reg: RegExpMatchArray) => JSX.Element>(
       }
     ],
     [
-      /(<(.+?)>.*?<\/\2>)/,
+      /(<(\w+?).*?>.*?<\/\2>)/,
       complexHtml => {
         const [match] = complexHtml;
         const { index, input } = complexHtml;
