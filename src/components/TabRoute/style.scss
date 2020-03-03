@@ -13,6 +13,11 @@
       padding: 0;
       height: 45px;
     }
+    .ant-tabs-bar {
+      @media print {
+        display: none;
+      }
+    }
   }
 }
 
