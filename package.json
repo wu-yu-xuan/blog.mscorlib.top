@@ -12,7 +12,7 @@
     "@types/react": "^16.9.11"
   },
   "dependencies": {
-    "antd": "^3.10.3",
+    "antd": "^4.0.2",
     "classnames": "^2.2.6",
     "codemirror": "^5.45.0",
     "marked": "^0.5.1",

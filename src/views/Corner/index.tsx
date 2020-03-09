@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import { Icon } from 'antd';
+import { GithubOutlined } from '@ant-design/icons';
 
 export default React.memo(function Corner() {
   return (
@@ -10,7 +10,7 @@ export default React.memo(function Corner() {
         title="star me on github!"
         href="//github.com/wu-yu-xuan/blog.mscorlib.top"
       >
-        <Icon type="github" className={style.icon} />
+        <GithubOutlined className={style.icon} />
       </a>
       <div className={style.triangle} style={useSupressMountTransition()} />
     </div>

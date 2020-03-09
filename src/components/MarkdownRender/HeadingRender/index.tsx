@@ -3,9 +3,9 @@ import { Tokens } from 'marked';
 import TextRender from '../TextRender';
 import BlockWrapper from '../BlockWrapper';
 import * as style from './style.scss';
-import { Icon } from 'antd';
 import * as classNames from 'classnames';
 import HrRender from '../HrRender';
+import { LinkOutlined } from '@ant-design/icons';
 
 export default React.memo(function HeadingRender({
   depth,
@@ -20,7 +20,7 @@ export default React.memo(function HeadingRender({
       <Tag className={classNames(style.h, style[Tag])} id={id}>
         <TextRender text={txt} />
         <a href={`#${id}`} className={style.link}>
-          <Icon type="link" />
+          <LinkOutlined />
         </a>
       </Tag>
       {depth === 1 && <HrRender />}
