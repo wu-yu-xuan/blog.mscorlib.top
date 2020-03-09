@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LocaleProvider } from 'antd';
+import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { Router } from 'web-router';
 import TabRoute, { TabRouteElement } from '../components/TabRoute';
@@ -19,11 +19,11 @@ const tabRouteComponents: TabRouteElement[] = [
 
 export default function App() {
   return (
-    <LocaleProvider locale={zhCN}>
+    <ConfigProvider locale={zhCN}>
       <Router>
         <Corner />
         <TabRoute components={tabRouteComponents} />
       </Router>
-    </LocaleProvider>
+    </ConfigProvider>
   );
 }
