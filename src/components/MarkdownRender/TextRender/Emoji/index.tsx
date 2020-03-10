@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { emoji } from './style.scss';
-import getEmoji from './getEmoji';
-import useFetch from 'src/useFetch';
+import React from 'react';
+import ErrorEmoji from './ErrorEmoji';
+import ErrorBoundary from 'src/ErrorBoundary';
+import EmojiImg from './EmojiImg';
 
 export interface EmojiProps {
   type: string;
@@ -15,36 +15,10 @@ export interface EmojiProps {
  */
 export default function Emoji({ type }: EmojiProps) {
   return (
-    <React.Suspense fallback={<>:{type}:</>}>
-      <Img type={type} />
-    </React.Suspense>
+    <ErrorBoundary fallback={<ErrorEmoji type={type} status="error" />}>
+      <React.Suspense fallback={<ErrorEmoji type={type} status="loading" />}>
+        <EmojiImg type={type} />
+      </React.Suspense>
+    </ErrorBoundary>
   );
-}
-
-function Img({ type }: EmojiProps) {
-  const [src] = useFetch(getEmoji, type);
-  const imgRef = React.useRef<HTMLImageElement>(null);
-  React.useLayoutEffect(() => {
-    if (imgRef.current) {
-      const { fontSize } = getComputedStyle(imgRef.current);
-      const size = parseInt(fontSize);
-      imgRef.current.width = size;
-      imgRef.current.height = size;
-    }
-  }, [src]);
-  if (src) {
-    return (
-      <img
-        ref={imgRef}
-        title={type}
-        alt={type}
-        height={20}
-        width={20}
-        src={src}
-        className={emoji}
-      />
-    );
-  } else {
-    return <>:{type}:</>;
-  }
 }

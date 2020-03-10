@@ -1,3 +1,11 @@
 .emoji {
-  vertical-align: text-bottom;
+  vertical-align: middle;
+}
+
+.error {
+  color: rgba($color: $error-color, $alpha: 0.2);
+}
+
+.loading {
+  color: rgba($color: $border-color-base, $alpha: 0.2);
 }
