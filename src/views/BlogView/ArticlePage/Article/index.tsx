@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { Redirect, useParams } from 'web-router';
 import MarkdownRender from 'src/components/MarkdownRender';
-import { Skeleton, message } from 'antd';
 import * as classNames from 'classnames';
 import * as style from './style.scss';
 import Catalog, { Heading } from './Catalog';
@@ -13,16 +11,12 @@ function containDotFile(path: string) {
   return path.startsWith('.') || path.includes('/.');
 }
 
-function TrueArticle({ title }: { title: string }) {
+export default function Article({ title }: { title: string }) {
   const articleRef = React.useRef<HTMLElement>();
-  const [markdown, error] = useMarkdown(title);
+  const markdown = useMarkdown(title);
   const [headings, loading, handleMarkdownRenderUpdate] = useHeadings(
     articleRef.current
   );
-  if (error) {
-    message.warn('未找到目标文章');
-    return <Redirect to="/blog" />;
-  }
   return (
     <div className={style.articleContainer}>
       <article
@@ -97,22 +91,4 @@ function useHeadings(el: HTMLElement): [Heading[], boolean, () => void] {
     }
   }, [loading]);
   return [headings, loading, handleMarkdownRenderUpdate];
-}
-
-export default function Article() {
-  const { title } = useParams<{ title: string }>();
-  return (
-    <React.Suspense
-      fallback={
-        <Skeleton
-          loading={true}
-          active={true}
-          title={false}
-          paragraph={{ rows: 6 }}
-        />
-      }
-    >
-      <TrueArticle title={title} />
-    </React.Suspense>
-  );
 }

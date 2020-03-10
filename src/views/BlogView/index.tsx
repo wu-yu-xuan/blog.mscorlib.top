@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Switch, Route } from 'web-router';
-import Article from './Article';
+import Article from './ArticlePage';
 import BlogListPage from './BlogListPage';
 
 export default function BlogView() {
