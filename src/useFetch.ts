@@ -1,35 +1,43 @@
-import { useCallback } from 'react';
-
-interface Cache<T = any, E = Error> {
+interface Cache<T = any> {
   data: T;
-  error: E;
+  error: Error | typeof initError;
   promise: Promise<T>;
 }
 
 const cache: { [key: string]: Cache } = {};
 
-export default function useFetch<T extends any[], Data = any, E = Error>(
+/**
+ * 以前初始值是 `undefined`, 当 `promise` 返回 `undefined` 时会引起递归
+ */
+const initData = Symbol('init data');
+const initError = Symbol('no error');
+
+/**
+ * 说白了就是配合 `React.Suspence` 可以 "异步转同步"
+ * 删除了 `error`, 将由 `ErrorBoundary` 处理
+ * @param fn
+ * @param args
+ */
+export default function useFetch<T extends any[], Data = any>(
   fn: (...args: T) => Promise<Data>,
   ...args: T
-): [Data, E] {
+): Data {
   const key = fn.name + args.toString();
-  const refresh = useCallback(async () => {
+  if (!cache[key]) {
     cache[key] = {
-      data: undefined,
-      error: undefined,
+      data: initData,
+      error: initError,
       promise: fn(...args)
         .then(data => (cache[key].data = data))
         .catch(error => (cache[key].error = error))
     };
-  }, args);
-  if (!cache[key]) {
-    refresh();
   }
-  if (
-    typeof cache[key].data === 'undefined' &&
-    typeof cache[key].error === 'undefined'
-  ) {
+  if (cache[key].data === initData && cache[key].error === initError) {
     throw cache[key].promise;
   }
-  return [cache[key].data, (cache[key].error as any) as E];
+  if (cache[key].error !== initError) {
+    // 异步错误转同步错误抛出, 真蛋疼
+    throw cache[key].error;
+  }
+  return cache[key].data;
 }
