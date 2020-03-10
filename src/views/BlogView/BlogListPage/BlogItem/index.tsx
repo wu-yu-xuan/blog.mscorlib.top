@@ -7,7 +7,7 @@ function formatTime(time: number) {
   return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
 }
 
-export interface IBlogItem {
+export interface BlogItemProps {
   title: string;
   modifyTime: number;
   birthTime: number;
@@ -20,7 +20,7 @@ export default React.memo(function BlogItem({
   birthTime,
   modifyTime,
   types
-}: IBlogItem) {
+}: BlogItemProps) {
   const path = types.join('/');
   return (
     <div className={style.blogListItemContainer}>

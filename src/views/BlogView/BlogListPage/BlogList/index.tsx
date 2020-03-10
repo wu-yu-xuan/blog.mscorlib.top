@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import BlogItem, { IBlogItem } from './BlogItem';
-import { Radio, Skeleton } from 'antd';
+import BlogItem, { BlogItemProps } from '../BlogItem';
+import { Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
-import Types, { ALL_TEXT } from './Types';
-import shouldHide from './shouldHide';
+import Types, { ALL_TEXT } from '../Types';
+import shouldHide from '../shouldHide';
 import useFetch from 'src/useFetch';
 
 const { Group, Button } = Radio;
@@ -14,7 +14,7 @@ enum Sort {
   modifyTime
 }
 
-function RealBlogList() {
+export default function BlogList() {
   const blogSummarys = useBlogSummarys();
   const [sortBy, handleRadioChange] = useSortBy();
   const [selections, setSelections] = React.useState<string[]>(['']);
@@ -31,7 +31,7 @@ function RealBlogList() {
       <Types types={blogSummarys.map(v => v.types)} onChange={setSelections} />
       <div className={style.blogListContainer}>
         {selections
-          .reduce<IBlogItem[]>(
+          .reduce<BlogItemProps[]>(
             (prev, cur, index) =>
               prev.filter(({ types }) => {
                 // 当前选中项为‘全部’
@@ -58,29 +58,16 @@ function RealBlogList() {
   );
 }
 
-async function getBlogSummarys(): Promise<IBlogItem[]> {
+async function getBlogSummarys(): Promise<BlogItemProps[]> {
   const response = await fetch('/markdown/list.json');
   if (!response.ok) {
     throw new Error();
   }
-  return await response.json();
+  return response.json();
 }
 
 function useBlogSummarys() {
-  const [blogSummarys, error] = useFetch(getBlogSummarys);
-  if (error) {
-    return [
-      {
-        title: 'unable to connect to the server',
-        birthTime: 0,
-        modifyTime: 0,
-        hash: '',
-        types: []
-      }
-    ];
-  } else {
-    return blogSummarys;
-  }
+  return useFetch(getBlogSummarys);
 }
 
 function useSortBy(): [Sort, (e: RadioChangeEvent) => void] {
@@ -90,22 +77,4 @@ function useSortBy(): [Sort, (e: RadioChangeEvent) => void] {
     []
   );
   return [sortBy, handleRadioChange];
-}
-
-export default function BlogList() {
-  return (
-    <React.Suspense
-      fallback={
-        <Skeleton
-          loading={true}
-          active={true}
-          children={false}
-          title={false}
-          paragraph={{ rows: 6 }}
-        />
-      }
-    >
-      <RealBlogList />
-    </React.Suspense>
-  );
 }

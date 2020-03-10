@@ -57,12 +57,12 @@ async function getMarkdown(title: string) {
     document.title = `${decodeURI(
       realTitle.replace(/(^.*\/)/g, '')
     )} - wyx's blog`;
-    return await response.text();
+    return response.text();
   }
   throw new Error();
 }
 
-function useMarkdown(title: string): [string, Error] {
+function useMarkdown(title: string): string {
   return useFetch(getMarkdown, title);
 }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Switch, Route } from 'web-router';
 import Article from './Article';
-import BlogList from './BlogList';
+import BlogListPage from './BlogListPage';
 
 export default function BlogView() {
   return (
@@ -10,7 +10,7 @@ export default function BlogView() {
         <Article />
       </Route>
       <Route path="/">
-        <BlogList />
+        <BlogListPage />
       </Route>
     </Switch>
   );
