@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { createBlockingRoot } from 'react-dom';
 import App from './views/App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+createBlockingRoot(document.getElementById('root')).render(<App />);
 registerServiceWorker();

@@ -16,8 +16,8 @@
     "classnames": "^2.2.6",
     "codemirror": "^5.45.0",
     "marked": "^0.5.1",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "react": "^0.0.0-experimental-235a6c4af",
+    "react-dom": "^0.0.0-experimental-235a6c4af",
     "react-zmage": "^0.7.5",
     "web-router": "https://github.com/wu-yu-xuan/web-router.git"
   },
