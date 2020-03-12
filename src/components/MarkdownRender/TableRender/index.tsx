@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { Tokens } from 'marked';
-import * as style from './style.scss';
+import style from './style.scss';
 import BlockWrapper from '../BlockWrapper';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import TextRender from '../TextRender';
 
 export default function TableRender({ header, align, cells }: Tokens.Table) {

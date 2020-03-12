@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as style from './style.scss';
+import React from 'react';
+import style from './style.scss';
 import MarkdownRender from '../../components/MarkdownRender';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import 'codemirror/mode/markdown/markdown';
 import CodeRender from './CodeRender';
 

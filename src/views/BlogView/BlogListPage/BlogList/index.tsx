@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as style from './style.scss';
+import React from 'react';
+import style from './style.scss';
 import BlogItem, { BlogItemProps } from '../BlogItem';
 import { Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';

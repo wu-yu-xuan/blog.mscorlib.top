@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { Tokens } from 'marked';
 import TextRender from '../TextRender';
 import BlockWrapper from '../BlockWrapper';
-import * as style from './style.scss';
-import * as classNames from 'classnames';
+import style from './style.scss';
+import classNames from 'classnames';
 import HrRender from '../HrRender';
 import { LinkOutlined } from '@ant-design/icons';
 

@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { Checkbox } from 'antd';
-import * as style from './style.scss';
+import style from './style.scss';
 
 export interface ListItemRenderProps {
   checked?: boolean;

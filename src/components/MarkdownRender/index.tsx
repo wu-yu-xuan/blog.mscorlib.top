@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/camelcase */
-import * as React from 'react';
+import React from 'react';
 import { lexer, Tokens } from 'marked';
-import * as style from './style.scss';
+import style from './style.scss';
 import HeadingRender from './HeadingRender';
 import HrRender from './HrRender';
 import ParagraphRender from './ParagraphRender';

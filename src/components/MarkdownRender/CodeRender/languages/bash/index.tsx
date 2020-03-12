@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import RegJSXMap, { IRegJSXMap } from '../../../RegJSXMap';
 import keyWords from './keyWords';
-import * as style from '../../style.scss';
+import style from '../../style.scss';
 import { languageRegMapItem } from '../interface';
 
 const languages = ['bash'];

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import BlockWrapper from '../BlockWrapper';
 import { list } from './style.scss';
 

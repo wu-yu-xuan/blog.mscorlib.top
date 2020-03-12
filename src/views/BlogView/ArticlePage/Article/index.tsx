@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import MarkdownRender from 'src/components/MarkdownRender';
-import * as classNames from 'classnames';
-import * as style from './style.scss';
+import classNames from 'classnames';
+import style from './style.scss';
 import Catalog, { Heading } from './Catalog';
 import useFetch from 'src/useFetch';
 

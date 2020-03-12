@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { Tokens } from 'marked';
-import * as style from './style.scss';
+import style from './style.scss';
 import TextRender from '../TextRender';
 import BlockWrapper from '../BlockWrapper';
 

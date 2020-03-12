@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Tokens } from 'marked';
 import BlockWrapper from './BlockWrapper';
 import RegJSXMap, { IRegJSXMap } from './RegJSXMap';

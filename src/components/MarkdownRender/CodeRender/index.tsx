@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { Tokens } from 'marked';
 import BlockWrapper from '../BlockWrapper';
-import * as style from './style.scss';
+import style from './style.scss';
 import RegJSXMap from '../RegJSXMap';
 import languageMap from './languages';
 import other from './languages/other';

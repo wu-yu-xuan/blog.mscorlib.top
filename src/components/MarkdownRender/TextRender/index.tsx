@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as style from './style.scss';
+import React from 'react';
+import style from './style.scss';
 import HtmlRender from '../HtmlRender';
 import RegJSXMap, { IRegJSXMap } from '../RegJSXMap';
 import Image from 'react-zmage';

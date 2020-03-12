@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import RegJSXMap, { IRegJSXMap } from '../../RegJSXMap';
-import * as style from '../style.scss';
+import style from '../style.scss';
 import { languageRegMapItem } from './interface';
 
 const languages = ['css', 'less', 'scss', 'sass'];
