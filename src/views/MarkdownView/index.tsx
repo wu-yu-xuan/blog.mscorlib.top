@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useDeferredValue } from 'react';
 import style from './style.scss';
 import MarkdownRender from '../../components/MarkdownRender';
 import classNames from 'classnames';
@@ -7,6 +7,7 @@ import CodeRender from './CodeRender';
 
 export default React.memo(function MarkdownView() {
   const [code, setCode] = useLocalStorage('markdown', '# type markdown here');
+  const markdownSource = useDeferredValue(code);
 
   return (
     <section className={style.flex}>
@@ -17,7 +18,7 @@ export default React.memo(function MarkdownView() {
         options={{ mode: 'markdown', lineWrapping: true, autofocus: true }}
       />
       <section className={style.frame}>
-        <MarkdownRender source={code} />
+        <MarkdownRender source={markdownSource} />
       </section>
     </section>
   );
