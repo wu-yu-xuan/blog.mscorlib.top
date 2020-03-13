@@ -28,7 +28,7 @@ export default function BlogList() {
           <Button value={Sort.birthTime}>发布时间</Button>
         </Group>
       </div>
-      <Types types={blogSummarys.map(v => v.types)} onChange={setSelections} />
+      <Types blogSummarys={blogSummarys} onChange={setSelections} searchWords={[]} />
       <div className={style.blogListContainer}>
         {selections
           .reduce<BlogItemProps[]>(
@@ -40,7 +40,7 @@ export default function BlogList() {
                   return types[index] ? !shouldHide(types[index]) : true;
                 } else {
                   // 否则显示与当前选中项相同的
-                  return types[index] && types[index] === cur;
+                  return types?.[index] === cur;
                 }
               }),
             blogSummarys

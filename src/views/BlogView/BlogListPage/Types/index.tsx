@@ -1,98 +1,137 @@
-import React from 'react';
-import style from './style.scss';
-import { Tag } from 'antd';
-import classNames from 'classnames';
+import React, { useState, useEffect } from 'react';
+import { BlogItemProps } from '../BlogItem';
 import shouldHide from '../shouldHide';
+import style from './style.scss';
+import classNames from 'classnames';
+import { Tag as antdTag } from 'antd';
 
-const { CheckableTag } = Tag;
+const { CheckableTag } = antdTag;
 
 export const ALL_TEXT = '全部';
 
-interface ITypes {
-  types: string[][];
-  onChange(types: string[]): void;
+interface TypesProps {
+  /**
+   * 已被筛选过的
+   */
+  blogSummarys: BlogItemProps[];
+  onChange: (selections: string[]) => void;
+  /**
+   * 仅用于高亮
+   */
+  searchWords: string[];
 }
 
-export default React.memo(function Types({ types, onChange }: ITypes) {
-  const [tags, selections, onSelect] = useTypes({ types, onChange });
+interface Tag {
+  name: string;
+  length: number;
+  children: Tag[];
+}
 
-  return (
-    <div className={style.outerContainer}>
-      {tags.map(
-        (arr, row) =>
-          /* 考虑到`[ALL_TEXT]`的情况, 此时并不需要渲染 */
-          arr.length > 1 && (
-            <div className={style.tagContainer} key={row}>
-              {arr.map((v, column) => (
-                <CheckableTag
-                  checked={v === selections[row]}
-                  key={column}
-                  onChange={() => onSelect(row, column)}
-                  className={classNames(
-                    shouldHide(v) && v !== selections[row]
-                      ? style.hidden
-                      : style.tag
-                  )}
-                >
-                  {v}
-                </CheckableTag>
-              ))}
-            </div>
-          )
-      )}
-    </div>
-  );
-});
-
-function useTypes({
-  types,
-  onChange
-}: ITypes): [string[][], string[], (row: number, column: number) => void] {
-  const [selections, setSelections] = React.useState<string[]>([ALL_TEXT]);
-  const [tags, setTags] = React.useState<string[][]>(() =>
-    getTags(types, selections)
-  );
-  const onSelect = (row: number, column: number) => {
-    const newSelections = [...selections];
-    newSelections[row] = tags[row][column];
-    newSelections.splice(row + 1);
-    if (newSelections[row] !== ALL_TEXT) {
-      newSelections.push(ALL_TEXT);
+function getTags(blogSummarys: BlogItemProps[], index = 0): Tag[] {
+  const results: Tag[] = [];
+  let tmpBlogs = [...blogSummarys];
+  while (tmpBlogs.length) {
+    const type = tmpBlogs.find(blog => blog.types?.[index])?.types?.[index];
+    if (!type) {
+      // 没有子类型了
+      break;
     }
-    setSelections(newSelections);
-    setTags(getTags(types, newSelections));
-  };
-  React.useEffect(() => {
+    const typedBlogs = tmpBlogs.filter(blog => blog.types?.[index] === type);
+    results.push({
+      name: type,
+      length: typedBlogs.length,
+      children: getTags(typedBlogs, index + 1)
+    });
+    // 剔除已经计算过的 Tag, 继续循环
+    tmpBlogs = tmpBlogs.filter(blog => blog.types?.[index] !== type);
+  }
+  if (results.length) {
+    results.push({ name: ALL_TEXT, length: blogSummarys.length, children: [] });
+    /**
+     * 按照
+     * 1. 隐藏的在后
+     * 2. 数量多的在前
+     * 的原则排序
+     */
+    return [
+      ...results
+        .filter(tag => !shouldHide(tag.name))
+        .sort((a, b) => b.length - a.length),
+      ...results
+        .filter(tag => shouldHide(tag.name))
+        .sort((a, b) => b.length - a.length)
+    ];
+  }
+  return results;
+}
+
+function getSelectedTag(
+  tags: Tag[],
+  selections: string[],
+  index = 0
+): string[][] {
+  if (tags.length === 0 || index >= selections.length) {
+    return [tags.map(tag => tag.name)];
+  }
+  return [
+    tags.map(tag => tag.name),
+    ...getSelectedTag(
+      tags.find(tag => tag.name === selections[index])?.children ?? [],
+      selections,
+      index + 1
+    )
+  ];
+}
+
+export default function Types({
+  blogSummarys,
+  onChange,
+  searchWords
+}: TypesProps) {
+  const [selections, setSelections] = useState<string[]>([ALL_TEXT]);
+  const [tags, setTags] = useState(() =>
+    getSelectedTag(getTags(blogSummarys), selections)
+  );
+  useEffect(() => {
+    /**
+     * 当搜索字符改变时, 将 selections 置为初始值
+     * 我考虑过了其他方案, 这个方案最大的优势是 bug-free
+     */
+    setSelections([ALL_TEXT]);
+  }, [JSON.stringify(searchWords)]);
+  useEffect(() => {
     onChange(selections);
   }, [selections]);
-  React.useEffect(() => {
-    const newSelections = [ALL_TEXT];
-    setSelections(newSelections);
-    setTags(getTags(types, newSelections));
-  }, [types.length]);
-  return [tags, selections, onSelect];
-}
-
-function getTags(types: string[][], selections: string[]) {
-  return selections.reduce<string[][]>((prev, cur, index) => {
-    const tmpArr = Array.from(
-      new Set([
-        ...types
-          .filter(
-            v =>
-              index === 0 ||
-              (v[index - 1] &&
-                selections[index - 1] &&
-                v[index - 1] === selections[index - 1])
-          )
-          .map(v => v[index] || ALL_TEXT),
-        ALL_TEXT
-      ])
-    );
-    prev.push([
-      ...tmpArr.filter(v => !shouldHide(v)).sort(),
-      ...tmpArr.filter(v => shouldHide(v)).sort()
+  useEffect(() => {
+    setTags(getSelectedTag(getTags(blogSummarys), selections));
+  }, [blogSummarys, selections]);
+  const onSelect = (row: number, column: number) => {
+    const selected = tags[row][column];
+    setSelections([
+      ...selections.slice(0, row),
+      ...(selected === ALL_TEXT ? [ALL_TEXT] : [selected, ALL_TEXT])
     ]);
-    return prev;
-  }, []);
+  };
+  return (
+    <div className={style.outerContainer}>
+      {tags.map((arr, row) => (
+        <div className={style.tagContainer} key={row}>
+          {arr.map((v, column) => (
+            <CheckableTag
+              checked={v === selections[row]}
+              key={column}
+              onChange={() => onSelect(row, column)}
+              className={classNames(
+                shouldHide(v) && v !== selections[row]
+                  ? style.hidden
+                  : style.tag
+              )}
+            >
+              {v}
+            </CheckableTag>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
 }
