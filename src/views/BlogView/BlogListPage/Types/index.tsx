@@ -18,24 +18,26 @@ export default React.memo(function Types({ types, onChange }: ITypes) {
 
   return (
     <div className={style.outerContainer}>
-      {tags.map((arr, row) => (
-        <div className={style.tagContainer} key={row}>
-          {/* 考虑到`[ALL_TEXT]`的情况, 此时并不需要渲染 */}
-          {arr.length > 1 &&
-            arr.map((v, column) => (
-              <CheckableTag
-                checked={v === selections[row]}
-                key={column}
-                onChange={() => onSelect(row, column)}
-                className={classNames({
-                  [style.hidden]: shouldHide(v) && v !== selections[row]
-                })}
-              >
-                {v}
-              </CheckableTag>
-            ))}
-        </div>
-      ))}
+      {tags.map(
+        (arr, row) =>
+          /* 考虑到`[ALL_TEXT]`的情况, 此时并不需要渲染 */
+          arr.length > 1 && (
+            <div className={style.tagContainer} key={row}>
+              {arr.map((v, column) => (
+                <CheckableTag
+                  checked={v === selections[row]}
+                  key={column}
+                  onChange={() => onSelect(row, column)}
+                  className={classNames({
+                    [style.hidden]: shouldHide(v) && v !== selections[row]
+                  })}
+                >
+                  {v}
+                </CheckableTag>
+              ))}
+            </div>
+          )
+      )}
     </div>
   );
 });
