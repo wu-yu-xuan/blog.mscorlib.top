@@ -28,9 +28,11 @@ export default React.memo(function Types({ types, onChange }: ITypes) {
                   checked={v === selections[row]}
                   key={column}
                   onChange={() => onSelect(row, column)}
-                  className={classNames({
-                    [style.hidden]: shouldHide(v) && v !== selections[row]
-                  })}
+                  className={classNames(
+                    shouldHide(v) && v !== selections[row]
+                      ? style.hidden
+                      : style.tag
+                  )}
                 >
                   {v}
                 </CheckableTag>

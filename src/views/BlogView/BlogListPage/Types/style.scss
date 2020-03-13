@@ -1,5 +1,8 @@
 .tag-container {
   margin-bottom: 10px;
+  .tag {
+    cursor: pointer;
+  }
   .hidden {
     opacity: 0;
     &:hover {
