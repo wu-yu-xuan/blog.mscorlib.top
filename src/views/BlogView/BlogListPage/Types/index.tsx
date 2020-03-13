@@ -101,10 +101,10 @@ export default function Types({
   }, [JSON.stringify(searchWords)]);
   useEffect(() => {
     onChange(selections);
-  }, [selections]);
+  }, [JSON.stringify(selections)]);
   useEffect(() => {
     setTags(getSelectedTag(getTags(blogSummarys), selections));
-  }, [blogSummarys, selections]);
+  }, [blogSummarys, JSON.stringify(selections)]);
   const onSelect = (row: number, column: number) => {
     const selected = tags[row][column];
     setSelections([

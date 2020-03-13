@@ -47,7 +47,7 @@ export default function BlogList() {
         )
       )
     );
-  }, [blogSummarys, searchWords]);
+  }, [blogSummarys, JSON.stringify(searchWords)]);
 
   return (
     <>
