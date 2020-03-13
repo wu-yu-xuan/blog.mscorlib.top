@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BlogItemProps } from '../BlogItem';
 import shouldHide from '../shouldHide';
 import style from './style.scss';
-import classNames from 'classnames';
 import { Tag as antdTag } from 'antd';
 
 const { CheckableTag } = antdTag;
@@ -46,14 +45,15 @@ function getTags(blogSummarys: BlogItemProps[], index = 0): Tag[] {
     tmpBlogs = tmpBlogs.filter(blog => blog.types?.[index] !== type);
   }
   if (results.length) {
-    results.push({ name: ALL_TEXT, length: blogSummarys.length, children: [] });
     /**
      * 按照
      * 1. 隐藏的在后
      * 2. 数量多的在前
+     * 3. '全部'位于第一位
      * 的原则排序
      */
     return [
+      { name: ALL_TEXT, length: blogSummarys.length, children: [] },
       ...results
         .filter(tag => !shouldHide(tag.name))
         .sort((a, b) => b.length - a.length),
@@ -121,11 +121,11 @@ export default function Types({
               checked={v === selections[row]}
               key={column}
               onChange={() => onSelect(row, column)}
-              className={classNames(
+              className={
                 shouldHide(v) && v !== selections[row]
                   ? style.hidden
                   : style.tag
-              )}
+              }
             >
               {v}
             </CheckableTag>
