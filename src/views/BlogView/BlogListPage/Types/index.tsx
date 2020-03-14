@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BlogItemProps } from '../BlogItem';
 import shouldHide from '../shouldHide';
 import style from './style.scss';
 import { Tag as antdTag } from 'antd';
+import { Blog } from '../interface';
 
 const { CheckableTag } = antdTag;
 
@@ -12,7 +12,7 @@ interface TypesProps {
   /**
    * 已被筛选过的
    */
-  blogSummarys: BlogItemProps[];
+  blogSummarys: Blog[];
   onChange: (selections: string[]) => void;
   /**
    * 仅用于高亮
@@ -26,7 +26,7 @@ interface Tag {
   children: Tag[];
 }
 
-function getTags(blogSummarys: BlogItemProps[], index = 0): Tag[] {
+function getTags(blogSummarys: Blog[], index = 0): Tag[] {
   const results: Tag[] = [];
   let tmpBlogs = [...blogSummarys];
   while (tmpBlogs.length) {

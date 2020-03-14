@@ -1,10 +1,11 @@
 import React, { Suspense } from 'react';
 import ErrorBoundary from 'src/ErrorBoundary';
-import BlogItem, { BlogItemProps } from './BlogItem';
+import BlogItem from './BlogItem';
 import { Skeleton } from 'antd';
 import BlogList from './BlogList';
+import { Blog } from './interface';
 
-const errorBlogItemProps: BlogItemProps = {
+const errorBlogItemProps: Blog = {
   title: 'unable to connect to the server',
   birthTime: 0,
   modifyTime: 0,

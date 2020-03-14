@@ -1,9 +1,9 @@
-import { BlogItemProps } from '../BlogItem';
 import shouldHide from '../shouldHide';
+import { Blog } from '../interface';
 
 let cache = '';
 
-export default function getRecommend(blogSummarys: BlogItemProps[]) {
+export default function getRecommend(blogSummarys: Blog[]) {
   if (cache) {
     return cache;
   }

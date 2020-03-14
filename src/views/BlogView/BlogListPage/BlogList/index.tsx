@@ -1,17 +1,13 @@
-import React, {
-  useState,
-  useCallback,
-  useDeferredValue,
-  useEffect
-} from 'react';
+import React, { useState, useCallback, useDeferredValue, useMemo } from 'react';
 import style from './style.scss';
-import BlogItem, { BlogItemProps } from '../BlogItem';
+import BlogItem from '../BlogItem';
 import { Radio, Input, Empty } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import Types, { ALL_TEXT } from '../Types';
 import shouldHide from '../shouldHide';
 import useFetch from 'src/useFetch';
 import getRecommend from './getRecommend';
+import { Blog, BlogSearchResult } from '../interface';
 
 const { Group, Button } = Radio;
 
@@ -22,7 +18,6 @@ enum Sort {
 
 export default function BlogList() {
   const blogSummarys = useBlogSummarys();
-  const [filterBlogSummarys, setFilterBlogSumarys] = useState(blogSummarys);
   const [sortBy, handleRadioChange] = useSortBy();
   const [selections, setSelections] = React.useState<string[]>(['']);
   const [rawSearchWords, setSearchWords] = useState('');
@@ -31,22 +26,37 @@ export default function BlogList() {
     (e: React.ChangeEvent<HTMLInputElement>) => setSearchWords(e.target.value),
     []
   );
-  const searchWords = useDeferredValue(rawSearchWords)
-    .split(' ')
-    .filter(v => v)
-    .map(v => v.toLowerCase());
-  useEffect(() => {
-    setFilterBlogSumarys(
-      blogSummarys.filter(({ title, types }) =>
-        [title, ...types].some(
-          value =>
-            !searchWords.length ||
-            searchWords.some(searchWord =>
-              value.toLowerCase().includes(searchWord)
+  const deferSearchWords = useDeferredValue(rawSearchWords);
+  const searchWords = useMemo(
+    () =>
+      deferSearchWords
+        .split(' ')
+        .filter(v => v)
+        .map(v => v.toLowerCase()),
+    [deferSearchWords]
+  );
+  const filterBlogSummarys = useMemo<BlogSearchResult[]>(() => {
+    if (!searchWords.length) {
+      // 没有搜索关键词时则无需搜索
+      return blogSummarys.map(blog => ({ ...blog, matchLength: 0 }));
+    }
+    return blogSummarys
+      .map(blog => {
+        // 计算关键词匹配数
+        const matchLength = [blog.title, ...blog.types].reduce((prev, cur) => {
+          const lowerCase = cur.toLowerCase();
+          return (
+            prev +
+            searchWords.reduce(
+              (searchResult, searchWord) =>
+                searchResult + Number(lowerCase.includes(searchWord)),
+              0
             )
-        )
-      )
-    );
+          );
+        }, 0);
+        return { ...blog, matchLength };
+      })
+      .filter(({ matchLength }) => matchLength);
   }, [blogSummarys, JSON.stringify(searchWords)]);
 
   return (
@@ -76,7 +86,7 @@ export default function BlogList() {
           />
           <div className={style.blogListContainer}>
             {selections
-              .reduce<BlogItemProps[]>(
+              .reduce<BlogSearchResult[]>(
                 (prev, cur, index) =>
                   prev.filter(({ types }) => {
                     // 当前选中项为‘全部’
@@ -90,11 +100,17 @@ export default function BlogList() {
                   }),
                 filterBlogSummarys
               )
-              .sort((a, b) =>
-                sortBy === Sort.modifyTime
+              .sort((a, b) => {
+                const diff = b.matchLength - a.matchLength;
+                if (diff) {
+                  // 优先按照关键词匹配数排序
+                  return diff;
+                }
+                // 匹配数一致则按照时间排序
+                return sortBy === Sort.modifyTime
                   ? b.modifyTime - a.modifyTime
-                  : b.birthTime - a.birthTime
-              )
+                  : b.birthTime - a.birthTime;
+              })
               .map(blogSummary => (
                 <BlogItem {...blogSummary} key={blogSummary.hash} />
               ))}
@@ -116,7 +132,7 @@ export default function BlogList() {
   );
 }
 
-async function getBlogSummarys(): Promise<BlogItemProps[]> {
+async function getBlogSummarys(): Promise<Blog[]> {
   const response = await fetch('/markdown/list.json');
   if (!response.ok) {
     throw new Error();

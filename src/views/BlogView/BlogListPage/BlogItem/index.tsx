@@ -1,18 +1,11 @@
 import React from 'react';
 import style from './style.scss';
 import { Link } from 'web-router';
+import { Blog } from '../interface';
 
 function formatTime(time: number) {
   const date = new Date(time);
   return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
-}
-
-export interface BlogItemProps {
-  title: string;
-  modifyTime: number;
-  birthTime: number;
-  hash: string;
-  types: string[];
 }
 
 export default React.memo(function BlogItem({
@@ -20,7 +13,7 @@ export default React.memo(function BlogItem({
   birthTime,
   modifyTime,
   types
-}: BlogItemProps) {
+}: Blog) {
   const path = types.join('/');
   return (
     <div className={style.blogListItemContainer}>
