@@ -15,7 +15,7 @@
     "antd": "^4.0.2",
     "classnames": "^2.2.6",
     "codemirror": "^5.45.0",
-    "marked": "^0.5.1",
+    "marked": "^0.6.1",
     "react": "^0.0.0-experimental-235a6c4af",
     "react-dom": "^0.0.0-experimental-235a6c4af",
     "react-highlight": "https://github.com/wu-yu-xuan/react-highlight.git",
