@@ -1,7 +1,9 @@
 import React from 'react';
 import style from './style.scss';
 import { Link } from 'web-router';
-import { Blog } from '../interface';
+import { BlogItemProps } from '../interface';
+import ReactHighlight from 'react-highlight';
+import { mark } from '../style.scss';
 
 function formatTime(time: number) {
   const date = new Date(time);
@@ -12,8 +14,9 @@ export default React.memo(function BlogItem({
   title,
   birthTime,
   modifyTime,
-  types
-}: Blog) {
+  types,
+  searchWords
+}: BlogItemProps) {
   const path = types.join('/');
   return (
     <div className={style.blogListItemContainer}>
@@ -22,7 +25,9 @@ export default React.memo(function BlogItem({
         className={style.title}
         title={title}
       >
-        {title}
+        <ReactHighlight searchWords={searchWords} highlightClassName={mark}>
+          {title}
+        </ReactHighlight>
       </Link>
       <div className={style.footer}>
         <span className={style.text}>发布于 {formatTime(birthTime)}</span>

@@ -43,17 +43,23 @@ export default function BlogList() {
     return blogSummarys
       .map(blog => {
         // 计算关键词匹配数
-        const matchLength = [blog.title, ...blog.types].reduce((prev, cur) => {
-          const lowerCase = cur.toLowerCase();
-          return (
-            prev +
-            searchWords.reduce(
-              (searchResult, searchWord) =>
-                searchResult + Number(lowerCase.includes(searchWord)),
-              0
-            )
-          );
-        }, 0);
+        const matchLength = [blog.title, ...blog.types].reduce(
+          (prev, cur, index) => {
+            const lowerCase = cur.toLowerCase();
+            return (
+              prev +
+              searchWords.reduce(
+                (searchResult, searchWord) =>
+                  searchResult +
+                  // 标题中直接出现关键字, 具有更高的优先级, 标题的 index 为 0
+                  Number(lowerCase.includes(searchWord)) *
+                    (index === 0 ? 2 : 1),
+                0
+              )
+            );
+          },
+          0
+        );
         return { ...blog, matchLength };
       })
       .filter(({ matchLength }) => matchLength);
@@ -112,7 +118,11 @@ export default function BlogList() {
                   : b.birthTime - a.birthTime;
               })
               .map(blogSummary => (
-                <BlogItem {...blogSummary} key={blogSummary.hash} />
+                <BlogItem
+                  {...blogSummary}
+                  key={blogSummary.hash}
+                  searchWords={searchWords}
+                />
               ))}
           </div>
         </>

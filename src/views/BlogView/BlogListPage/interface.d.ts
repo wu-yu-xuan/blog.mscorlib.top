@@ -12,3 +12,7 @@ export interface BlogSearchResult extends Blog {
    */
   matchLength: number;
 }
+
+export interface BlogItemProps extends Blog {
+  searchWords: string[];
+}

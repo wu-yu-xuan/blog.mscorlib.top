@@ -6269,6 +6269,10 @@ react-error-overlay@^4.0.1:
   version "4.0.1"
   resolved "http://registry.npm.taobao.org/react-error-overlay/download/react-error-overlay-4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
 
+"react-highlight@https://github.com/wu-yu-xuan/react-highlight.git":
+  version "0.1.0"
+  resolved "https://github.com/wu-yu-xuan/react-highlight.git#b278c296edf67a559457a5fd36acaa2c908c1239"
+
 react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.0"
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import shouldHide from '../shouldHide';
 import style from './style.scss';
 import { Tag as antdTag } from 'antd';
 import { Blog } from '../interface';
+import ReactHighlight from 'react-highlight';
+import { mark } from '../style.scss';
 
 const { CheckableTag } = antdTag;
 
@@ -89,9 +91,6 @@ export default function Types({
   searchWords
 }: TypesProps) {
   const [selections, setSelections] = useState<string[]>([ALL_TEXT]);
-  const [tags, setTags] = useState(() =>
-    getSelectedTag(getTags(blogSummarys), selections)
-  );
   useEffect(() => {
     /**
      * 当搜索字符改变时, 将 selections 置为初始值
@@ -102,9 +101,10 @@ export default function Types({
   useEffect(() => {
     onChange(selections);
   }, [JSON.stringify(selections)]);
-  useEffect(() => {
-    setTags(getSelectedTag(getTags(blogSummarys), selections));
-  }, [blogSummarys, JSON.stringify(selections)]);
+  const tags = useMemo(
+    () => getSelectedTag(getTags(blogSummarys), selections),
+    [blogSummarys, JSON.stringify(selections)]
+  );
   const onSelect = (row: number, column: number) => {
     const selected = tags[row][column];
     setSelections([
@@ -127,7 +127,12 @@ export default function Types({
                   : style.tag
               }
             >
-              {v}
+              <ReactHighlight
+                searchWords={searchWords}
+                highlightClassName={mark}
+              >
+                {v}
+              </ReactHighlight>
             </CheckableTag>
           ))}
         </div>

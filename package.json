@@ -18,6 +18,7 @@
     "marked": "^0.5.1",
     "react": "^0.0.0-experimental-235a6c4af",
     "react-dom": "^0.0.0-experimental-235a6c4af",
+    "react-highlight": "https://github.com/wu-yu-xuan/react-highlight.git",
     "react-zmage": "^0.7.5",
     "web-router": "https://github.com/wu-yu-xuan/web-router.git"
   },

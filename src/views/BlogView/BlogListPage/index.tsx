@@ -3,14 +3,15 @@ import ErrorBoundary from 'src/ErrorBoundary';
 import BlogItem from './BlogItem';
 import { Skeleton } from 'antd';
 import BlogList from './BlogList';
-import { Blog } from './interface';
+import { BlogItemProps } from './interface';
 
-const errorBlogItemProps: Blog = {
+const errorBlogItemProps: BlogItemProps = {
   title: 'unable to connect to the server',
   birthTime: 0,
   modifyTime: 0,
   hash: '',
-  types: []
+  types: [],
+  searchWords: []
 };
 
 const errorBlogItem = <BlogItem {...errorBlogItemProps} />;
