@@ -25,9 +25,9 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
-const makeMarkdownList = require('./makeMarkdownList');
 
-const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
+const measureFileSizesBeforeBuild =
+  FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -59,13 +59,13 @@ measureFileSizesBeforeBuild(paths.appBuild)
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
-          chalk.underline(chalk.yellow('keywords')) +
-          ' to learn more about each warning.'
+            chalk.underline(chalk.yellow('keywords')) +
+            ' to learn more about each warning.'
         );
         console.log(
           'To ignore, add ' +
-          chalk.cyan('// eslint-disable-next-line') +
-          ' to the line before.\n'
+            chalk.cyan('// eslint-disable-next-line') +
+            ' to the line before.\n'
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -98,16 +98,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
       printBuildError(err);
       process.exit(1);
     }
-  )
-  .then(() => {
-    Promise.all([(async () => {
-      await fs.writeFile(`${paths.appBuild}/404.html`, await fs.readFile(`${paths.appBuild}/index.html`));
-      console.log('404 page done');
-    })(), (async () => {
-      await fs.writeFile(`${paths.appBuild}/README.md`, await fs.readFile(`${await fs.realpath(process.cwd())}/README.md`));
-      console.log('README.md done');
-    })()])
-  });
+  );
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
@@ -137,7 +128,7 @@ function build(previousFileSizes) {
         console.log(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
-            'Most CI servers set it automatically.\n'
+              'Most CI servers set it automatically.\n'
           )
         );
         return reject(new Error(messages.warnings.join('\n\n')));
@@ -145,7 +136,7 @@ function build(previousFileSizes) {
       return resolve({
         stats,
         previousFileSizes,
-        warnings: messages.warnings,
+        warnings: messages.warnings
       });
     });
   });
@@ -154,6 +145,6 @@ function build(previousFileSizes) {
 function copyPublicFolder() {
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: file => file !== paths.appHtml,
+    filter: file => file !== paths.appHtml
   });
 }

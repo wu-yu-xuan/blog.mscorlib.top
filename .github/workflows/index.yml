@@ -27,6 +27,8 @@ jobs:
         run: |
           yarn build
           cp ./README.md ./build/markdown/其他/projectReadme.md
+          cp ./README.md ./build/README.md
+          cp ./build/index.html ./build/404.html
       - name: deploy
         uses: wu-yu-xuan/deploy-github-pages@action
         with:
