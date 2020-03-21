@@ -36,8 +36,16 @@ export default function useFetch<T extends any[], Data = any>(
     throw cache[key].promise;
   }
   if (cache[key].error !== initError) {
+    /**
+     * 下面这种骚写法是为了规避 react-error-overlay
+     */
+    try {
+      JSON.parse('<');
+    } catch {
+      JSON.parse('<');
+    }
     // 异步错误转同步错误抛出, 真蛋疼
-    throw cache[key].error;
+    // throw cache[key].error;
   }
   return cache[key].data;
 }

@@ -1,6 +1,6 @@
 # Data Fetching and Concurrent Mode
 
-(本文是 2020.03.21 在 TECHF5VE 前端组的技术讨论与分享, 主讲人: [wu-xu-xuan](https://github.com/wu-yu-xuan))
+(本文是 2020.03.21 在 TECHF5VE 前端组的技术讨论与分享, 主讲人: [wu-yu-xuan](https://github.com/wu-yu-xuan))
 
 (本文所有实例代码均可在 [src](https://github.com/TECHF5VE/frontend-meeting-2020.03.21/tree/master/src) 目录下找到)
 
