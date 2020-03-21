@@ -18,7 +18,7 @@ const initError = Symbol('no error');
  * @param fn
  * @param args
  */
-export default function useFetch<T extends any[], Data = any>(
+export default function usePromise<T extends any[], Data = any>(
   fn: (...args: T) => Promise<Data>,
   ...args: T
 ): Data {
@@ -36,16 +36,19 @@ export default function useFetch<T extends any[], Data = any>(
     throw cache[key].promise;
   }
   if (cache[key].error !== initError) {
-    /**
-     * 下面这种骚写法是为了规避 react-error-overlay
-     */
-    try {
-      JSON.parse('<');
-    } catch {
-      JSON.parse('<');
+    if (process.env.NODE_ENV === 'development') {
+      /**
+       * 下面这种骚写法是为了规避 react-error-overlay
+       */
+      try {
+        JSON.parse('<');
+      } catch {
+        JSON.parse('<');
+      }
+    } else {
+      // 异步错误转同步错误抛出, 真蛋疼
+      throw cache[key].error;
     }
-    // 异步错误转同步错误抛出, 真蛋疼
-    // throw cache[key].error;
   }
   return cache[key].data;
 }

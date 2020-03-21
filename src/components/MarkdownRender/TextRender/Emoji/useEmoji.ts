@@ -1,12 +1,12 @@
 import { message } from 'antd';
-import useFetch from 'src/useFetch';
+import usePromise from 'src/usePromise';
 
 export default function useEmoji(type: string) {
-  const emojis = useFetch(getAllEmojis);
+  const emojis = usePromise(getAllEmojis);
   if (!(type in emojis)) {
     throw new Error();
   }
-  return useFetch(fetchEmoji, emojis[type]);
+  return usePromise(fetchEmoji, emojis[type]);
 }
 
 interface Emojis {

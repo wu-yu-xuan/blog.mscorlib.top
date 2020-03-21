@@ -3,7 +3,7 @@ import MarkdownRender from 'src/components/MarkdownRender';
 import classNames from 'classnames';
 import style from './style.scss';
 import Catalog, { Heading } from './Catalog';
-import useFetch from 'src/useFetch';
+import usePromise from 'src/usePromise';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -57,7 +57,7 @@ async function getMarkdown(title: string) {
 }
 
 function useMarkdown(title: string): string {
-  return useFetch(getMarkdown, title);
+  return usePromise(getMarkdown, title);
 }
 
 function getHeadings(el: HTMLElement) {

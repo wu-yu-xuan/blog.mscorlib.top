@@ -5,7 +5,7 @@ import { Radio, Input, Empty } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import Types, { ALL_TEXT } from '../Types';
 import shouldHide from '../shouldHide';
-import useFetch from 'src/useFetch';
+import usePromise from 'src/usePromise';
 import getRecommend from './getRecommend';
 import { Blog, BlogSearchResult } from '../interface';
 
@@ -151,7 +151,7 @@ async function getBlogSummarys(): Promise<Blog[]> {
 }
 
 function useBlogSummarys() {
-  return useFetch(getBlogSummarys);
+  return usePromise(getBlogSummarys);
 }
 
 function useSortBy(): [Sort, (e: RadioChangeEvent) => void] {
