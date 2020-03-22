@@ -86,7 +86,37 @@ async function getMarkdown(title: string) {
 
 为什么呢?
 
+## 复现问题
+
 我建立了这个 [codesandbox 环境](https://codesandbox.io/s/lucid-cloud-0bjyf) 来最小复现
+
+代码是:
+
+```typescript
+function ThrowError() {
+  if (Math.random() < 1) {
+    throw new Error('啦啦啦啦');
+  }
+  return <div />;
+}
+
+console.log(React.version);
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>shit</div>}>
+      <ThrowError />
+    </ErrorBoundary>
+  );
+}
+
+const rootElement = document.getElementById('root');
+ReactDOM.createRoot(rootElement).render(<App />);
+```
+
+结果发现, 在多个 react 版本中均能稳定复现
+
+讲道理, 结果应该是 `<div>shit</div>`, 而实际情况是整个页面崩溃, 显示错误信息
 
 在[伊撒尔](https://github.com/yisar)大佬与[月迷津渡](https://github.com/CodeDaraW)大佬的帮助下, 我发现这是由两个子问题组成的
 
