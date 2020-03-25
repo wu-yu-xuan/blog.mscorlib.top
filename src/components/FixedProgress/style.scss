@@ -1,0 +1,27 @@
+.outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  visibility: hidden;
+  z-index: 100;
+  animation-name: show;
+  animation-duration: 0.3s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes show {
+  to {
+    visibility: visible;
+  }
+}
+
+.inner {
+  height: 2px;
+  background-color: $primary-color;
+  width: 0;
+  box-shadow: 0 0 1px rgba($color: $primary-color, $alpha: 0.6);
+  transition: 0.3s width;
+}
