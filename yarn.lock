@@ -5301,8 +5301,8 @@ path-to-regexp@^1.0.1:
 
 path-to-regexp@^6.1.0:
   version "6.1.0"
-  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.1.0.tgz#0b18f88b7a0ce0bfae6a25990c909ab86f512427"
-  integrity sha512-h9DqehX3zZZDCEm+xbfU0ZmwCGFCAAraPJWMXJ4+v32NjZJilVg3k1TcKsRgIb8IQ/izZSaydDc1OhJCZvs2Dw==
+  resolved "https://registry.npm.taobao.org/path-to-regexp/download/path-to-regexp-6.1.0.tgz#0b18f88b7a0ce0bfae6a25990c909ab86f512427"
+  integrity sha1-Cxj4i3oM4L+uaiWZDJCauG9RJCc=
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -7639,10 +7639,10 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^3.7.5:
-  version "3.7.5"
-  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
-  integrity sha1-BpLiH2X9QQi5MwI4qsEd0uF3oa4=
+typescript@^3.8.3:
+  version "3.8.3"
+  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
+  integrity sha1-QJ64VE6gM1cRIFhp7EWKsQnuEGE=
 
 typings-for-css-modules-loader@^1.7.0:
   version "1.7.0"
@@ -7912,8 +7912,8 @@ wbuf@^1.1.0, wbuf@^1.7.2:
     minimalistic-assert "^1.0.0"
 
 "web-router@https://github.com/wu-yu-xuan/web-router.git":
-  version "0.1.0"
-  resolved "https://github.com/wu-yu-xuan/web-router.git#a12b607b7c7e575cdf1f7cbba707561cfc905d16"
+  version "0.2.0"
+  resolved "https://github.com/wu-yu-xuan/web-router.git#3756542e0c6220fe38d5cac1f22e9097f35145f5"
   dependencies:
     path-to-regexp "^6.1.0"
 

@@ -65,7 +65,7 @@
     "ts-import-plugin": "^1.5.5",
     "ts-loader": "^2.3.7",
     "tsconfig-paths-webpack-plugin": "^2.0.0",
-    "typescript": "^3.7.5",
+    "typescript": "^3.8.3",
     "typings-for-css-modules-loader": "^1.7.0",
     "uglifyjs-webpack-plugin": "1.2.5",
     "url-loader": "0.6.2",
