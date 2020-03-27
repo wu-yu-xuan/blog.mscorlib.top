@@ -412,6 +412,16 @@ module.exports = {
       // If a URL is already hashed by Webpack, then there is no concern
       // about it being stale, and the cache-busting can be skipped.
       dontCacheBustUrlsMatching: /\.\w{8}\./,
+      runtimeCaching: [
+        {
+          urlPattern: /\.md$/,
+          handler: 'fastest'
+        },
+        {
+          urlPattern: /static\/images\//,
+          handler: 'cacheFirst'
+        }
+      ],
       filename: 'service-worker.js',
       logger(message) {
         if (message.indexOf('Total precache size is') === 0) {
@@ -437,7 +447,9 @@ module.exports = {
         /asset-manifest\.json$/,
         /CNAME/,
         /_config.yml/,
-        /\.pdf$/
+        /\.pdf$/,
+        /\.md$/,
+        /static[\/\\]images[\/\\]/
       ]
     }),
     // Moment.js is an extremely popular library that bundles large locale files
