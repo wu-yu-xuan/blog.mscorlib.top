@@ -111,3 +111,27 @@ ok, 你说上个问题简单, 因为 [**Render-as-You-Fetch**](https://reactjs.o
 那么, 请求有轻重缓急, 我应该先发送首屏请求, 那些不怎么急的可以缓缓
 
 如何控制这种优先级来保证优先渲染首屏? 又什么时候发出不那么急的请求?
+
+## 原理分析及问题
+
+根据[官方的说法](https://reactjs.org/docs/concurrent-mode-intro.html#blocking-vs-interruptible-rendering), `useTransition` 就类似于 git, 当 `startTransition` 时, 会 fork 一个分支出来, 当次分支不存在 `Suspense` 时, merge 进主分支
+
+那么问题来了: 它其实仅 fork 了 vdom, 不可能也没必要复制整个环境
+
+那么我新旧两个分支读写外部变量时会不会引入潜在的 bug? 比如路由, 比如 dom
+
+如何解决? 即将到来的 `useMutableSource` 是否就可以解决这个问题?
+
+~~我早说过, react 最近的骚操作反而引入了更多的问题~~
+
+好消息是, 我这个博客已经迁移到了 `useTransition`, 虽然旧代码中有很多读写外部变量的操作, 但是目前没有发现 bug
+
+## 问题: 是否应该全局唯一化
+
+个人觉得, `useTransition` 和其他 hook 不同, 不具备原语性(Primitive), 导致难以随意排列组合, 必须配合特定的库或是理念来使用
+
+按照 YouTube 的实现, 加载时停留在上个页面, 顶部显示加载条
+
+如果不唯一化, 加载条会不会引入潜在的 bug? 会不会显示多个加载条? 或进度突然抽风?
+
+如果唯一化, 当然问题更多
