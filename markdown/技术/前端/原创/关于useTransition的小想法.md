@@ -170,6 +170,15 @@ function Demo<T>(props: Props<T>): React.ReactElement;
 <Demo type={?} />; // 如何传递模板参数 `T`?
 ```
 
+[Wenlu Wang](https://github.com/Kingwl) 大佬说, 可以这样做:
+
+```typescript
+<Demo<string> type="string" />;
+<Demo<number> type={0} />;
+```
+
+谢谢大佬了, 我太菜了呜呜呜
+
 ---
 
 说是写下想法, 结果说出了一堆问题, 2333
