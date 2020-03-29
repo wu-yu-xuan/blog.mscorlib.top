@@ -135,3 +135,41 @@ ok, 你说上个问题简单, 因为 [**Render-as-You-Fetch**](https://reactjs.o
 如果不唯一化, 加载条会不会引入潜在的 bug? 会不会显示多个加载条? 或进度突然抽风?
 
 如果唯一化, 当然问题更多
+
+## `TransitionSwitch` 的局限性
+
+除了上述一些问题, [_web-router_](https://github.com/wu-yu-xuan/web-router) 中新增的 `TransitionSwitch` 还存在着一定的局限性
+
+因为 pages 的切换和路由的切换并不是强相关的, 虽然很多情况下的确是同步发生
+
+而 `TransitionSwitch` 将两者捆绑在了一起
+
+可以写个 `TransitionTab` 来达到仅切换页面而不切换路由的目的
+
+我已经想好怎么写了, 由于 _web-router_ 仅为这个博客系统服务, 而本系统内并没有需要这样做的场景, 所以就先咕了:dove:
+
+pr is welcome
+
+## 问题: 如何给组件传递模板参数
+
+这个问题和 `useTransition` 无关, 但也困扰了我很久
+
+众所周知, React 组件可以是函数或类
+
+众所周知, 在 typescript 中, 函数或类可以使用模板
+
+于是, 问题来了, React 组件是否可以使用模板?
+
+```typescript
+interface Props<T> {
+  type: T extends string ? string : number;
+}
+
+function Demo<T>(props: Props<T>): React.ReactElement;
+
+<Demo type={?} />; // 如何传递模板参数 `T`?
+```
+
+---
+
+说是写下想法, 结果说出了一堆问题, 2333
