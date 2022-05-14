@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useDeferredValue, useMemo } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useDeferredValue,
+  useMemo,
+  useEffect
+} from 'react';
 import style from './style.scss';
 import BlogItem from '../BlogItem';
 import { Radio, Input, Empty } from 'antd';
@@ -64,6 +70,38 @@ export default function BlogList() {
       })
       .filter(({ matchLength }) => matchLength);
   }, [blogSummarys, JSON.stringify(searchWords)]);
+
+
+  useEffect(() => {
+
+    const offsets = parseInt(sessionStorage.getItem("offsets")) ;
+
+    if(offsets){
+      window.scrollTo(0, offsets)
+    }
+
+
+    let flag = false;
+    const scrollHnadler = () => {
+      if (!flag) {
+        // 使用requestAnimationFrame进行节流
+        requestAnimationFrame(() => {
+          sessionStorage.setItem("offsets", window.scrollY.toString())
+
+          flag = false;
+        });
+      }
+
+      flag = true;
+    };
+
+    window.addEventListener('scroll', scrollHnadler, false);
+
+    return () => {
+      window.removeEventListener('scroll', scrollHnadler, false);
+      flag = null;
+    };
+  }, [selections]);
 
   return (
     <>
